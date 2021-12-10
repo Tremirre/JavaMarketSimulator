@@ -13,16 +13,13 @@ public class CommoditiesMarket extends Market{
     private HashSet<String> commodities;
 
     public CommoditiesMarket(String name, double buyFee, double sellFee) throws IOException {
-        super(name + " commodity", buyFee, sellFee);
+        super(name + " Commodity", buyFee, sellFee);
         this.commodities = new HashSet<String>();
         this.initializeMarket();
     }
 
     @Override
     public void initializeMarket() {
-        var manager = AssetManager.getInstance();
-        var newCurrency = manager.createCurrencyAsset("US Dollar", 1.00, new String[]{"United States"});
-        this.commodities.add(newCurrency.getUniqueIndetifyingName());
     }
 
     @Override
@@ -46,7 +43,7 @@ public class CommoditiesMarket extends Market{
     }
 
     @Override
-    public ArrayList<String> getAvailableAssetTypes() {
+    public String[] getAvailableAssetTypes() {
         return null;
     }
 }

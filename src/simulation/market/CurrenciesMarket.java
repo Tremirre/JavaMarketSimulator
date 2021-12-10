@@ -1,5 +1,6 @@
 package simulation.market;
 
+import simulation.asset.AssetManager;
 import simulation.holders.AssetHolder;
 import simulation.offer.BuyOffer;
 import simulation.offer.SellOffer;
@@ -12,12 +13,16 @@ public class CurrenciesMarket extends Market{
     private HashSet<String> currencies;
 
     public CurrenciesMarket(String name, double buyFee, double sellFee) throws IOException {
-        super(name + " currency", buyFee, sellFee);
+        super(name + " Currency", buyFee, sellFee);
+        this.currencies = new HashSet<String>();
+        initializeMarket();
     }
 
     @Override
     public void initializeMarket() {
-
+        var manager = AssetManager.getInstance();
+        var newCurrency = manager.createCurrencyAsset("US Dollar", 1.00, new String[]{"United States"});
+        this.currencies.add(newCurrency.getUniqueIndetifyingName());
     }
 
     @Override
@@ -41,7 +46,7 @@ public class CurrenciesMarket extends Market{
     }
 
     @Override
-    public ArrayList<String> getAvailableAssetTypes() {
-        return null;
+    public String[] getAvailableAssetTypes() {
+        return this.currencies.toArray(new String[0]);
     }
 }

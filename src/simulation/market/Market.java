@@ -19,7 +19,7 @@ abstract public class Market {
 
     Market(String name, double buyFee, double sellFee) throws IOException {
         this.address = Address.getRandomAddress();
-        this.name = name + " market of " + this.address.getCity();
+        this.name = name + " Market of " + this.address.getCity();
         this.buyFee = buyFee;
         this.sellFee = sellFee;
         this.buyOffers = new ArrayList<BuyOffer>();
@@ -62,7 +62,7 @@ abstract public class Market {
         return total;
     }
 
-    abstract public ArrayList<String> getAvailableAssetTypes();
+    abstract public String[] getAvailableAssetTypes();
 
     public Address getAddress() {
         return this.address;

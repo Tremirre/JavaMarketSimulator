@@ -12,7 +12,7 @@ public class StockMarket extends Market{
     private ArrayList<StockMarketIndex> stockMarketIndexes;
 
     public StockMarket(String name, double buyFee, double sellFee) throws IOException {
-        super(name + " stock", buyFee, sellFee);
+        super(name + " Stock", buyFee, sellFee);
     }
 
     @Override
@@ -41,7 +41,7 @@ public class StockMarket extends Market{
     }
 
     @Override
-    public ArrayList<String> getAvailableAssetTypes() {
+    public String[] getAvailableAssetTypes() {
         return null;
     }
 }
