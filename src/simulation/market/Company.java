@@ -9,7 +9,7 @@ public class Company extends AssetHolder {
     private double profit;
     private double revenue;
     private double capital;
-    private int traidingVolume;
+    private int tradingVolume;
     private int totalSales;
 
     public void buyout(StockMarket stockMarket) {
@@ -20,7 +20,7 @@ public class Company extends AssetHolder {
         return name;
     }
 
-    public void setCompanyName(String name) {
+    public void setCompnayName(String name) {
         this.name = name;
     }
 
@@ -64,12 +64,12 @@ public class Company extends AssetHolder {
         this.capital = capital;
     }
 
-    public int getTraidingVolume() {
-        return traidingVolume;
+    public int getTradingVolume() {
+        return tradingVolume;
     }
 
-    public void setTraidingVolume(int traidingVolume) {
-        this.traidingVolume = traidingVolume;
+    public void setTradingVolume(int tradingVolume) {
+        this.tradingVolume = tradingVolume;
     }
 
     public int getTotalSales() {
