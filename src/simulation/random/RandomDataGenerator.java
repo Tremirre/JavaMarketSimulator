@@ -12,6 +12,7 @@ public class RandomDataGenerator {
     private final Random generator;
 
     private RandomDataGenerator() throws IOException {
+        System.out.println("[LOGGING] Initializing RandomDataGenerator...");
         final String path = "resource\\address_data\\";
         var data = new HashMap<String, String[]>();
         String countries = Files.readString(Path.of(path + "countries.txt"));
