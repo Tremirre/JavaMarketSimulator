@@ -12,7 +12,7 @@ import java.util.HashSet;
 public class CommoditiesMarket extends Market{
     private HashSet<String> commodities;
 
-    CommoditiesMarket(String name, double buyFee, double sellFee) throws IOException {
+    public CommoditiesMarket(String name, double buyFee, double sellFee) throws IOException {
         super(name + " commodity", buyFee, sellFee);
         this.commodities = new HashSet<String>();
         this.initializeMarket();

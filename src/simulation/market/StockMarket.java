@@ -11,7 +11,7 @@ public class StockMarket extends Market{
     private String traidingCurrency;
     private ArrayList<StockMarketIndex> stockMarketIndexes;
 
-    StockMarket(String name, double buyFee, double sellFee) throws IOException {
+    public StockMarket(String name, double buyFee, double sellFee) throws IOException {
         super(name + " stock", buyFee, sellFee);
     }
 

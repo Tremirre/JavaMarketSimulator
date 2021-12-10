@@ -11,7 +11,7 @@ import java.util.HashSet;
 public class CurrenciesMarket extends Market{
     private HashSet<String> currencies;
 
-    CurrenciesMarket(String name, double buyFee, double sellFee) throws IOException {
+    public CurrenciesMarket(String name, double buyFee, double sellFee) throws IOException {
         super(name + " currency", buyFee, sellFee);
     }
 
