@@ -1,5 +1,6 @@
 package simulation.market;
 
+import simulation.holders.Address;
 import simulation.holders.AssetHolder;
 import simulation.offer.BuyOffer;
 import simulation.offer.SellOffer;
@@ -8,7 +9,6 @@ import java.util.ArrayList;
 
 abstract public class Market {
     private String name;
-    private Address address;
     private double buyFee;
     private double sellFee;
     private ArrayList<BuyOffer> buyOffers;
@@ -49,14 +49,6 @@ abstract public class Market {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Address getAddress() {
-        return address;
-    }
-
-    public void setAddress(Address address) {
-        this.address = address;
     }
 
     public double getBuyFee() {

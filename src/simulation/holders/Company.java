@@ -5,12 +5,17 @@ import simulation.market.StockMarket;
 public class Company extends AssetHolder {
     private String name;
     private String IPODate;
+    private Address address;
     private double IPOShareValue;
     private double profit;
     private double revenue;
     private double capital;
     private int tradingVolume;
     private int totalSales;
+
+    Company() {
+
+    }
 
     public void buyout(StockMarket stockMarket) {
 
@@ -78,5 +83,13 @@ public class Company extends AssetHolder {
 
     public void setTotalSales(int totalSales) {
         this.totalSales = totalSales;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
     }
 }

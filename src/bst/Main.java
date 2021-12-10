@@ -1,6 +1,6 @@
 package bst;
 
-import simulation.market.Address;
+import simulation.holders.Address;
 import java.io.IOException;
 
 public class Main {
