@@ -5,6 +5,7 @@ import simulation.holders.AssetHolder;
 import simulation.offer.BuyOffer;
 import simulation.offer.SellOffer;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 abstract public class Market {
@@ -15,6 +16,15 @@ abstract public class Market {
     private double sellFee;
     private ArrayList<BuyOffer> buyOffers;
     private ArrayList<SellOffer> sellOffers;
+
+    Market(String name, double buyFee, double sellFee) throws IOException {
+        this.address = Address.getRandomAddress();
+        this.name = name + " market of " + this.address.getCity();
+        this.buyFee = buyFee;
+        this.sellFee = sellFee;
+        this.buyOffers = new ArrayList<BuyOffer>();
+        this.sellOffers = new ArrayList<SellOffer>();
+    }
 
     abstract public void initializeMarket();
 
