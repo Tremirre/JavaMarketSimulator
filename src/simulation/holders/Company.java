@@ -1,6 +1,6 @@
-package simulation.market;
+package simulation.holders;
 
-import simulation.asset.AssetHolder;
+import simulation.market.StockMarket;
 
 public class Company extends AssetHolder {
     private String name;

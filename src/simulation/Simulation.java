@@ -1,7 +1,7 @@
 package simulation;
 
 import simulation.asset.AssetManager;
-import simulation.asset.AssetHolder;
+import simulation.holders.AssetHolder;
 import simulation.market.Market;
 import java.util.ArrayList;
 

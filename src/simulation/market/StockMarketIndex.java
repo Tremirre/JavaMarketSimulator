@@ -1,5 +1,7 @@
 package simulation.market;
 
+import simulation.holders.Company;
+
 import java.util.HashSet;
 
 public class StockMarketIndex {

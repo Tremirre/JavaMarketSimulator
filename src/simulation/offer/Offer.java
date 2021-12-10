@@ -1,6 +1,6 @@
 package simulation.offer;
 
-import simulation.asset.AssetHolder;
+import simulation.holders.AssetHolder;
 
 public abstract class Offer {
     private int id;

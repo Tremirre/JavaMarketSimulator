@@ -1,6 +1,4 @@
-package simulation.investor;
-
-import simulation.asset.AssetHolder;
+package simulation.holders;
 
 public class Investor extends AssetHolder {
     private String firstName;

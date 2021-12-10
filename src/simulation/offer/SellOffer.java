@@ -1,6 +1,6 @@
 package simulation.offer;
 
-import simulation.asset.AssetHolder;
+import simulation.holders.AssetHolder;
 
 public class SellOffer extends Offer {
     SellOffer(int id, String assetType, AssetHolder sender, double price, double size) {

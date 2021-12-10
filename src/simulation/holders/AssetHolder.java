@@ -1,4 +1,4 @@
-package simulation.asset;
+package simulation.holders;
 
 import simulation.market.Market;
 

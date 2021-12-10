@@ -1,6 +1,6 @@
 package simulation.offer;
 
-import simulation.asset.AssetHolder;
+import simulation.holders.AssetHolder;
 
 public class StandardOfferFactory implements IOfferFactory {
     private static int id = 0;

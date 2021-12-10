@@ -1,6 +1,6 @@
 package simulation.market;
 
-import simulation.asset.AssetHolder;
+import simulation.holders.AssetHolder;
 import simulation.offer.BuyOffer;
 import simulation.offer.SellOffer;
 
