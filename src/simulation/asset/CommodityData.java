@@ -4,6 +4,11 @@ public class CommodityData extends AssetData{
     private String traidingUnit;
     private String traidingCurrency;
 
+    protected CommodityData(int id, String name, double openingPrice, String traindUnit, String tU, String tC) {
+        super(id, name, openingPrice);
+        this.traidingUnit = tU;
+        this.traidingCurrency = tC;
+    }
 
     @Override
     public double getLatestSellingPrice() {

@@ -16,11 +16,11 @@ public class Company extends AssetHolder {
 
     }
 
-    public String getName() {
+    public String getCompanyName() {
         return name;
     }
 
-    public void setName(String name) {
+    public void setCompanyName(String name) {
         this.name = name;
     }
 
