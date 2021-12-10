@@ -21,4 +21,28 @@ public abstract class Offer {
     public void updatePrice(){
 
     }
+
+    public int getID() {
+        return id;
+    }
+
+    public String getAssetType() {
+        return assetType;
+    }
+
+    public AssetHolder getSender() {
+        return sender;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public double getSize() {
+        return size;
+    }
+
+    public int getDaysSinceGiven() {
+        return daysSinceGiven;
+    }
 }

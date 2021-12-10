@@ -4,7 +4,7 @@ import simulation.market.Market;
 
 import java.util.HashMap;
 
-public class AssetHolder extends Thread {
+public abstract class AssetHolder extends Thread {
     HashMap<String, Double> storedAssets;
     HashMap<String, Double> assetsOnSale;
 

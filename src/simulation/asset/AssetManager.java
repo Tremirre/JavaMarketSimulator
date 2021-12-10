@@ -21,19 +21,22 @@ public class AssetManager {
         return instance;
     }
 
-    public void createCommodityAsset(String name, double openingPrice, String tradingUnit, String currency) {
+    public CommodityData createCommodityAsset(String name, double openingPrice, String tradingUnit, String currency) {
         var com = new CommodityData(commodityID++, name, openingPrice, tradingUnit, currency);
         this.allAssets.put(com.getUniqueIndetifyingName(), com);
+        return com;
     }
 
-    public void createStockAsset(String name, double openingPrice, int companyID) {
+    public StockData createStockAsset(String name, double openingPrice, int companyID) {
         var stock = new StockData(stockID++, name, openingPrice, companyID);
         this.allAssets.put(stock.getUniqueIndetifyingName(), stock);
+        return stock;
     }
 
-    public void createCurrencyAsset(String name, double openingPrice, String[] countriesOfUse) {
+    public CurrencyData createCurrencyAsset(String name, double openingPrice, String[] countriesOfUse) {
         var cur = new CurrencyData(currencyID++, name, openingPrice, countriesOfUse);
         this.allAssets.put(cur.getUniqueIndetifyingName(), cur);
+        return cur;
     }
 
     public AssetData getAssetData(String uniqueName){
@@ -56,5 +59,9 @@ public class AssetManager {
             }
         }
         return false;
+    }
+
+    public void removeAsset(String uniqueName) {
+        this.allAssets.remove(uniqueName);
     }
 }
