@@ -7,7 +7,7 @@ public class AssetManager {
     private HashMap<String,AssetData> allAssets;
     private static int commodityID = 0;
     private static int currencyID = 0;
-    private static int stockID =0;
+    private static int stockID = 0;
 
 
     private AssetManager() {
