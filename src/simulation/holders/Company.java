@@ -20,7 +20,7 @@ public class Company extends AssetHolder {
         return name;
     }
 
-    public void setCompnayName(String name) {
+    public void setCompanyName(String name) {
         this.name = name;
     }
 
