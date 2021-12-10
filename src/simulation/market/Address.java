@@ -1,11 +1,42 @@
 package simulation.market;
 
+import simulation.random.RandomDataGenerator;
+
+import java.io.IOException;
+
 public class Address {
     private String country;
     private String city;
     private String postalCode;
     private String streetName;
     private int buildingNumber;
+
+    public Address(String country, String city, String postalCode, String streetName, int buildingNumber) {
+        this.country = country;
+        this.city = city;
+        this.postalCode = postalCode;
+        this.streetName = streetName;
+        this.buildingNumber = buildingNumber;
+    }
+
+    public static Address getRandomAddress() throws IOException {
+        var rand = RandomDataGenerator.getInstance();
+        String country = rand.yieldCountry();
+        return new Address(country,
+                rand.yieldCityForCountry(country),
+                rand.yieldPostCode(),
+                rand.yieldStreetName(),
+                rand.yieldRandomInteger(1000));
+    }
+
+    public void print() {
+        System.out.printf("%s %d \n%s %s, %s \n",
+                this.streetName,
+                this.buildingNumber,
+                this.postalCode,
+                this.city,
+                this.country);
+    }
 
     public String getCountry() {
         return country;

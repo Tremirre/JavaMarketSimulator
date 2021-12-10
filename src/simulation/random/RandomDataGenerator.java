@@ -9,6 +9,7 @@ import java.util.Random;
 public class RandomDataGenerator {
     private static RandomDataGenerator instance;
     private final HashMap<String, String[]> addressData;
+    private final String[] streets;
     private final Random generator;
 
     private RandomDataGenerator() throws IOException {
@@ -22,6 +23,8 @@ public class RandomDataGenerator {
             String[] citiesList = cities.split(";");
             data.put(s, citiesList);
         }
+        String allStreets = Files.readString(Path.of(path + "street_names.txt"));
+        this.streets = allStreets.split(";");
         this.addressData = data;
         this.generator = new Random();
     }
@@ -39,6 +42,21 @@ public class RandomDataGenerator {
         String[] cities = this.addressData.get(country);
         int randomIdx = generator.nextInt(cities.length);
         return cities[randomIdx];
+    }
+
+    public String yieldPostCode() {
+        String[] randomValues = new String[5];
+        for (int i = 0; i < randomValues.length; i++)
+            randomValues[i] = String.valueOf(this.generator.nextInt(10));
+        return randomValues[0] + randomValues[1] + '-' + randomValues[2] + randomValues[3] + randomValues[4];
+    }
+
+    public String yieldStreetName() {
+        return streets[generator.nextInt(streets.length)];
+    }
+
+    public int yieldRandomInteger(int bound) {
+        return this.generator.nextInt(bound);
     }
 
     public static RandomDataGenerator getInstance() throws IOException{
