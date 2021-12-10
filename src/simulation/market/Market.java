@@ -4,6 +4,7 @@ import simulation.holders.Address;
 import simulation.holders.AssetHolder;
 import simulation.offer.BuyOffer;
 import simulation.offer.SellOffer;
+import simulation.offer.StandardOfferFactory;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -28,9 +29,15 @@ abstract public class Market {
 
     abstract public void initializeMarket();
 
-    abstract public void addBuyOffer(String assetType, AssetHolder sender, double price, double size);
+    public void addBuyOffer(String assetType, AssetHolder sender, double price, double size) {
+        BuyOffer offer = (BuyOffer) new StandardOfferFactory().createOffer(assetType, sender, price, size, false);
+        this.buyOffers.add(offer);
+    }
 
-    abstract public void addSellOffer(String assetType, AssetHolder sender, double price, double size);
+    public void addSellOffer(String assetType, AssetHolder sender, double price, double size) {
+        SellOffer offer = (SellOffer) new StandardOfferFactory().createOffer(assetType, sender, price, size, true);
+        this.sellOffers.add(offer);
+    }
 
     abstract void processOffer(BuyOffer buyOffer, SellOffer sellOffer);
 

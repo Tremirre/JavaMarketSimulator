@@ -6,7 +6,6 @@ import simulation.offer.BuyOffer;
 import simulation.offer.SellOffer;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashSet;
 
 public class CurrenciesMarket extends Market{
@@ -23,16 +22,6 @@ public class CurrenciesMarket extends Market{
         var manager = AssetManager.getInstance();
         var newCurrency = manager.createCurrencyAsset("US Dollar", 1.00, new String[]{"United States"});
         this.currencies.add(newCurrency.getUniqueIndetifyingName());
-    }
-
-    @Override
-    public void addBuyOffer(String assetType, AssetHolder sender, double price, double size) {
-
-    }
-
-    @Override
-    public void addSellOffer(String assetType, AssetHolder sender, double price, double size) {
-
     }
 
     @Override

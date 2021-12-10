@@ -21,16 +21,6 @@ public class StockMarket extends Market{
     }
 
     @Override
-    public void addBuyOffer(String assetType, AssetHolder sender, double price, double size) {
-
-    }
-
-    @Override
-    public void addSellOffer(String assetType, AssetHolder sender, double price, double size) {
-
-    }
-
-    @Override
     void processOffer(BuyOffer buyOffer, SellOffer sellOffer) {
 
     }
