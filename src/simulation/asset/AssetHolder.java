@@ -4,7 +4,7 @@ import simulation.market.Market;
 
 import java.util.HashMap;
 
-public class AssetHolder {
+public class AssetHolder extends Thread {
     HashMap<String, Double> storedAssets;
     HashMap<String, Double> assetsOnSale;
 
@@ -30,6 +30,10 @@ public class AssetHolder {
     }
 
     public void generateOrders(Market market) {
+
+    }
+
+    public void run(){
 
     }
 }
