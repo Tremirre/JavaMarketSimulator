@@ -10,21 +10,28 @@ public class RandomDataGenerator {
     private static RandomDataGenerator instance;
     private final HashMap<String, String[]> addressData;
     private final String[] streets;
+    private final String[] names;
+    private final String[] surnames;
     private final Random generator;
 
     private RandomDataGenerator() throws IOException {
         System.out.println("[LOGGING] Initializing RandomDataGenerator...");
-        final String path = "resource\\address_data\\";
+        final String addressPath = "resource\\address_data\\";
+        final String credentialsPath = "resource\\credentials_data\\";
         var data = new HashMap<String, String[]>();
-        String countries = Files.readString(Path.of(path + "countries.txt"));
+        String countries = Files.readString(Path.of(addressPath + "countries.txt"));
         String[] countriesList = countries.split(";");
         for (String s : countriesList) {
-            String cities = Files.readString(Path.of(path + s.toLowerCase() + ".txt"));
+            String cities = Files.readString(Path.of(addressPath + s.toLowerCase() + ".txt"));
             String[] citiesList = cities.split(";");
             data.put(s, citiesList);
         }
-        String allStreets = Files.readString(Path.of(path + "street_names.txt"));
+        String allStreets = Files.readString(Path.of(addressPath + "street_names.txt"));
         this.streets = allStreets.split(";");
+        String allNames = Files.readString(Path.of(credentialsPath + "names.txt"));
+        this.names = allNames.split(";");
+        String allSurnames = Files.readString(Path.of(credentialsPath + "surnames.txt"));
+        this.surnames = allSurnames.split(";");
         this.addressData = data;
         this.generator = new Random();
     }
@@ -52,11 +59,19 @@ public class RandomDataGenerator {
     }
 
     public String yieldStreetName() {
-        return streets[generator.nextInt(streets.length)];
+        return this.streets[generator.nextInt(streets.length)];
     }
 
     public int yieldRandomInteger(int bound) {
         return this.generator.nextInt(bound);
+    }
+
+    public String yieldName() {
+        return this.names[this.generator.nextInt(this.names.length)];
+    }
+
+    public String yieldSurname() {
+        return this.surnames[this.generator.nextInt(this.surnames.length)];
     }
 
     public static RandomDataGenerator getInstance() throws IOException{

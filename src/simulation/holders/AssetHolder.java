@@ -10,6 +10,7 @@ public abstract class AssetHolder extends Thread {
 
     private double investmentBudget;
     private double frozenFunds;
+    private int id;
 
     public void sendSellOrder(Market market) {
         if (this.storedAssets.isEmpty()) {
