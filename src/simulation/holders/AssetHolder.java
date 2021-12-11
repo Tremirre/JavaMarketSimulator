@@ -1,7 +1,6 @@
 package simulation.holders;
 
 import simulation.market.Market;
-
 import java.util.HashMap;
 
 public abstract class AssetHolder extends Thread {
@@ -11,6 +10,14 @@ public abstract class AssetHolder extends Thread {
     private double investmentBudget;
     private double frozenFunds;
     private int id;
+
+    public AssetHolder(int id, double investmentBudget) {
+        this.storedAssets = new HashMap<>();
+        this.assetsOnSale = new HashMap<>();
+        this.investmentBudget = investmentBudget;
+        this.frozenFunds = 0;
+        this.id = id;
+    }
 
     public void sendSellOrder(Market market) {
         if (this.storedAssets.isEmpty()) {
@@ -32,6 +39,10 @@ public abstract class AssetHolder extends Thread {
 
     public void generateOrders(Market market) {
 
+    }
+
+    public int getID() {
+        return this.id;
     }
 
     public void run(){

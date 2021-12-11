@@ -13,8 +13,8 @@ public class Company extends AssetHolder {
     private int tradingVolume;
     private int totalSales;
 
-    Company() {
-
+    public Company(int id, double investmentBudget) {
+        super(id, investmentBudget);
     }
 
     public void buyout(StockMarket stockMarket) {

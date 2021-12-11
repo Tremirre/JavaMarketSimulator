@@ -1,8 +1,6 @@
 package bst;
 
-import simulation.market.CurrenciesMarket;
 import simulation.random.RandomDataGenerator;
-
 import java.io.IOException;
 
 public class Main {

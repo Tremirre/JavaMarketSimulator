@@ -45,17 +45,20 @@ public class AssetManager {
 
     public boolean doesAssetExist(String uniqueName, AssetType type) {
         switch (type) {
-            case any -> {
+            case ANY -> {
                 return this.allAssets.containsKey(uniqueName);
             }
-            case stock -> {
+            case STOCK -> {
                 return this.allAssets.containsKey(uniqueName) && this.allAssets.get(uniqueName) instanceof StockData;
             }
-            case currency -> {
+            case CURRENCY -> {
                 return this.allAssets.containsKey(uniqueName) && this.allAssets.get(uniqueName) instanceof CurrencyData;
             }
-            case commodity -> {
+            case COMMODITY -> {
                 return this.allAssets.containsKey(uniqueName) && this.allAssets.get(uniqueName) instanceof CommodityData;
+            }
+            default -> {
+                //throw exception
             }
         }
         return false;

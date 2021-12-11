@@ -74,6 +74,10 @@ public class RandomDataGenerator {
         return this.surnames[this.generator.nextInt(this.surnames.length)];
     }
 
+    public Object sampleElement(Object[] array) {
+        return array[this.generator.nextInt(array.length)];
+    }
+
     public static RandomDataGenerator getInstance() throws IOException{
         if (instance == null) {
             instance = new RandomDataGenerator();
