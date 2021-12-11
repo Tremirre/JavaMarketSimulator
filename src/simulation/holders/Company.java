@@ -33,13 +33,25 @@ public class Company extends AssetHolder {
         this.tradingVolume = tradingVolume; //number of transactions of stocks of that company
         this.numberOfStocks = numberOfStocks; // Capital = stock price * number of stock
         this.totalSales = totalSales; // total value of transactions of stocks of that company
-        var stock = AssetManager.getInstance().createStockAsset(name.substring(0, 3).toUpperCase(), IPOShareValue, id);
+        String stockName = "";
+        for (int i = 0; i < name.length(); i++) {
+            if (Character.isLetter(name.charAt(i))) stockName += name.charAt(i);
+        }
+        var stock = AssetManager.getInstance().createStockAsset(stockName.toUpperCase(), IPOShareValue, id);
         this.associatedAsset = stock.getUniqueIdentifyingName();
         this.storedAssets.put(this.associatedAsset, (double) numberOfStocks);
     }
 
     public void buyout(StockMarket stockMarket) {
 
+    }
+
+    public void print() {
+        System.out.println(this.name);
+        this.address.print();
+        System.out.println(String.format("IPO date: %s", this.IPODate));
+        System.out.println(String.format("Revenue: %f, Profit: %f", this.revenue, this.profit));
+        System.out.println(String.format("Stock name: %s", this.associatedAsset));
     }
 
     public String getCompanyName() {

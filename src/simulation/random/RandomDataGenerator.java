@@ -3,6 +3,9 @@ package simulation.random;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.sql.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Random;
 
@@ -12,13 +15,14 @@ public class RandomDataGenerator {
     private final String[] streets;
     private final String[] names;
     private final String[] surnames;
+    private final ArrayList<String> companyNames;
     private final Random generator;
     private static final int SEED = -1;
 
     private RandomDataGenerator() throws IOException {
         System.out.println("[LOGGING] Initializing RandomDataGenerator...");
         final String addressPath = "resource\\address_data\\";
-        final String credentialsPath = "resource\\credentials_data\\";
+        final String holdersPath = "resource\\holders_data\\";
         var data = new HashMap<String, String[]>();
         String countries = Files.readString(Path.of(addressPath + "countries.txt"));
         String[] countriesList = countries.split(";");
@@ -27,13 +31,15 @@ public class RandomDataGenerator {
             String[] citiesList = cities.split(";");
             data.put(s, citiesList);
         }
+        this.addressData = data;
         String allStreets = Files.readString(Path.of(addressPath + "street_names.txt"));
         this.streets = allStreets.split(";");
-        String allNames = Files.readString(Path.of(credentialsPath + "names.txt"));
+        String allNames = Files.readString(Path.of(holdersPath + "names.txt"));
         this.names = allNames.split(";");
-        String allSurnames = Files.readString(Path.of(credentialsPath + "surnames.txt"));
+        String allSurnames = Files.readString(Path.of(holdersPath + "surnames.txt"));
         this.surnames = allSurnames.split(";");
-        this.addressData = data;
+        String allCompanyNames = Files.readString(Path.of(holdersPath + "companies.txt"));
+        this.companyNames = new ArrayList<>(Arrays.asList(allCompanyNames.split(";")));
         this.generator = SEED >= 0 ? new Random(SEED) : new Random();
     }
 
@@ -83,6 +89,12 @@ public class RandomDataGenerator {
         return this.surnames[this.generator.nextInt(this.surnames.length)];
     }
 
+    public String yieldCompanyName() {
+        var selected = this.companyNames.get(this.generator.nextInt(this.companyNames.size()));
+        this.companyNames.remove(selected);
+        return selected;
+    }
+
     public Object sampleElement(Object[] array) {
         return array[this.generator.nextInt(array.length)];
     }
@@ -95,7 +107,7 @@ public class RandomDataGenerator {
         monthD += String.valueOf(month);
         String dayD = day < 10 ? "0" : "";
         dayD += String.valueOf(day);
-        return String.valueOf(year) + '-' + monthD + '-' + day;
+        return String.valueOf(year) + '-' + monthD + '-' + dayD;
     }
 
     public static RandomDataGenerator getInstance() throws IOException{

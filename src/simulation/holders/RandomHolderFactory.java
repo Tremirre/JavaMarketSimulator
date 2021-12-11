@@ -22,7 +22,8 @@ public class RandomHolderFactory implements IHolderFactory{
                 var rand = RandomDataGenerator.getInstance();
                 var date = rand.yieldDate();
                 var address = Address.getRandomAddress();
-                return new Company(id++, 0, "", date, address, 0, 0 ,0, 0,0);
+                var name = rand.yieldCompanyName();
+                return new Company(id++, 0, name, date, address, 0, 0 ,0, 0,0);
             }
             default -> {
                 //raise exception
