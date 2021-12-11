@@ -7,8 +7,8 @@ public abstract class AssetHolder extends Thread {
     HashMap<String, Double> storedAssets;
     HashMap<String, Double> assetsOnSale;
 
-    private double investmentBudget;
-    private double frozenFunds;
+    protected double investmentBudget;
+    protected double frozenFunds;
     private int id;
 
     public AssetHolder(int id, double investmentBudget) {
@@ -45,7 +45,5 @@ public abstract class AssetHolder extends Thread {
         return this.id;
     }
 
-    public void run(){
-
-    }
+    abstract public void run();
 }

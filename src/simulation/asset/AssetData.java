@@ -6,7 +6,6 @@ abstract public class AssetData {
     final private int id;
     private String name;
     final private double openingPrice;
-    private double currentPrice;
     private double maximalPrice;
     private double minimalPrice;
     private ArrayList<Double> sellingPrices;
@@ -15,17 +14,16 @@ abstract public class AssetData {
         this.id = id;
         this.name = name;
         this.openingPrice = openingPrice;
-        this.currentPrice = openingPrice;
         this.maximalPrice = openingPrice;
         this.minimalPrice = openingPrice;
         this.sellingPrices = new ArrayList<>();
-        this.sellingPrices.add(this.currentPrice);
+        this.sellingPrices.add(this.openingPrice);
     }
 
     abstract public double getLatestSellingPrice();
     abstract public void addLatestSellingPrice(double price);
 
-    public String getUniqueIndetifyingName() {
+    public String getUniqueIdentifyingName() {
         return this.name + this.id;
     }
 
@@ -39,14 +37,6 @@ abstract public class AssetData {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public double getCurrentPrice() {
-        return currentPrice;
-    }
-
-    public void setCurrentPrice(double currentPrice) {
-        this.currentPrice = currentPrice;
     }
 
     public double getMaximalPrice() {

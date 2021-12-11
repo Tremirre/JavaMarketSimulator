@@ -23,19 +23,19 @@ public class AssetManager {
 
     public CommodityData createCommodityAsset(String name, double openingPrice, String tradingUnit, String currency) {
         var com = new CommodityData(commodityID++, name, openingPrice, tradingUnit, currency);
-        this.allAssets.put(com.getUniqueIndetifyingName(), com);
+        this.allAssets.put(com.getUniqueIdentifyingName(), com);
         return com;
     }
 
     public StockData createStockAsset(String name, double openingPrice, int companyID) {
         var stock = new StockData(stockID++, name, openingPrice, companyID);
-        this.allAssets.put(stock.getUniqueIndetifyingName(), stock);
+        this.allAssets.put(stock.getUniqueIdentifyingName(), stock);
         return stock;
     }
 
     public CurrencyData createCurrencyAsset(String name, double openingPrice, String[] countriesOfUse) {
         var cur = new CurrencyData(currencyID++, name, openingPrice, countriesOfUse);
-        this.allAssets.put(cur.getUniqueIndetifyingName(), cur);
+        this.allAssets.put(cur.getUniqueIdentifyingName(), cur);
         return cur;
     }
 
@@ -45,9 +45,6 @@ public class AssetManager {
 
     public boolean doesAssetExist(String uniqueName, AssetType type) {
         switch (type) {
-            case ANY -> {
-                return this.allAssets.containsKey(uniqueName);
-            }
             case STOCK -> {
                 return this.allAssets.containsKey(uniqueName) && this.allAssets.get(uniqueName) instanceof StockData;
             }
@@ -62,6 +59,10 @@ public class AssetManager {
             }
         }
         return false;
+    }
+
+    public boolean doesAssetExist(String uniqueName) {
+        return this.allAssets.containsKey(uniqueName);
     }
 
     public void removeAsset(String uniqueName) {

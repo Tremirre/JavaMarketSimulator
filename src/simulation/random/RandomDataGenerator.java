@@ -13,6 +13,7 @@ public class RandomDataGenerator {
     private final String[] names;
     private final String[] surnames;
     private final Random generator;
+    private static final int SEED = -1;
 
     private RandomDataGenerator() throws IOException {
         System.out.println("[LOGGING] Initializing RandomDataGenerator...");
@@ -33,7 +34,7 @@ public class RandomDataGenerator {
         String allSurnames = Files.readString(Path.of(credentialsPath + "surnames.txt"));
         this.surnames = allSurnames.split(";");
         this.addressData = data;
-        this.generator = new Random();
+        this.generator = SEED >= 0 ? new Random(SEED) : new Random();
     }
 
     public String yieldCountry() {
@@ -66,6 +67,14 @@ public class RandomDataGenerator {
         return this.generator.nextInt(bound);
     }
 
+    public double yieldRandomNumber(double upperBound) {
+        return this.generator.nextDouble()*upperBound;
+    }
+
+    public double yieldRandomGaussianNumber(double standardDeviation, double mean) {
+        return this.generator.nextGaussian()*standardDeviation + mean;
+    }
+
     public String yieldName() {
         return this.names[this.generator.nextInt(this.names.length)];
     }
@@ -76,6 +85,17 @@ public class RandomDataGenerator {
 
     public Object sampleElement(Object[] array) {
         return array[this.generator.nextInt(array.length)];
+    }
+
+    public String yieldDate() {
+        var month = this.generator.nextInt(12) + 1;
+        var day = this.generator.nextInt(29) + 1;
+        var year = this.generator.nextInt(41) + 1980;
+        String monthD = month < 10 ? "0" : "";
+        monthD += String.valueOf(month);
+        String dayD = day < 10 ? "0" : "";
+        dayD += String.valueOf(day);
+        return String.valueOf(year) + '-' + monthD + '-' + day;
     }
 
     public static RandomDataGenerator getInstance() throws IOException{

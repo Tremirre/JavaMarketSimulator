@@ -16,4 +16,8 @@ public class Investor extends AssetHolder {
 
     }
 
+    @Override
+    public void run() {
+
+    }
 }

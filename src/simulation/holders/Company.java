@@ -1,20 +1,41 @@
 package simulation.holders;
 
+import simulation.asset.AssetManager;
 import simulation.market.StockMarket;
 
 public class Company extends AssetHolder {
     private String name;
-    private String IPODate;
+    private final String IPODate;
     private Address address;
-    private double IPOShareValue;
     private double profit;
     private double revenue;
-    private double capital;
+    private final String associatedAsset;
     private int tradingVolume;
     private int totalSales;
+    private int numberOfStocks;
 
-    public Company(int id, double investmentBudget) {
-        super(id, investmentBudget);
+    public Company(int id,
+                   int numberOfStocks,
+                   String name,
+                   String IPODate,
+                   Address address,
+                   double IPOShareValue,
+                   double profit,
+                   double revenue,
+                   int tradingVolume,
+                   int totalSales) {
+        super(id, 0);
+        this.name = name;
+        this.IPODate = IPODate;
+        this.address = address;
+        this.profit = profit;
+        this.revenue = revenue; //Optimal strategy: stock price / company profit = 10
+        this.tradingVolume = tradingVolume; //number of transactions of stocks of that company
+        this.numberOfStocks = numberOfStocks; // Capital = stock price * number of stock
+        this.totalSales = totalSales; // total value of transactions of stocks of that company
+        var stock = AssetManager.getInstance().createStockAsset(name.substring(0, 3).toUpperCase(), IPOShareValue, id);
+        this.associatedAsset = stock.getUniqueIdentifyingName();
+        this.storedAssets.put(this.associatedAsset, (double) numberOfStocks);
     }
 
     public void buyout(StockMarket stockMarket) {
@@ -31,18 +52,6 @@ public class Company extends AssetHolder {
 
     public String getIPODate() {
         return IPODate;
-    }
-
-    public void setIPODate(String IPODate) {
-        this.IPODate = IPODate;
-    }
-
-    public double getIPOShareValue() {
-        return IPOShareValue;
-    }
-
-    public void setIPOShareValue(double IPOShareValue) {
-        this.IPOShareValue = IPOShareValue;
     }
 
     public double getProfit() {
@@ -62,11 +71,7 @@ public class Company extends AssetHolder {
     }
 
     public double getCapital() {
-        return capital;
-    }
-
-    public void setCapital(double capital) {
-        this.capital = capital;
+        return this.numberOfStocks * AssetManager.getInstance().getAssetData(this.associatedAsset).getLatestSellingPrice();
     }
 
     public int getTradingVolume() {
@@ -91,5 +96,10 @@ public class Company extends AssetHolder {
 
     public void setAddress(Address address) {
         this.address = address;
+    }
+
+    @Override
+    public void run() {
+
     }
 }

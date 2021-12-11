@@ -7,4 +7,9 @@ public class InvestmentFund extends AssetHolder {
     public InvestmentFund(int id, double investmentBudget) {
         super(id, investmentBudget);
     }
+
+    @Override
+    public void run() {
+
+    }
 }
