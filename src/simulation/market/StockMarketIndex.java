@@ -16,7 +16,11 @@ public class StockMarketIndex {
     }
 
     public double calculateMarketValue() {
-        return 0.0;
+        double total = 0;
+        for (var company : companies) {
+            total += company.getCapital();
+        }
+        return total;
     }
 
     public HashSet<Company> getCompanies() {

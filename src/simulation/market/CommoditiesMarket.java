@@ -23,16 +23,6 @@ public class CommoditiesMarket extends Market{
     }
 
     @Override
-    void processOffer(BuyOffer buyOffer, SellOffer sellOffer) {
-
-    }
-
-    @Override
-    public void processAllOffers() {
-
-    }
-
-    @Override
     public String[] getAvailableAssetTypes() {
         return this.commodities.toArray(new String[0]);
     }

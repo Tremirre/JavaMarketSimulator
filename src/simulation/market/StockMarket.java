@@ -10,22 +10,14 @@ public class StockMarket extends Market{
     private String traidingCurrency;
     private ArrayList<StockMarketIndex> stockMarketIndexes;
 
-    public StockMarket(String name, double buyFee, double sellFee) throws IOException {
+    public StockMarket(String name, double buyFee, double sellFee, String currency) throws IOException {
         super(name + " Stock", buyFee, sellFee);
+        this.traidingCurrency = currency;
+        this.stockMarketIndexes = new ArrayList<>();
     }
 
     @Override
     public void initializeMarket() {
-
-    }
-
-    @Override
-    void processOffer(BuyOffer buyOffer, SellOffer sellOffer) {
-
-    }
-
-    @Override
-    public void processAllOffers() {
 
     }
 

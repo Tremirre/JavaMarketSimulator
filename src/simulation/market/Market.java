@@ -1,5 +1,6 @@
 package simulation.market;
 
+import simulation.asset.AssetManager;
 import simulation.holders.Address;
 import simulation.holders.AssetHolder;
 import simulation.offer.BuyOffer;
@@ -39,9 +40,20 @@ abstract public class Market {
         this.sellOffers.add(offer);
     }
 
-    abstract void processOffer(BuyOffer buyOffer, SellOffer sellOffer);
+    private void processOffer(BuyOffer buyOffer, SellOffer sellOffer) {
+        var buyer = buyOffer.getSender();
+        var seller = sellOffer.getSender();
+        var commonPrice = sellOffer.getPrice();
+        var assetType = sellOffer.getAssetType();
+        var amount = sellOffer.getSize();
+        buyer.processBuyOrder(assetType, commonPrice, amount);
+        seller.processSellOrder(assetType, commonPrice, amount);
+        AssetManager.getInstance().getAssetData(assetType).addLatestSellingPrice(commonPrice);
+    }
 
-    abstract public void processAllOffers();
+    public void processAllOffers() {
+
+    }
 
     public void removeBuyOffer(int offerID) {
         buyOffers.removeIf(offer -> offer.getID() == offerID);

@@ -24,16 +24,6 @@ public class CurrenciesMarket extends Market{
     }
 
     @Override
-    void processOffer(BuyOffer buyOffer, SellOffer sellOffer) {
-
-    }
-
-    @Override
-    public void processAllOffers() {
-
-    }
-
-    @Override
     public String[] getAvailableAssetTypes() {
         return this.currencies.toArray(new String[0]);
     }

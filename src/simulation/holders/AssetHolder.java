@@ -1,6 +1,7 @@
 package simulation.holders;
 
 import simulation.market.Market;
+
 import java.util.HashMap;
 
 public abstract class AssetHolder extends Thread {
@@ -29,11 +30,11 @@ public abstract class AssetHolder extends Thread {
 
     }
 
-    public void processBuyOrder(Market market) {
+    public void processBuyOrder(String assetType, double price, double amount) {
 
     }
 
-    public void processSellOrder(Market market) {
+    public void processSellOrder(String assetType, double price, double amount) {
 
     }
 
