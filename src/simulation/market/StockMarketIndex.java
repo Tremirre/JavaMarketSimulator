@@ -5,7 +5,11 @@ import simulation.holders.Company;
 import java.util.HashSet;
 
 public class StockMarketIndex {
-    HashSet<Company> companies;
+    private HashSet<Company> companies;
+
+    public StockMarketIndex() {
+        this.companies = new HashSet<>();
+    }
 
     public void addCompany(Company company) {
         companies.add(company);

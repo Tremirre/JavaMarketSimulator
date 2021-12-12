@@ -12,7 +12,7 @@ public class CurrenciesMarket extends Market{
 
     public CurrenciesMarket(String name, double buyFee, double sellFee) throws IOException {
         super(name + " Currency", buyFee, sellFee);
-        this.currencies = new HashSet<String>();
+        this.currencies = new HashSet<>();
         initializeMarket();
     }
 

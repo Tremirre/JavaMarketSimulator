@@ -114,4 +114,8 @@ public class Company extends AssetHolder {
     public void run() {
 
     }
+
+    public String getAssociatedAsset() {
+        return associatedAsset;
+    }
 }

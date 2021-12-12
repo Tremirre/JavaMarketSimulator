@@ -1,10 +1,8 @@
 package simulation.market;
 
-import simulation.offer.BuyOffer;
-import simulation.offer.SellOffer;
-
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class StockMarket extends Market{
     private String traidingCurrency;
@@ -16,6 +14,10 @@ public class StockMarket extends Market{
         this.stockMarketIndexes = new ArrayList<>();
     }
 
+    public void addStockMarketIndex(StockMarketIndex idx) {
+        this.stockMarketIndexes.add(idx);
+    }
+
     @Override
     public void initializeMarket() {
 
@@ -23,6 +25,12 @@ public class StockMarket extends Market{
 
     @Override
     public String[] getAvailableAssetTypes() {
-        return null;
+        HashSet<String> assets = new HashSet<>();
+        for (var idx : this.stockMarketIndexes) {
+            for (var company : idx.getCompanies()) {
+                assets.add(company.getAssociatedAsset());
+            }
+        }
+        return assets.toArray(new String[0]);
     }
 }
