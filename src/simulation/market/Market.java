@@ -52,7 +52,21 @@ abstract public class Market {
     }
 
     public void processAllOffers() {
-
+        ArrayList<Integer> processedSellOrders = new ArrayList<>();
+        for (SellOffer sellOffer : this.sellOffers) {
+            for (BuyOffer buyOffer: this.buyOffers) {
+                if (!sellOffer.getAssetType().equals(buyOffer.getAssetType()) ||
+                        sellOffer.getPrice() > buyOffer.getPrice()) continue;
+                this.processOffer(buyOffer, sellOffer);
+                processedSellOrders.add(sellOffer.getID());
+                this.removeBuyOffer(buyOffer.getID());
+                break;
+            }
+            if (processedSellOrders.size() > 20)
+                break;
+        }
+        for (var id : processedSellOrders)
+            this.removeSellOffer(id);
     }
 
     public void removeBuyOffer(int offerID) {
