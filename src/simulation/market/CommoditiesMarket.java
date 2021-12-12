@@ -1,12 +1,6 @@
 package simulation.market;
 
-import simulation.asset.AssetManager;
-import simulation.holders.AssetHolder;
-import simulation.offer.BuyOffer;
-import simulation.offer.SellOffer;
-
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashSet;
 
 public class CommoditiesMarket extends Market{
@@ -14,7 +8,7 @@ public class CommoditiesMarket extends Market{
 
     public CommoditiesMarket(String name, double buyFee, double sellFee) throws IOException {
         super(name + " Commodity", buyFee, sellFee);
-        this.commodities = new HashSet<String>();
+        this.commodities = new HashSet<>();
         this.initializeMarket();
     }
 
@@ -23,7 +17,7 @@ public class CommoditiesMarket extends Market{
     }
 
     @Override
-    public String[] getAvailableAssetTypes() {
-        return this.commodities.toArray(new String[0]);
+    public HashSet<String> getAvailableAssetTypes() {
+        return this.commodities;
     }
 }

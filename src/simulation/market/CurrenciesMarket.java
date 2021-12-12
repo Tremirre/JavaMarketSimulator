@@ -24,7 +24,7 @@ public class CurrenciesMarket extends Market{
     }
 
     @Override
-    public String[] getAvailableAssetTypes() {
-        return this.currencies.toArray(new String[0]);
+    public HashSet<String> getAvailableAssetTypes() {
+        return this.currencies;
     }
 }

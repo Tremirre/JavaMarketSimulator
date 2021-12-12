@@ -9,6 +9,8 @@ import simulation.offer.StandardOfferFactory;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 
 abstract public class Market {
     final static int MAX_DAYS = 10;
@@ -95,7 +97,7 @@ abstract public class Market {
         return total;
     }
 
-    abstract public String[] getAvailableAssetTypes();
+    abstract public HashSet<String> getAvailableAssetTypes();
 
     public Address getAddress() {
         return this.address;

@@ -2,6 +2,7 @@ package simulation.market;
 
 import simulation.holders.Company;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 
 public class StockMarketIndex {
@@ -31,4 +32,18 @@ public class StockMarketIndex {
         return companies;
     }
 
+    public static ArrayList<StockMarketIndex> splitCompaniesIntoIndexes(Company[] companies) {
+        ArrayList<StockMarketIndex> indexes = new ArrayList<>();
+        final int indexSize = 5;
+        int current = 0;
+        indexes.add(new StockMarketIndex());
+        for (Company company : companies) {
+            indexes.get(indexes.size() - 1).addCompany(company);
+            if (current++ >= indexSize) {
+                indexes.add(new StockMarketIndex());
+                current = 0;
+            }
+        }
+        return indexes;
+    }
 }

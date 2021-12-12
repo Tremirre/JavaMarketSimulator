@@ -24,13 +24,13 @@ public class StockMarket extends Market{
     }
 
     @Override
-    public String[] getAvailableAssetTypes() {
+    public HashSet<String> getAvailableAssetTypes() {
         HashSet<String> assets = new HashSet<>();
         for (var idx : this.stockMarketIndexes) {
             for (var company : idx.getCompanies()) {
                 assets.add(company.getAssociatedAsset());
             }
         }
-        return assets.toArray(new String[0]);
+        return assets;
     }
 }
