@@ -1,6 +1,6 @@
 package simulation.holders;
 
-import simulation.random.RandomDataGenerator;
+import simulation.util.RandomDataGenerator;
 
 import java.io.IOException;
 
@@ -22,7 +22,7 @@ public class RandomHolderFactory implements IHolderFactory{
                 var rand = RandomDataGenerator.getInstance();
                 var date = rand.yieldDate();
                 var address = Address.getRandomAddress();
-                var name = rand.yieldCompanyName();
+                var name = rand.useCompanyName();
                 return new Company(id++, 0, name, date, address, 0, 0 ,0, 0,0);
             }
             default -> {

@@ -1,9 +1,8 @@
-package simulation.random;
+package simulation.util;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.sql.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -89,10 +88,20 @@ public class RandomDataGenerator {
         return this.surnames[this.generator.nextInt(this.surnames.length)];
     }
 
-    public String yieldCompanyName() {
+    public String useCompanyName() {
+        if (this.companyNames.size() == 0)
+            return this.yieldRandomString(10);
         var selected = this.companyNames.get(this.generator.nextInt(this.companyNames.size()));
         this.companyNames.remove(selected);
         return selected;
+    }
+
+    public String yieldRandomString(int length) {
+        StringBuilder result = new StringBuilder();
+        for (int i = 0; i < length; i++) {
+            result.append((char) (this.generator.nextInt(26) + 97));
+        }
+        return result.toString();
     }
 
     public Object sampleElement(Object[] array) {

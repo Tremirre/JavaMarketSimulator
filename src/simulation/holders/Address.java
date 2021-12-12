@@ -1,6 +1,6 @@
 package simulation.holders;
 
-import simulation.random.RandomDataGenerator;
+import simulation.util.RandomDataGenerator;
 
 import java.io.IOException;
 
