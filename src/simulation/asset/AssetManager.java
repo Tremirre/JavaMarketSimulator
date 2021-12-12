@@ -43,7 +43,7 @@ public class AssetManager {
         return this.allAssets.getOrDefault(uniqueName, null);
     }
 
-    public boolean doesAssetExist(String uniqueName, AssetType type) {
+    public boolean doesAssetExist(String uniqueName, AssetCathegory type) {
         switch (type) {
             case STOCK -> {
                 return this.allAssets.containsKey(uniqueName) && this.allAssets.get(uniqueName) instanceof StockData;

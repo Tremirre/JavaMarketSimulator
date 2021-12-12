@@ -1,7 +1,10 @@
 package simulation.holders;
 
+import simulation.asset.AssetManager;
 import simulation.market.Market;
+import simulation.util.RandomDataGenerator;
 
+import java.io.IOException;
 import java.util.HashMap;
 
 public abstract class AssetHolder extends Thread {
@@ -26,16 +29,30 @@ public abstract class AssetHolder extends Thread {
         }
     }
 
-    public void sendBuyOrder(Market market) {
-
+    public void sendBuyOrder(Market market) throws IOException {
+        var rand = RandomDataGenerator.getInstance();
+        String chosenAsset = (String) rand.sampleElement(this.storedAssets.keySet().toArray());
+        double availableAmount = this.storedAssets.get(chosenAsset);
+        double amount = availableAmount > 2 ? (double) Math.round(0.5 * availableAmount) : availableAmount;
+        double price = AssetManager.getInstance().getAssetData(chosenAsset).getLatestSellingPrice() * 0.9;
+        market.addBuyOffer(chosenAsset, this, price, amount);
     }
 
     public void processBuyOrder(String assetType, double price, double amount) {
-
+        if (!this.storedAssets.containsKey(assetType)) {
+            //raise exception
+        }
+        double newAmount = this.assetsOnSale.get(assetType) - amount;
+        if (newAmount > 0)
+            this.assetsOnSale.replace(assetType, newAmount);
+        else
+            this.assetsOnSale.remove(assetType);
+        this.frozenFunds -= price * amount;
     }
 
     public void processSellOrder(String assetType, double price, double amount) {
-
+        this.investmentBudget += price * amount;
+        this.storedAssets.put(assetType, this.storedAssets.getOrDefault(assetType, 0.0) + amount);
     }
 
     public void generateOrders(Market market) {

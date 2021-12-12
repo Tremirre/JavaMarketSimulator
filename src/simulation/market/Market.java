@@ -9,7 +9,6 @@ import simulation.offer.StandardOfferFactory;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 
 abstract public class Market {
@@ -26,8 +25,8 @@ abstract public class Market {
         this.name = name + " Market of " + this.address.getCity();
         this.buyFee = buyFee;
         this.sellFee = sellFee;
-        this.buyOffers = new ArrayList<BuyOffer>();
-        this.sellOffers = new ArrayList<SellOffer>();
+        this.buyOffers = new ArrayList<>();
+        this.sellOffers = new ArrayList<>();
     }
 
     abstract public void initializeMarket();
@@ -47,7 +46,7 @@ abstract public class Market {
         var seller = sellOffer.getSender();
         var commonPrice = sellOffer.getPrice();
         var assetType = sellOffer.getAssetType();
-        var amount = sellOffer.getSize();
+        var amount = Math.min(sellOffer.getSize(), buyOffer.getSize());
         buyer.processBuyOrder(assetType, commonPrice, amount);
         seller.processSellOrder(assetType, commonPrice, amount);
         AssetManager.getInstance().getAssetData(assetType).addLatestSellingPrice(commonPrice);
