@@ -23,19 +23,30 @@ public abstract class AssetHolder extends Thread {
         this.id = id;
     }
 
-    public void sendSellOrder(Market market) {
-        if (this.storedAssets.isEmpty()) {
+    public void sendSellOrder(Market market) throws IOException {
+        if (this.storedAssets.isEmpty())
             return;
-        }
-    }
-
-    public void sendBuyOrder(Market market) throws IOException {
         var rand = RandomDataGenerator.getInstance();
         String chosenAsset = (String) rand.sampleElement(this.storedAssets.keySet().toArray());
         double availableAmount = this.storedAssets.get(chosenAsset);
         double amount = availableAmount > 2 ? (double) Math.round(0.5 * availableAmount) : availableAmount;
+        double price = AssetManager.getInstance().getAssetData(chosenAsset).getLatestSellingPrice() * 1.1;
+        market.addSellOffer(chosenAsset, this, price, amount);
+        double left = this.storedAssets.get(chosenAsset) - amount;
+        if (left > 0)
+            this.storedAssets.put(chosenAsset, left);
+        else
+            this.storedAssets.remove(chosenAsset);
+    }
+
+    public void sendBuyOrder(Market market) throws IOException {
+        var rand = RandomDataGenerator.getInstance();
+        String chosenAsset = (String) rand.sampleElement(market.getAvailableAssetTypes().toArray());
         double price = AssetManager.getInstance().getAssetData(chosenAsset).getLatestSellingPrice() * 0.9;
+        double amount = this.investmentBudget > price * 2 && rand.yieldRandomNumber(1.0) > 0.7 ? 1.0 : 2.0;
         market.addBuyOffer(chosenAsset, this, price, amount);
+        this.investmentBudget -= price * amount;
+        this.frozenFunds += price * amount;
     }
 
     public void processBuyOrder(String assetType, double price, double amount) {
