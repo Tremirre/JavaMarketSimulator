@@ -60,7 +60,7 @@ abstract public class Market {
             for (BuyOffer buyOffer: this.buyOffers) {
                 if (!sellOffer.getAssetType().equals(buyOffer.getAssetType()) ||
                         sellOffer.getPrice() > buyOffer.getPrice()) continue;
-                if (this.processOffer(buyOffer, sellOffer))
+                if (!this.processOffer(buyOffer, sellOffer))
                     processedSellOrders.add(sellOffer.getID());
                 this.removeBuyOffer(buyOffer.getID());
                 break;

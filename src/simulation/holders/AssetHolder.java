@@ -50,21 +50,22 @@ public abstract class AssetHolder extends Thread {
     }
 
     public void processBuyOrder(String assetType, double price, double amount) {
-        if (!this.storedAssets.containsKey(assetType)) {
+        double newAmount = this.storedAssets.getOrDefault(assetType, 0.0) + amount;
+        this.frozenFunds -= price * amount;
+        this.storedAssets.put(assetType, newAmount);
+    }
+
+    public void processSellOrder(String assetType, double price, double amount) {
+        if (!this.assetsOnSale.containsKey(assetType)) {
+            // exception
             return;
-            //raise exception
         }
         double newAmount = this.assetsOnSale.get(assetType) - amount;
+        this.investmentBudget += price * amount;
         if (newAmount > 0)
             this.assetsOnSale.replace(assetType, newAmount);
         else
             this.assetsOnSale.remove(assetType);
-        this.frozenFunds -= price * amount;
-    }
-
-    public void processSellOrder(String assetType, double price, double amount) {
-        this.investmentBudget += price * amount;
-        this.storedAssets.put(assetType, this.storedAssets.getOrDefault(assetType, 0.0) + amount);
     }
 
     public void generateOrders(Market market) throws IOException {

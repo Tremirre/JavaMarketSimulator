@@ -18,9 +18,7 @@ public abstract class Offer {
         this.size = size;
     }
 
-    public void updatePrice(){
-
-    }
+    abstract public void updatePrice();
 
     public int getID() {
         return id;

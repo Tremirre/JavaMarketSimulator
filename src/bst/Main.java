@@ -11,7 +11,7 @@ public class Main {
         var simulation = new Simulation();
         String stock = simulation.companies.get(0).getAssociatedAsset();
         System.out.println(AssetManager.getInstance().getAssetData(stock).getLatestSellingPrice());
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 100; i++) {
             System.out.println("Simulation day no. " + (i + 1));
             System.out.println(AssetManager.getInstance().getAssetData(stock).getLatestSellingPrice());
             simulation.runSimulationDay();
