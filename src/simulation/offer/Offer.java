@@ -45,4 +45,8 @@ public abstract class Offer {
     public int getDaysSinceGiven() {
         return daysSinceGiven;
     }
+
+    public void setSize(double size) {
+        this.size = size;
+    }
 }

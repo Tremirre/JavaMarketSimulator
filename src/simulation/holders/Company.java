@@ -1,6 +1,7 @@
 package simulation.holders;
 
 import simulation.asset.AssetManager;
+import simulation.market.Market;
 import simulation.market.StockMarket;
 
 public class Company extends AssetHolder {
@@ -33,11 +34,11 @@ public class Company extends AssetHolder {
         this.tradingVolume = tradingVolume; //number of transactions of stocks of that company
         this.numberOfStocks = numberOfStocks; // Capital = stock price * number of stock
         this.totalSales = totalSales; // total value of transactions of stocks of that company
-        String stockName = "";
+        StringBuilder stockName = new StringBuilder();
         for (int i = 0; i < name.length(); i++) {
-            if (Character.isLetter(name.charAt(i))) stockName += name.charAt(i);
+            if (Character.isLetter(name.charAt(i))) stockName.append(name.charAt(i));
         }
-        var stock = AssetManager.getInstance().createStockAsset(stockName.toUpperCase(), IPOShareValue, id);
+        var stock = AssetManager.getInstance().createStockAsset(stockName.toString().toUpperCase(), IPOShareValue, id);
         this.associatedAsset = stock.getUniqueIdentifyingName();
         this.storedAssets.put(this.associatedAsset, (double) numberOfStocks);
     }
@@ -52,6 +53,16 @@ public class Company extends AssetHolder {
         System.out.println(String.format("IPO date: %s", this.IPODate));
         System.out.println(String.format("Revenue: %f, Profit: %f", this.revenue, this.profit));
         System.out.println(String.format("Stock name: %s", this.associatedAsset));
+    }
+
+    public void sendSellOffer(Market market) {
+        double price = AssetManager.getInstance().getAssetData(this.associatedAsset).getLatestSellingPrice() * 0.8;
+        market.addSellOffer(this.associatedAsset, this, price, this.storedAssets.get(this.associatedAsset));
+    }
+
+    public void processSellOrder(String assetType, double price, double amount) {
+        this.storedAssets.put(this.associatedAsset, this.storedAssets.get(this.associatedAsset) - amount);
+        this.revenue += price;
     }
 
     public String getCompanyName() {

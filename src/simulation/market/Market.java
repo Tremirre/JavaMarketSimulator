@@ -41,7 +41,7 @@ abstract public class Market {
         this.sellOffers.add(offer);
     }
 
-    private void processOffer(BuyOffer buyOffer, SellOffer sellOffer) {
+    private boolean processOffer(BuyOffer buyOffer, SellOffer sellOffer) {
         var buyer = buyOffer.getSender();
         var seller = sellOffer.getSender();
         var commonPrice = sellOffer.getPrice();
@@ -50,6 +50,8 @@ abstract public class Market {
         buyer.processBuyOrder(assetType, commonPrice, amount);
         seller.processSellOrder(assetType, commonPrice, amount);
         AssetManager.getInstance().getAssetData(assetType).addLatestSellingPrice(commonPrice);
+        sellOffer.setSize(sellOffer.getSize() - amount);
+        return (sellOffer.getSize() > 0);
     }
 
     public void processAllOffers() {
@@ -58,8 +60,8 @@ abstract public class Market {
             for (BuyOffer buyOffer: this.buyOffers) {
                 if (!sellOffer.getAssetType().equals(buyOffer.getAssetType()) ||
                         sellOffer.getPrice() > buyOffer.getPrice()) continue;
-                this.processOffer(buyOffer, sellOffer);
-                processedSellOrders.add(sellOffer.getID());
+                if (this.processOffer(buyOffer, sellOffer))
+                    processedSellOrders.add(sellOffer.getID());
                 this.removeBuyOffer(buyOffer.getID());
                 break;
             }

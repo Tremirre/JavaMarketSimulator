@@ -29,6 +29,8 @@ public class Simulation {
         for (int i = 0; i < 20; i++) {
             investors.add((Investor) new RandomHolderFactory().createHolder(HolderType.INVESTOR));
         }
+        ((StockMarket) this.markets.get(0)).addStockMarketIndex(stockIndex);
+        this.companies.get(0).sendSellOffer(this.markets.get(0));
     }
 
     public void runSimulationDay() {
