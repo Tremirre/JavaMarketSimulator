@@ -38,5 +38,6 @@ public class Simulation {
             investor.generateOrders(this.markets.get(0));
         }
         this.markets.get(0).processAllOffers();
+        this.markets.get(0).updateOffers();
     }
 }

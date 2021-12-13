@@ -3,12 +3,12 @@ package simulation.offer;
 import simulation.holders.AssetHolder;
 
 public abstract class Offer {
-    private int id;
-    private String assetType;
-    private AssetHolder sender;
-    private double price;
-    private double size;
-    private int daysSinceGiven = 0;
+    protected int id;
+    protected String assetType;
+    protected AssetHolder sender;
+    protected double price;
+    protected double size;
+    protected int daysSinceGiven = 0;
 
     Offer(int id, String assetType, AssetHolder sender, double price, double size) {
         this.id = id;

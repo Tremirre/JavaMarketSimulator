@@ -80,6 +80,13 @@ abstract public class Market {
         sellOffers.removeIf(offer -> offer.getID() == offerID);
     }
 
+    public void updateOffers() {
+        for (var offer : this.sellOffers)
+            offer.updatePrice();
+        for (var offer : this.buyOffers)
+            offer.updatePrice();
+    }
+
     public void removeOutdatedOffers() {
         buyOffers.removeIf(offer -> offer.getDaysSinceGiven() > MAX_DAYS);
         sellOffers.removeIf(offer -> offer.getDaysSinceGiven() > MAX_DAYS);

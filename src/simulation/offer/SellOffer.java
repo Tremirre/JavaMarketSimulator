@@ -9,6 +9,6 @@ public class SellOffer extends Offer {
 
     @Override
     public void updatePrice() {
-
+        this.price *= 0.9;
     }
 }
