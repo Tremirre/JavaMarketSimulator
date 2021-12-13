@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class Simulation {
     private ArrayList<Market> markets;
     private ArrayList<Investor> investors;
-    private ArrayList<Company> companies;
+    public ArrayList<Company> companies;
     private SimulationConfig simConfig;
 
     public Simulation() throws IOException {
@@ -33,7 +33,10 @@ public class Simulation {
         this.companies.get(0).sendSellOffer(this.markets.get(0));
     }
 
-    public void runSimulationDay() {
-
+    public void runSimulationDay() throws IOException {
+        for (var investor : this.investors) {
+            investor.generateOrders(this.markets.get(0));
+        }
+        this.markets.get(0).processAllOffers();
     }
 }

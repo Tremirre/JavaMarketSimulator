@@ -20,8 +20,16 @@ abstract public class AssetData {
         this.sellingPrices.add(this.openingPrice);
     }
 
-    abstract public double getLatestSellingPrice();
-    abstract public void addLatestSellingPrice(double price);
+    public double getLatestSellingPrice() {
+        return this.sellingPrices.get(this.sellingPrices.size() - 1);
+    }
+    public void addLatestSellingPrice(double price) {
+        this.sellingPrices.add(price);
+        if (this.maximalPrice < price)
+            this.maximalPrice = price;
+        if (this.minimalPrice > price)
+            this.minimalPrice = price;
+    }
 
     public String getUniqueIdentifyingName() {
         return this.name + this.id;
