@@ -11,7 +11,7 @@ public class AssetManager {
 
 
     private AssetManager() {
-        this.allAssets = new HashMap<String, AssetData>();
+        this.allAssets = new HashMap<>();
     }
 
     public static AssetManager getInstance() {
@@ -43,7 +43,7 @@ public class AssetManager {
         return this.allAssets.getOrDefault(uniqueName, null);
     }
 
-    public boolean doesAssetExist(String uniqueName, AssetCathegory type) {
+    public boolean doesAssetExist(String uniqueName, AssetCategory type) {
         switch (type) {
             case STOCK -> {
                 return this.allAssets.containsKey(uniqueName) && this.allAssets.get(uniqueName) instanceof StockData;

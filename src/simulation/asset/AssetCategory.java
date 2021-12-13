@@ -1,6 +1,6 @@
 package simulation.asset;
 
-public enum AssetCathegory {
+public enum AssetCategory {
     COMMODITY,
     STOCK,
     CURRENCY
