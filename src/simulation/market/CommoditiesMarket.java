@@ -16,7 +16,7 @@ public class CommoditiesMarket extends Market{
     }
 
     @Override
-    public HashSet<String> getAvailableAssetTypes() {
+    public synchronized HashSet<String> getAvailableAssetTypes() {
         return this.commodities;
     }
 }

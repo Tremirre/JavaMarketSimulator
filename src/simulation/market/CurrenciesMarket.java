@@ -23,7 +23,7 @@ public class CurrenciesMarket extends Market{
     }
 
     @Override
-    public HashSet<String> getAvailableAssetTypes() {
+    public synchronized HashSet<String> getAvailableAssetTypes() {
         return this.currencies;
     }
 }

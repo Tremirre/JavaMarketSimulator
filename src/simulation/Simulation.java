@@ -8,7 +8,6 @@ import simulation.market.Market;
 import simulation.market.StockMarket;
 import simulation.market.StockMarketIndex;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 

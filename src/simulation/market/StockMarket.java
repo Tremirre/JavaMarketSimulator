@@ -23,7 +23,7 @@ public class StockMarket extends Market{
     }
 
     @Override
-    public HashSet<String> getAvailableAssetTypes() {
+    public synchronized HashSet<String> getAvailableAssetTypes() {
         HashSet<String> assets = new HashSet<>();
         for (var idx : this.stockMarketIndexes) {
             for (var company : idx.getCompanies()) {
