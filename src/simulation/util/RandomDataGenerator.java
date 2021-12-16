@@ -10,35 +10,41 @@ import java.util.Random;
 
 public class RandomDataGenerator {
     private static RandomDataGenerator instance;
-    private final HashMap<String, String[]> addressData;
-    private final String[] streets;
-    private final String[] names;
-    private final String[] surnames;
-    private final ArrayList<String> companyNames;
+    private HashMap<String, String[]> addressData;
+    private String[] streets;
+    private String[] names;
+    private String[] surnames;
+    private ArrayList<String> companyNames;
     private final Random generator;
     private static final int SEED = -1;
 
-    private RandomDataGenerator() throws IOException {
+    private RandomDataGenerator() {
         System.out.println("[LOGGING] Initializing RandomDataGenerator...");
         final String addressPath = "resource\\address_data\\";
         final String holdersPath = "resource\\holders_data\\";
         var data = new HashMap<String, String[]>();
-        String countries = Files.readString(Path.of(addressPath + "countries.txt"));
-        String[] countriesList = countries.split(";");
-        for (String s : countriesList) {
-            String cities = Files.readString(Path.of(addressPath + s.toLowerCase() + ".txt"));
-            String[] citiesList = cities.split(";");
-            data.put(s, citiesList);
+        try {
+            String countries = Files.readString(Path.of(addressPath + "countries.txt"));
+            String[] countriesList = countries.split(";");
+            for (String s : countriesList) {
+                String cities = Files.readString(Path.of(addressPath + s.toLowerCase() + ".txt"));
+                String[] citiesList = cities.split(";");
+                data.put(s, citiesList);
+            }
+            this.addressData = data;
+            String allStreets = Files.readString(Path.of(addressPath + "street_names.txt"));
+            this.streets = allStreets.split(";");
+            String allNames = Files.readString(Path.of(holdersPath + "names.txt"));
+            this.names = allNames.split(";");
+            String allSurnames = Files.readString(Path.of(holdersPath + "surnames.txt"));
+            this.surnames = allSurnames.split(";");
+            String allCompanyNames = Files.readString(Path.of(holdersPath + "companies.txt"));
+            this.companyNames = new ArrayList<>(Arrays.asList(allCompanyNames.split(";")));
+        } catch (IOException e) {
+            System.out.println("Failed to load a resource!");
+            System.out.println(e.getMessage());
+            System.exit(1);
         }
-        this.addressData = data;
-        String allStreets = Files.readString(Path.of(addressPath + "street_names.txt"));
-        this.streets = allStreets.split(";");
-        String allNames = Files.readString(Path.of(holdersPath + "names.txt"));
-        this.names = allNames.split(";");
-        String allSurnames = Files.readString(Path.of(holdersPath + "surnames.txt"));
-        this.surnames = allSurnames.split(";");
-        String allCompanyNames = Files.readString(Path.of(holdersPath + "companies.txt"));
-        this.companyNames = new ArrayList<>(Arrays.asList(allCompanyNames.split(";")));
         this.generator = SEED >= 0 ? new Random(SEED) : new Random();
     }
 
@@ -119,7 +125,7 @@ public class RandomDataGenerator {
         return String.valueOf(year) + '-' + monthD + '-' + dayD;
     }
 
-    public static RandomDataGenerator getInstance() throws IOException{
+    public static RandomDataGenerator getInstance() {
         if (instance == null) {
             instance = new RandomDataGenerator();
         }

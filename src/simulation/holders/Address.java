@@ -2,8 +2,6 @@ package simulation.holders;
 
 import simulation.util.RandomDataGenerator;
 
-import java.io.IOException;
-
 public class Address {
     private String country;
     private String city;
@@ -19,7 +17,7 @@ public class Address {
         this.buildingNumber = buildingNumber;
     }
 
-    public static Address getRandomAddress() throws IOException {
+    public static Address getRandomAddress() {
         var rand = RandomDataGenerator.getInstance();
         String country = rand.yieldCountry();
         return new Address(country,

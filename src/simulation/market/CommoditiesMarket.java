@@ -1,12 +1,11 @@
 package simulation.market;
 
-import java.io.IOException;
 import java.util.HashSet;
 
 public class CommoditiesMarket extends Market{
     private HashSet<String> commodities;
 
-    public CommoditiesMarket(String name, double buyFee, double sellFee) throws IOException {
+    public CommoditiesMarket(String name, double buyFee, double sellFee) {
         super(name + " Commodity", buyFee, sellFee);
         this.commodities = new HashSet<>();
         this.initializeMarket();

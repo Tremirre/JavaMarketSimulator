@@ -1,5 +1,7 @@
 package simulation.holders;
 
+import simulation.util.RandomDataGenerator;
+
 public class Investor extends AssetHolder {
     private String firstName;
     private String lastName;
@@ -18,6 +20,13 @@ public class Investor extends AssetHolder {
 
     @Override
     public void run() {
-
+        while (this.running) {
+            this.generateOrders();
+            try {
+                Thread.sleep(RandomDataGenerator.getInstance().yieldRandomInteger(10));
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

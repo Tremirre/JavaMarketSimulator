@@ -3,18 +3,22 @@ package bst;
 import simulation.Simulation;
 import simulation.asset.AssetManager;
 
-import java.io.IOException;
-
 public class Main {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         var simulation = new Simulation();
         String stock = simulation.companies.get(0).getAssociatedAsset();
         System.out.println(AssetManager.getInstance().getAssetData(stock).getLatestSellingPrice());
+        var start = System.nanoTime();
         for (int i = 0; i < 100; i++) {
             System.out.println("Simulation day no. " + (i + 1));
             System.out.println(AssetManager.getInstance().getAssetData(stock).getLatestSellingPrice());
-            simulation.runSimulationDay();
+            try {
+                simulation.runSimulationDay();
+            } catch(InterruptedException e) {
+                break;
+            }
         }
+        System.out.println("Simulation took " + (System.nanoTime() - start)/1_000_000 + "ms");
     }
 }

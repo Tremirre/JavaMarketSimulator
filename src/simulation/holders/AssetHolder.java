@@ -4,26 +4,28 @@ import simulation.asset.AssetManager;
 import simulation.market.Market;
 import simulation.util.RandomDataGenerator;
 
-import java.io.IOException;
 import java.util.HashMap;
+import java.util.HashSet;
 
 public abstract class AssetHolder extends Thread {
     HashMap<String, Double> storedAssets;
     HashMap<String, Double> assetsOnSale;
-
+    private HashSet<Market> availableMarkets;
     protected double investmentBudget;
     protected double frozenFunds;
+    protected boolean running = false;
     private int id;
 
     public AssetHolder(int id, double investmentBudget) {
         this.storedAssets = new HashMap<>();
         this.assetsOnSale = new HashMap<>();
+        this.availableMarkets = new HashSet<>();
         this.investmentBudget = investmentBudget;
         this.frozenFunds = 0;
         this.id = id;
     }
 
-    public void sendSellOrder(Market market) throws IOException {
+    public void sendSellOrder(Market market) {
         if (this.storedAssets.isEmpty())
             return;
         var rand = RandomDataGenerator.getInstance();
@@ -39,7 +41,7 @@ public abstract class AssetHolder extends Thread {
             this.storedAssets.remove(chosenAsset);
     }
 
-    public void sendBuyOrder(Market market) throws IOException {
+    public void sendBuyOrder(Market market) {
         var rand = RandomDataGenerator.getInstance();
         String chosenAsset = (String) rand.sampleElement(market.getAvailableAssetTypes().toArray());
         double price = AssetManager.getInstance().getAssetData(chosenAsset).getLatestSellingPrice() * 0.9;
@@ -68,16 +70,34 @@ public abstract class AssetHolder extends Thread {
             this.assetsOnSale.remove(assetType);
     }
 
-    public void generateOrders(Market market) throws IOException {
+    public void generateOrders() {
         var rand = RandomDataGenerator.getInstance();
+        var market = (Market) rand.sampleElement(this.availableMarkets.toArray());
         if (rand.yieldRandomNumber(1.0) < 0.5)
             this.sendBuyOrder(market);
         if (rand.yieldRandomNumber(1.0) < 0.5)
             this.sendSellOrder(market);
     }
 
+    public void giveAccessToMarkets(HashSet<Market> markets) {
+        this.availableMarkets = markets;
+    }
+
     public int getID() {
         return this.id;
+    }
+
+    public void stopRunning() {
+        this.running = false;
+    }
+
+    public boolean isRunning() {
+        return this.running;
+    }
+
+    public void start() {
+        this.running = true;
+        super.start();
     }
 
     abstract public void run();

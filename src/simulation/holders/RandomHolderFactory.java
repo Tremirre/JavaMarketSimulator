@@ -2,11 +2,9 @@ package simulation.holders;
 
 import simulation.util.RandomDataGenerator;
 
-import java.io.IOException;
-
 public class RandomHolderFactory extends HolderFactory{
     @Override
-    public AssetHolder createHolder(HolderType type) throws IOException {
+    public AssetHolder createHolder(HolderType type) {
         switch (type) {
             case INVESTOR -> {
                 var rand = RandomDataGenerator.getInstance();

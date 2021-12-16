@@ -7,7 +7,6 @@ import simulation.offer.BuyOffer;
 import simulation.offer.SellOffer;
 import simulation.offer.StandardOfferFactory;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 
@@ -20,7 +19,7 @@ abstract public class Market {
     private ArrayList<BuyOffer> buyOffers;
     private ArrayList<SellOffer> sellOffers;
 
-    Market(String name, double buyFee, double sellFee) throws IOException {
+    Market(String name, double buyFee, double sellFee) {
         this.address = Address.getRandomAddress();
         this.name = name + " Market of " + this.address.getCity();
         this.buyFee = buyFee;
@@ -31,12 +30,12 @@ abstract public class Market {
 
     abstract public void initializeMarket();
 
-    public void addBuyOffer(String assetType, AssetHolder sender, double price, double size) {
+    public synchronized void addBuyOffer(String assetType, AssetHolder sender, double price, double size) {
         BuyOffer offer = (BuyOffer) new StandardOfferFactory().createOffer(assetType, sender, price, size, false);
         this.buyOffers.add(offer);
     }
 
-    public void addSellOffer(String assetType, AssetHolder sender, double price, double size) {
+    public synchronized void addSellOffer(String assetType, AssetHolder sender, double price, double size) {
         SellOffer offer = (SellOffer) new StandardOfferFactory().createOffer(assetType, sender, price, size, true);
         this.sellOffers.add(offer);
     }
@@ -54,7 +53,7 @@ abstract public class Market {
         return (sellOffer.getSize() > 0);
     }
 
-    public void processAllOffers() {
+    public synchronized void processAllOffers() {
         ArrayList<Integer> processedSellOrders = new ArrayList<>();
         for (SellOffer sellOffer : this.sellOffers) {
             for (BuyOffer buyOffer: this.buyOffers) {
