@@ -1,659 +1,133 @@
-Processing day no. 1
 [INVESTOR] Sent buy order for 18.0
-Current budget: 105.59682657708906
-Frozen funds: 18.0
+	Current budget: 86.27646713453048
 [INVESTOR] Sent buy order for 18.0
-Current budget: 87.59682657708906
-Frozen funds: 36.0
+	Current budget: 68.27646713453048
+[SIMULATION] Processing day no. 1
 [INVESTOR] Sent buy order for 18.0
-Current budget: 69.59682657708906
-Frozen funds: 54.0
-[INVESTOR] Sent buy order for 9.0
-Current budget: 60.59682657708906
-Frozen funds: 63.0
+	Current budget: 50.27646713453048
 [INVESTOR] Sent buy order for 18.0
-Current budget: 42.59682657708906
-Frozen funds: 81.0
+	Current budget: 32.27646713453048
+[INVESTOR] Sent buy order for 18.0
+	Current budget: 14.276467134530478
+[INVESTOR] Processed buy order for 16.0
+	Current budget: 14.276467134530478
 [INVESTOR] Process buy offer alteration to  18.72
-Current budget: 41.87682657708906
-Frozen funds: 81.72
+	Current budget: 13.556467134530479
 [INVESTOR] Process buy offer alteration to  18.72
-Current budget: 41.15682657708906
-Frozen funds: 82.44
+	Current budget: 12.83646713453048
 [INVESTOR] Process buy offer alteration to  18.72
-Current budget: 40.436826577089064
-Frozen funds: 83.16
-[INVESTOR] Process buy offer alteration to  9.36
-Current budget: 40.076826577089065
-Frozen funds: 83.52
+	Current budget: 12.116467134530481
 [INVESTOR] Process buy offer alteration to  18.72
-Current budget: 39.356826577089066
-Frozen funds: 84.24
-Processing day no. 2
+	Current budget: 11.396467134530482
+[SIMULATION] Processing day no. 2
+[INVESTOR] Sent sell offer for 17.6
+Current budget: 11.396467134530482
 [INVESTOR] Process buy offer alteration to  19.468799999999998
-Current budget: 38.60802657708906
-Frozen funds: 84.9888
+	Current budget: 10.647667134530483
 [INVESTOR] Process buy offer alteration to  19.468799999999998
-Current budget: 37.85922657708906
-Frozen funds: 85.7376
+	Current budget: 9.898867134530484
 [INVESTOR] Process buy offer alteration to  19.468799999999998
-Current budget: 37.11042657708906
-Frozen funds: 86.4864
-[INVESTOR] Process buy offer alteration to  9.734399999999999
-Current budget: 36.736026577089056
-Frozen funds: 86.8608
+	Current budget: 9.150067134530484
 [INVESTOR] Process buy offer alteration to  19.468799999999998
-Current budget: 35.98722657708906
-Frozen funds: 87.6096
-Processing day no. 3
+	Current budget: 8.401267134530485
+[SIMULATION] Processing day no. 3
 [INVESTOR] Process buy offer alteration to  20.247552
-Current budget: 35.20847457708906
-Frozen funds: 88.388352
+	Current budget: 7.6225151345304845
 [INVESTOR] Process buy offer alteration to  20.247552
-Current budget: 34.429722577089066
-Frozen funds: 89.167104
+	Current budget: 6.843763134530484
 [INVESTOR] Process buy offer alteration to  20.247552
-Current budget: 33.65097057708907
-Frozen funds: 89.94585599999999
-[INVESTOR] Process buy offer alteration to  10.123776
-Current budget: 33.26159457708907
-Frozen funds: 90.33523199999999
+	Current budget: 6.065011134530483
 [INVESTOR] Process buy offer alteration to  20.247552
-Current budget: 32.48284257708907
-Frozen funds: 91.11398399999999
-Processing day no. 4
+	Current budget: 5.286259134530482
+[SIMULATION] Processing day no. 4
+[INVESTOR] Processed buy order for 14.155776
+	Current budget: 5.286259134530482
 [INVESTOR] Process buy offer alteration to  21.05745408
-Current budget: 31.672940497089073
-Frozen funds: 91.92388607999999
+	Current budget: 4.476357054530482
 [INVESTOR] Process buy offer alteration to  21.05745408
-Current budget: 30.863038417089072
-Frozen funds: 92.73378815999999
+	Current budget: 3.666454974530481
 [INVESTOR] Process buy offer alteration to  21.05745408
-Current budget: 30.05313633708907
-Frozen funds: 93.54369023999999
-[INVESTOR] Process buy offer alteration to  10.52872704
-Current budget: 29.64818529708907
-Frozen funds: 93.94864127999999
-[INVESTOR] Process buy offer alteration to  21.05745408
-Current budget: 28.83828321708907
-Frozen funds: 94.75854335999999
-Processing day no. 5
+	Current budget: 2.8565528945304806
+[SIMULATION] Processing day no. 5
+[INVESTOR] Sent sell offer for 20.444160000000004
+Current budget: 2.8565528945304806
 [INVESTOR] Process buy offer alteration to  21.899752243200002
-Current budget: 27.99598505388907
-Frozen funds: 95.60084152319999
+	Current budget: 2.014254731330478
 [INVESTOR] Process buy offer alteration to  21.899752243200002
-Current budget: 27.153686890689066
-Frozen funds: 96.44313968639999
+	Current budget: 1.1719565681304758
 [INVESTOR] Process buy offer alteration to  21.899752243200002
-Current budget: 26.311388727489064
-Frozen funds: 97.28543784959999
-[INVESTOR] Process buy offer alteration to  10.949876121600001
-Current budget: 25.89023964588906
-Frozen funds: 97.7065869312
+	Current budget: 0.3296584049304734
+[SIMULATION] Processing day no. 6
+[INVESTOR] Process buy offer alteration to  22.229410648130475
+	Current budget: 0.0
 [INVESTOR] Process buy offer alteration to  21.899752243200002
-Current budget: 25.04794148268906
-Frozen funds: 98.54888509439999
-Processing day no. 6
-[INVESTOR] Process buy offer alteration to  22.775742332928
-Current budget: 24.17195139296106
-Frozen funds: 99.42487518412798
-[INVESTOR] Process buy offer alteration to  22.775742332928
-Current budget: 23.29596130323306
-Frozen funds: 100.30086527385598
-[INVESTOR] Process buy offer alteration to  22.775742332928
-Current budget: 22.41997121350506
-Frozen funds: 101.17685536358397
-[INVESTOR] Process buy offer alteration to  11.387871166464
-Current budget: 21.98197616864106
-Frozen funds: 101.61485040844796
-[INVESTOR] Process buy offer alteration to  22.775742332928
-Current budget: 21.105986078913062
-Frozen funds: 102.49084049817597
-Processing day no. 7
-[INVESTOR] Process buy offer alteration to  23.686772026245123
-Current budget: 20.19495638559594
-Frozen funds: 103.40187019149309
-[INVESTOR] Process buy offer alteration to  23.686772026245123
-Current budget: 19.28392669227882
-Frozen funds: 104.31289988481021
-[INVESTOR] Process buy offer alteration to  23.686772026245123
-Current budget: 18.372896998961696
-Frozen funds: 105.22392957812733
-[INVESTOR] Process buy offer alteration to  11.843386013122561
-Current budget: 17.917382152303134
-Frozen funds: 105.67944442478588
-[INVESTOR] Process buy offer alteration to  23.686772026245123
-Current budget: 17.00635245898601
-Frozen funds: 106.590474118103
-Processing day no. 8
-[INVESTOR] Process buy offer alteration to  24.63424290729493
-Current budget: 16.058881577936205
-Frozen funds: 107.53794499915281
-[INVESTOR] Process buy offer alteration to  24.63424290729493
-Current budget: 15.111410696886399
-Frozen funds: 108.48541588020262
-[INVESTOR] Process buy offer alteration to  24.63424290729493
-Current budget: 14.163939815836592
-Frozen funds: 109.43288676125243
-[INVESTOR] Process buy offer alteration to  12.317121453647465
-Current budget: 13.690204375311689
-Frozen funds: 109.90662220177734
-[INVESTOR] Process buy offer alteration to  24.63424290729493
-Current budget: 12.742733494261882
-Frozen funds: 110.85409308282715
-Processing day no. 9
-[INVESTOR] Process buy offer alteration to  25.61961262358673
-Current budget: 11.757363777970083
-Frozen funds: 111.83946279911895
-[INVESTOR] Process buy offer alteration to  25.61961262358673
-Current budget: 10.771994061678283
-Frozen funds: 112.82483251541075
-[INVESTOR] Process buy offer alteration to  25.61961262358673
-Current budget: 9.786624345386484
-Frozen funds: 113.81020223170255
-[INVESTOR] Process buy offer alteration to  12.809806311793364
-Current budget: 9.293939487240584
-Frozen funds: 114.30288708984844
-[INVESTOR] Process buy offer alteration to  25.61961262358673
-Current budget: 8.308569770948784
-Frozen funds: 115.28825680614024
-Processing day no. 10
-[INVESTOR] Processed buy order for 12.538910343168004
-Current budget: 8.308569770948784
-Frozen funds: 102.74934646297224
-[INVESTOR] Process buy offer alteration to  26.644397128530198
-Current budget: 7.2837852660053155
-Frozen funds: 103.77413096791571
-[INVESTOR] Process buy offer alteration to  26.644397128530198
-Current budget: 6.259000761061847
-Frozen funds: 104.79891547285918
-[INVESTOR] Process buy offer alteration to  13.322198564265099
-Current budget: 5.746608508590112
-Frozen funds: 105.31130772533092
-[INVESTOR] Process buy offer alteration to  26.644397128530198
-Current budget: 4.721824003646644
-Frozen funds: 106.33609223027439
-Processing day no. 11
-[INVESTOR] Sent sell offer for 13.792801377484805
-Current budget: 4.721824003646644
-Frozen funds: 106.33609223027439
-[INVESTOR] Processed sell offer alteration
-[INVESTOR] Process buy offer alteration to  27.710173013671408
-Current budget: 3.656048118505433
-Frozen funds: 107.4018681154156
-[INVESTOR] Process buy offer alteration to  27.710173013671408
-Current budget: 2.5902722333642227
-Frozen funds: 108.4676440005568
-[INVESTOR] Process buy offer alteration to  13.855086506835704
-Current budget: 2.0573842907936175
-Frozen funds: 109.00053194312741
-[INVESTOR] Process buy offer alteration to  27.710173013671408
-Current budget: 0.991608405652407
-Frozen funds: 110.06630782826862
-[INVESTOR] Process buy withdrawal for 27.710173013671408
-[INVESTOR] Process buy withdrawal for 27.710173013671408
-[INVESTOR] Process buy withdrawal for 13.855086506835704
-[INVESTOR] Process buy withdrawal for 27.710173013671408
-Processing day no. 12
-[INVESTOR] Sent buy order for 9.573589958277614
-Current budget: 88.40362399522473
-Frozen funds: 22.654292238696307
-[INVESTOR] Sent buy order for 9.573589958277614
-Current budget: 78.83003403694713
-Frozen funds: 32.22788219697392
-[INVESTOR] Sent buy order for 4.786794979138807
-Current budget: 74.04323905780832
-Frozen funds: 37.01467717611273
-[INVESTOR] Sent buy order for 9.573589958277614
-Current budget: 64.46964909953071
-Frozen funds: 46.58826713439034
-[INVESTOR] Processed sell offer alteration
-[INVESTOR] Process buy offer alteration to  9.956533556608719
-Current budget: 64.0867055011996
-Frozen funds: 46.971210732721445
-[INVESTOR] Process buy offer alteration to  9.956533556608719
-Current budget: 63.7037619028685
-Frozen funds: 47.35415433105255
-[INVESTOR] Process buy offer alteration to  4.978266778304359
-Current budget: 63.512290103702945
-Frozen funds: 47.5456261302181
-[INVESTOR] Process buy offer alteration to  9.956533556608719
-Current budget: 63.12934650537184
-Frozen funds: 47.928569728549206
-Processing day no. 13
-[INVESTOR] Processed sell offer alteration
-[INVESTOR] Process buy offer alteration to  10.354794898873068
-Current budget: 62.731085163107494
-Frozen funds: 48.326831070813554
-[INVESTOR] Process buy offer alteration to  10.354794898873068
-Current budget: 62.332823820843146
-Frozen funds: 48.7250924130779
-[INVESTOR] Process buy offer alteration to  5.177397449436534
-Current budget: 62.13369314971097
-Frozen funds: 48.92422308421008
-[INVESTOR] Process buy offer alteration to  10.354794898873068
-Current budget: 61.73543180744662
-Frozen funds: 49.322484426474425
-Processing day no. 14
-[INVESTOR] Processed sell offer alteration
-[INVESTOR] Process buy offer alteration to  10.768986694827992
-Current budget: 61.321240011491696
-Frozen funds: 49.73667622242935
-[INVESTOR] Process buy offer alteration to  10.768986694827992
-Current budget: 60.907048215536776
-Frozen funds: 50.15086801838427
-[INVESTOR] Process buy offer alteration to  5.384493347413996
-Current budget: 60.699952317559315
-Frozen funds: 50.35796391636173
-[INVESTOR] Process buy offer alteration to  10.768986694827992
-Current budget: 60.28576052160439
-Frozen funds: 50.77215571231666
-Processing day no. 15
-[INVESTOR] Processed sell offer alteration
-[INVESTOR] Process buy offer alteration to  11.199746162621112
-Current budget: 59.855001053811264
-Frozen funds: 51.202915180109784
-[INVESTOR] Process buy offer alteration to  11.199746162621112
-Current budget: 59.42424158601814
-Frozen funds: 51.63367464790291
-[INVESTOR] Process buy offer alteration to  5.599873081310556
-Current budget: 59.20886185212158
-Frozen funds: 51.84905438179947
-[INVESTOR] Process buy offer alteration to  11.199746162621112
-Current budget: 58.77810238432846
-Frozen funds: 52.279813849592585
-Processing day no. 16
-[INVESTOR] Processed sell offer alteration
-[INVESTOR] Process buy offer alteration to  11.647736009125957
-Current budget: 58.33011253782362
-Frozen funds: 52.72780369609743
-[INVESTOR] Process buy offer alteration to  11.647736009125957
-Current budget: 57.88212269131877
-Frozen funds: 53.17579354260228
-[INVESTOR] Process buy offer alteration to  5.8238680045629785
-Current budget: 57.65812776806635
-Frozen funds: 53.3997884658547
-[INVESTOR] Process buy offer alteration to  11.647736009125957
-Current budget: 57.210137921561504
-Frozen funds: 53.847778312359544
-Processing day no. 17
-[INVESTOR] Processed sell offer alteration
-[INVESTOR] Process buy offer alteration to  12.113645449490996
-Current budget: 56.744228481196465
-Frozen funds: 54.31368775272458
-[INVESTOR] Process buy offer alteration to  12.113645449490996
-Current budget: 56.27831904083143
-Frozen funds: 54.77959719308962
-[INVESTOR] Process buy offer alteration to  6.056822724745498
-Current budget: 56.04536432064891
-Frozen funds: 55.01255191327214
-[INVESTOR] Process buy offer alteration to  12.113645449490996
-Current budget: 55.57945488028387
-Frozen funds: 55.47846135363718
-Processing day no. 18
-[INVESTOR] Processed buy order for 12.025282859914498
-Current budget: 55.57945488028387
-Frozen funds: 43.45317849372268
-[INVESTOR] Processed sell offer alteration
-[INVESTOR] Process buy offer alteration to  12.598191267470636
-Current budget: 55.094909062304225
-Frozen funds: 43.937724311702326
-[INVESTOR] Process buy offer alteration to  6.299095633735318
-Current budget: 54.85263615331441
-Frozen funds: 44.179997220692144
-[INVESTOR] Process buy offer alteration to  12.598191267470636
-Current budget: 54.36809033533477
-Frozen funds: 44.66454303867178
-Processing day no. 19
-[INVESTOR] Sent sell offer for 13.227811145905948
-Current budget: 54.36809033533477
-Frozen funds: 44.66454303867178
-[INVESTOR] Processed sell offer alteration
-[INVESTOR] Process buy offer alteration to  13.102118918169461
-Current budget: 53.86416268463594
-Frozen funds: 45.16847068937061
-[INVESTOR] Process buy offer alteration to  6.551059459084731
-Current budget: 53.61219885928653
-Frozen funds: 45.42043451472002
-[INVESTOR] Process buy offer alteration to  13.102118918169461
-Current budget: 53.1082712085877
-Frozen funds: 45.92436216541885
-Processing day no. 20
-[INVESTOR] Sent buy order for 11.905030031315354
-Current budget: 41.203241177272346
-Frozen funds: 57.829392196734204
-[INVESTOR] Processed sell offer alteration
-[INVESTOR] Process buy offer alteration to  13.62620367489624
-Current budget: 40.67915642054557
-Frozen funds: 58.353476953460984
-[INVESTOR] Process buy offer alteration to  6.81310183744812
-Current budget: 40.41711404218218
-Frozen funds: 58.61551933182437
-[INVESTOR] Process buy offer alteration to  13.62620367489624
-Current budget: 39.8930292854554
-Frozen funds: 59.13960408855115
-[INVESTOR] Process buy offer alteration to  12.381231232567968
-Current budget: 39.416828084202784
-Frozen funds: 59.61580528980377
-Processing day no. 21
-[INVESTOR] Processed buy order for 7.0720389420705185
-Current budget: 39.416828084202784
-Frozen funds: 52.543766347733246
-[INVESTOR] Processed sell offer alteration
-[INVESTOR] Process buy offer alteration to  7.085625910946045
-Current budget: 39.14430401070486
-Frozen funds: 52.81629042123117
-[INVESTOR] Process buy offer alteration to  14.17125182189209
-Current budget: 38.599255863709004
-Frozen funds: 53.361338568227026
-[INVESTOR] Process buy offer alteration to  12.876480481870686
-Current budget: 38.10400661440629
-Frozen funds: 53.85658781752974
-[INVESTOR] Processed sell offer withdrawal
-Processing day no. 22
-[INVESTOR] Sent buy order for 7.293040159010223
-Current budget: 30.810966455396063
-Frozen funds: 61.14962797653997
-[INVESTOR] Sent buy order for 3.6465200795051116
-Current budget: 27.16444637589095
-Frozen funds: 64.79614805604508
-[INVESTOR] Processed buy order for 4.456857874950693
-Current budget: 27.16444637589095
-Frozen funds: 60.33929018109439
-[INVESTOR] Process buy offer alteration to  14.738101894767775
-Current budget: 26.597596303015266
-Frozen funds: 60.90614025397008
-[INVESTOR] Process buy offer alteration to  13.391539701145515
-Current budget: 26.082537083740437
-Frozen funds: 61.42119947324491
-[INVESTOR] Process buy offer alteration to  7.584761765370632
-Current budget: 25.79081547738003
-Frozen funds: 61.71292107960532
-[INVESTOR] Process buy offer alteration to  3.792380882685316
-Current budget: 25.644954674199823
-Frozen funds: 61.85878188278553
-[INVESTOR] Process buy withdrawal for 14.738101894767775
-Processing day no. 23
-[INVESTOR] Sent buy order for 8.022344174911247
-Current budget: 32.36071239405635
-Frozen funds: 55.143024162929
-[INVESTOR] Sent sell offer for 9.805087324891524
-Current budget: 32.36071239405635
-Frozen funds: 55.143024162929
-[INVESTOR] Processed buy order for 4.902543662445762
-Current budget: 32.36071239405635
-Frozen funds: 50.240480500483244
-[INVESTOR] Process buy offer alteration to  7.888152235985458
-Current budget: 32.05732192344152
-Frozen funds: 50.54387097109807
-[INVESTOR] Process buy offer alteration to  3.944076117992729
-Current budget: 31.905626688134106
-Frozen funds: 50.69556620640549
-[INVESTOR] Process buy offer alteration to  8.343237941907697
-Current budget: 31.584732921137658
-Frozen funds: 51.016459973401936
-Processing day no. 24
-[INVESTOR] Sent buy order for 8.824578592402371
-Current budget: 22.760154328735286
-Frozen funds: 59.84103856580431
-[INVESTOR] Sent buy order for 8.824578592402371
-Current budget: 13.935575736332915
-Frozen funds: 68.66561715820669
-[INVESTOR] Processed buy order for 6.256887445451701
-Current budget: 13.935575736332915
-Frozen funds: 62.40872971275498
-[INVESTOR] Process buy offer alteration to  4.101839162712438
-Current budget: 13.777812691613205
-Frozen funds: 62.56649275747469
-[INVESTOR] Process buy offer alteration to  8.676967459584006
-Current budget: 13.444083173936896
-Frozen funds: 62.900222275151
-[INVESTOR] Process buy offer alteration to  9.177561736098466
-Current budget: 13.091100030240801
-Frozen funds: 63.253205418847095
-[INVESTOR] Process buy offer alteration to  9.177561736098466
-Current budget: 12.738116886544706
-Frozen funds: 63.60618856254319
-Processing day no. 25
-[INVESTOR] Sent buy order for 5.631198700906531
-Current budget: 7.1069181856381745
-Frozen funds: 69.23738726344972
-[INVESTOR] Sent sell offer for 10.323864284995308
-Current budget: 7.1069181856381745
-Frozen funds: 69.23738726344972
-[INVESTOR] Processed buy order for 3.441288094998436
-Current budget: 7.1069181856381745
-Frozen funds: 65.79609916845128
-[INVESTOR] Processed sell offer alteration
-[INVESTOR] Process buy offer alteration to  9.024046157967366
-Current budget: 6.759839487254815
-Frozen funds: 66.14317786683463
-[INVESTOR] Process buy offer alteration to  9.544664205542405
-Current budget: 6.392737017810876
-Frozen funds: 66.51028033627857
-[INVESTOR] Process buy offer alteration to  9.544664205542405
-Current budget: 6.025634548366937
-Frozen funds: 66.8773828057225
-[INVESTOR] Process buy offer alteration to  5.856446648942793
-Current budget: 5.800386600330675
-Frozen funds: 67.10263075375876
-Processing day no. 26
-[INVESTOR] Processed buy order for 7.57083380899656
-Current budget: 5.800386600330675
-Frozen funds: 59.5317969447622
-[INVESTOR] Processed sell offer alteration
-[INVESTOR] Process buy offer alteration to  9.926450773764103
-Current budget: 5.418600032108978
-Frozen funds: 59.9135835129839
-[INVESTOR] Process buy offer alteration to  9.926450773764103
-Current budget: 5.036813463887281
-Frozen funds: 60.2953700812056
-[INVESTOR] Process buy offer alteration to  6.090704514900505
-Current budget: 4.802555597929569
-Frozen funds: 60.529627947163306
-Processing day no. 27
-[INVESTOR] Sent sell offer for 12.491875784844325
-Current budget: 4.802555597929569
-Frozen funds: 60.529627947163306
-[INVESTOR] Processed buy order for 4.7712025567113745
-Current budget: 4.802555597929569
-Frozen funds: 55.75842539045193
-[INVESTOR] Processed buy order for 4.7712025567113745
-Current budget: 4.802555597929569
-Frozen funds: 50.98722283374056
-[INVESTOR] Processed sell offer alteration
-[INVESTOR] Process buy offer alteration to  6.334332695496525
-Current budget: 4.558927417333549
-Frozen funds: 51.23085101433658
-Processing day no. 28
-[INVESTOR] Sent sell offer for 9.160708908885839
-Current budget: 4.558927417333549
-Frozen funds: 51.23085101433658
-[INVESTOR] Sent sell offer for 9.160708908885839
-Current budget: 4.558927417333549
-Frozen funds: 51.23085101433658
-[INVESTOR] Process buy offer alteration to  6.587706003316386
-Current budget: 4.305554109513688
-Frozen funds: 51.48422432215644
-Processing day no. 29
-[INVESTOR] Process buy offer alteration to  6.851214243449042
-Current budget: 4.042045869381032
-Frozen funds: 51.7477325622891
-Processing day no. 30
-[INVESTOR] Process buy offer alteration to  7.125262813187004
-Current budget: 3.7679972996430697
-Frozen funds: 52.021781132027066
-Processing day no. 31
-[INVESTOR] Process buy offer alteration to  7.410273325714485
-Current budget: 3.482986787115589
-Frozen funds: 52.30679164455454
-Processing day no. 32
-[INVESTOR] Process buy offer alteration to  7.706684258743064
-Current budget: 3.1865758540870095
-Frozen funds: 52.603202577583126
-Processing day no. 33
-[INVESTOR] Process buy offer alteration to  8.014951629092787
-Current budget: 2.878308483737287
-Frozen funds: 52.91146994793285
-Processing day no. 34
-[INVESTOR] Process buy offer alteration to  8.335549694256498
-Current budget: 2.557710418573576
-Frozen funds: 53.232068013096566
-Processing day no. 35
-[INVESTOR] Processed buy order for 3.9933916545233106
-Current budget: 2.557710418573576
-Frozen funds: 49.23867635857326
-Processing day no. 36
-[INVESTOR] Sent sell offer for 5.033337397888757
-Current budget: 2.557710418573576
-Frozen funds: 49.23867635857326
-[INVESTOR] Processed sell offer alteration
-Processing day no. 37
-Processing day no. 38
-Processing day no. 39
-Processing day no. 40
-Processing day no. 41
-Processing day no. 42
-Processing day no. 43
-Processing day no. 44
-Processing day no. 45
-Processing day no. 46
-[INVESTOR] Sent buy order for 2.389443390200874
-Current budget: 0.16826702837270213
-Frozen funds: 51.62811974877413
-[INVESTOR] Process buy offer alteration to  2.4850211258089088
-Current budget: 0.07268929276466718
-Frozen funds: 51.723697484382164
-Processing day no. 47
-[INVESTOR] Process buy offer alteration to  2.557710418573576
+	Current budget: 0.0
+[INVESTOR] Process buy offer alteration to  21.899752243200002
+	Current budget: 0.0
+[SIMULATION] Processing day no. 7
+[INVESTOR] Processed buy order for 21.589032960000004
+	Current budget: 0.0
+[INVESTOR] Process buy offer alteration to  21.899752243200002
+	Current budget: 0.0
+[INVESTOR] Process buy offer alteration to  21.899752243200002
+	Current budget: 0.0
+[SIMULATION] Processing day no. 8
+[INVESTOR] Sent sell offer for 15.785615425536003
 Current budget: 0.0
-Frozen funds: 51.79638677714683
-Processing day no. 48
-[INVESTOR] Process buy offer alteration to  2.557710418573576
+[INVESTOR] Processed sell offer alteration
+[INVESTOR] Process buy offer alteration to  21.899752243200002
+	Current budget: 0.0
+[INVESTOR] Process buy offer alteration to  21.899752243200002
+	Current budget: 0.0
+[SIMULATION] Processing day no. 9
+[INVESTOR] Processed buy order for 11.542233263741336
+	Current budget: 0.0
+[INVESTOR] Process buy offer alteration to  21.899752243200002
+	Current budget: 0.0
+[SIMULATION] Processing day no. 10
+[INVESTOR] Sent sell offer for 19.10059466489857
 Current budget: 0.0
-Frozen funds: 51.79638677714683
-Processing day no. 49
-[INVESTOR] Processed buy order for 2.254961693090944
+[INVESTOR] Processed buy order for 9.550297332449285
+	Current budget: 0.0
+[SIMULATION] Processing day no. 11
+[INVESTOR] Sent sell offer for 10.505327065694214
 Current budget: 0.0
-Frozen funds: 49.54142508405589
-Processing day no. 50
-[INVESTOR] Sent sell offer for 2.4804578624000384
-Current budget: 0.0
-Frozen funds: 49.54142508405589
-[INVESTOR] Processed sell offer alteration
-Processing day no. 51
-[INVESTOR] Processed sell offer alteration
-Processing day no. 52
-[INVESTOR] Processed sell offer alteration
-Processing day no. 53
-[INVESTOR] Processed sell offer alteration
-Processing day no. 54
-[INVESTOR] Processed sell offer alteration
-Processing day no. 55
-[INVESTOR] Processed sell offer alteration
-Processing day no. 56
-[INVESTOR] Processed sell offer alteration
-Processing day no. 57
-[INVESTOR] Processed sell offer alteration
-Processing day no. 58
-[INVESTOR] Processed sell offer alteration
-Processing day no. 59
-[INVESTOR] Processed sell offer alteration
-Processing day no. 60
-[INVESTOR] Processed sell offer alteration
-[INVESTOR] Processed sell offer withdrawal
-Processing day no. 61
-[INVESTOR] Sent sell offer for 1.8639338052540657
-Current budget: 0.0
-Frozen funds: 49.54142508405589
-[INVESTOR] Processed sell offer alteration
-Processing day no. 62
-[INVESTOR] Processed sell offer alteration
-Processing day no. 63
-[INVESTOR] Processed sell offer alteration
-Processing day no. 64
-[INVESTOR] Processed sell offer alteration
-Processing day no. 65
-[INVESTOR] Processed sell offer alteration
-Processing day no. 66
-[INVESTOR] Processed sell offer alteration
-Processing day no. 67
-[INVESTOR] Processed sell offer alteration
-Processing day no. 68
-[INVESTOR] Processed sell offer alteration
-Processing day no. 69
-[INVESTOR] Processed sell offer alteration
-Processing day no. 70
-[INVESTOR] Processed sell offer alteration
-Processing day no. 71
-[INVESTOR] Processed sell offer alteration
-[INVESTOR] Processed sell offer withdrawal
-Processing day no. 72
-[INVESTOR] Sent sell offer for 1.8639338052540657
-Current budget: 0.0
-Frozen funds: 49.54142508405589
-[INVESTOR] Processed sell offer alteration
-Processing day no. 73
-[INVESTOR] Processed sell offer alteration
-Processing day no. 74
-[INVESTOR] Processed sell offer alteration
-Processing day no. 75
-[INVESTOR] Processed sell offer alteration
-Processing day no. 76
-[INVESTOR] Processed sell offer alteration
-Processing day no. 77
-[INVESTOR] Processed sell offer alteration
-Processing day no. 78
-[INVESTOR] Processed sell offer alteration
-Processing day no. 79
-[INVESTOR] Processed sell offer alteration
-Processing day no. 80
-[INVESTOR] Processed sell offer alteration
-Processing day no. 81
-[INVESTOR] Processed sell offer alteration
-Processing day no. 82
-[INVESTOR] Processed sell offer alteration
-[INVESTOR] Processed sell offer withdrawal
-Processing day no. 83
-[INVESTOR] Sent sell offer for 1.8639338052540657
-Current budget: 0.0
-Frozen funds: 49.54142508405589
-[INVESTOR] Processed sell offer alteration
-Processing day no. 84
-[INVESTOR] Processed sell offer alteration
-Processing day no. 85
-[INVESTOR] Processed sell offer alteration
-Processing day no. 86
-[INVESTOR] Processed sell offer alteration
-Processing day no. 87
-[INVESTOR] Processed sell offer alteration
-Processing day no. 88
-[INVESTOR] Processed sell offer alteration
-Processing day no. 89
-[INVESTOR] Processed sell offer alteration
-Processing day no. 90
-[INVESTOR] Processed sell offer alteration
-Processing day no. 91
-[INVESTOR] Processed sell offer alteration
-Processing day no. 92
-[INVESTOR] Processed sell offer alteration
-Processing day no. 93
-[INVESTOR] Processed sell offer alteration
-[INVESTOR] Processed sell offer withdrawal
-Processing day no. 94
-[INVESTOR] Sent sell offer for 1.8639338052540657
-Current budget: 0.0
-Frozen funds: 49.54142508405589
-[INVESTOR] Processed sell offer alteration
-Processing day no. 95
-[INVESTOR] Processed sell offer alteration
-Processing day no. 96
-[INVESTOR] Processed sell offer alteration
-Processing day no. 97
-[INVESTOR] Processed sell offer alteration
-Processing day no. 98
-[INVESTOR] Processed sell offer alteration
-Processing day no. 99
-[INVESTOR] Processed sell offer alteration
-Processing day no. 100
-[INVESTOR] Processed sell offer alteration
+[SIMULATION] Processing day no. 12
+[SIMULATION] Processing day no. 13
+[SIMULATION] Processing day no. 14
+[SIMULATION] Processing day no. 15
+[SIMULATION] Processing day no. 16
+[SIMULATION] Processing day no. 17
+[SIMULATION] Processing day no. 18
+[SIMULATION] Processing day no. 19
+[SIMULATION] Processing day no. 20
+[SIMULATION] Processing day no. 21
+[SIMULATION] Processing day no. 22
+[SIMULATION] Processing day no. 23
+[SIMULATION] Processing day no. 24
+[SIMULATION] Processing day no. 25
+[SIMULATION] Processing day no. 26
+[SIMULATION] Processing day no. 27
+[SIMULATION] Processing day no. 28
+[SIMULATION] Processing day no. 29
+[SIMULATION] Processing day no. 30
+[SIMULATION] Processing day no. 31
+[SIMULATION] Processing day no. 32
+[SIMULATION] Processing day no. 33
+[SIMULATION] Processing day no. 34
+[SIMULATION] Processing day no. 35
+[SIMULATION] Processing day no. 36
+[SIMULATION] Processing day no. 37
+[SIMULATION] Processing day no. 38
+[SIMULATION] Processing day no. 39
+[SIMULATION] Processing day no. 40
+[SIMULATION] Processing day no. 41
+[SIMULATION] Processing day no. 42
+[SIMULATION] Processing day no. 43
+[SIMULATION] Processing day no. 44
+[SIMULATION] Processing day no. 45
+[SIMULATION] Processing day no. 46
+[SIMULATION] Processing day no. 47
+[SIMULATION] Processing day no. 48
+[SIMULATION] Processing day no. 49
+[SIMULATION] Processing day no. 50

@@ -26,7 +26,7 @@ public class Simulation {
         var stockIndex = new StockMarketIndex();
         stockIndex.addCompany(companies.get(0));
         this.investors = new ArrayList<>();
-        for (int i = 0; i < 40; i++) {
+        for (int i = 0; i < 10; i++) {
             investors.add((Investor) new RandomHolderFactory().createHolder(HolderType.INVESTOR));
             this.investors.get(this.investors.size() - 1).giveAccessToMarkets(new HashSet<>(this.markets));
         }

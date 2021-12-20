@@ -13,18 +13,18 @@ public abstract class AssetHolder extends Thread {
     HashMap<String, Double> assetsOnSale;
     private HashSet<Market> availableMarkets;
     protected double investmentBudget;
-    protected double frozenFunds;
     protected boolean running = false;
     protected boolean log = false;
     protected boolean freezeWithdrawal = false;
     private int id;
 
     public AssetHolder(int id, double investmentBudget) {
+        if (this.log)
+            DebugLogger.logMessage("[INVESTOR] Initial funds: " + investmentBudget);
         this.storedAssets = new HashMap<>();
         this.assetsOnSale = new HashMap<>();
         this.availableMarkets = new HashSet<>();
         this.investmentBudget = investmentBudget;
-        this.frozenFunds = 0;
         this.id = id;
     }
 
@@ -38,27 +38,22 @@ public abstract class AssetHolder extends Thread {
         }
         market.addBuyOffer(chosenAsset, this, price, amount);
         this.investmentBudget -= price * amount;
-        this.frozenFunds += price * amount;
         if (this.log) {
             DebugLogger.logMessage("[INVESTOR] Sent buy order for " + amount*price);
-            DebugLogger.logMessage("Current budget: " + this.investmentBudget);
-            DebugLogger.logMessage("Frozen funds: " + this.frozenFunds);
+            DebugLogger.logMessage("\tCurrent budget: " + this.investmentBudget);
         }
     }
 
     public void processBuyOrder(String assetType, double price, double amount) {
         double newAmount = this.storedAssets.getOrDefault(assetType, 0.0) + amount;
-        this.frozenFunds -= price * amount;
         this.storedAssets.put(assetType, newAmount);
         if (this.log) {
             DebugLogger.logMessage("[INVESTOR] Processed buy order for " + amount * price);
-            DebugLogger.logMessage("Current budget: " + this.investmentBudget);
-            DebugLogger.logMessage("Frozen funds: " + this.frozenFunds);
+            DebugLogger.logMessage("\tCurrent budget: " + this.investmentBudget);
         }
     }
 
     public void processBuyWithdrawal(double price, double amount) {
-        this.frozenFunds -= price * amount;
         this.investmentBudget += price * amount;
         if (this.log) {
             DebugLogger.logMessage("[INVESTOR] Process buy withdrawal for " + amount * price);
@@ -71,11 +66,9 @@ public abstract class AssetHolder extends Thread {
             newPrice = price + this.investmentBudget/amount;
         }
         this.investmentBudget -= (newPrice - price) * amount;
-        this.frozenFunds += (newPrice - price) * amount;
         if (this.log) {
             DebugLogger.logMessage("[INVESTOR] Process buy offer alteration to  " + newPrice * amount);
-            DebugLogger.logMessage("Current budget: " + this.investmentBudget);
-            DebugLogger.logMessage("Frozen funds: " + this.frozenFunds);
+            DebugLogger.logMessage("\tCurrent budget: " + this.investmentBudget);
         }
         return newPrice;
     }
@@ -97,7 +90,6 @@ public abstract class AssetHolder extends Thread {
         if (this.log) {
             DebugLogger.logMessage("[INVESTOR] Sent sell offer for " + price * amount);
             DebugLogger.logMessage("Current budget: " + this.investmentBudget);
-            DebugLogger.logMessage("Frozen funds: " + this.frozenFunds);
         }
     }
 
@@ -115,7 +107,6 @@ public abstract class AssetHolder extends Thread {
         if (this.log) {
             DebugLogger.logMessage("[INVESTOR] Processed sell offer for " + price * amount);
             DebugLogger.logMessage("Current budget: " + this.investmentBudget);
-            DebugLogger.logMessage("Frozen funds: " + this.frozenFunds);
         }
     }
 
