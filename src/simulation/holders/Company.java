@@ -41,6 +41,7 @@ public class Company extends AssetHolder {
         var stock = AssetManager.getInstance().createStockAsset(stockName.toString().toUpperCase(), IPOShareValue, id);
         this.associatedAsset = stock.getUniqueIdentifyingName();
         this.storedAssets.put(this.associatedAsset, (double) numberOfStocks);
+        this.freezeWithdrawal = true;
     }
 
     public void buyout(StockMarket stockMarket) {

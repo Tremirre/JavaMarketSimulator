@@ -2,6 +2,7 @@ package simulation.holders;
 
 import simulation.asset.AssetManager;
 import simulation.market.Market;
+import simulation.util.DebugLogger;
 import simulation.util.RandomDataGenerator;
 
 import java.util.HashMap;
@@ -14,6 +15,8 @@ public abstract class AssetHolder extends Thread {
     protected double investmentBudget;
     protected double frozenFunds;
     protected boolean running = false;
+    protected boolean log = false;
+    protected boolean freezeWithdrawal = false;
     private int id;
 
     public AssetHolder(int id, double investmentBudget) {
@@ -23,6 +26,58 @@ public abstract class AssetHolder extends Thread {
         this.investmentBudget = investmentBudget;
         this.frozenFunds = 0;
         this.id = id;
+    }
+
+    public void sendBuyOrder(Market market) {
+        var rand = RandomDataGenerator.getInstance();
+        String chosenAsset = (String) rand.sampleElement(market.getAvailableAssetTypes().toArray());
+        double price = AssetManager.getInstance().getAssetData(chosenAsset).getLatestSellingPrice() * 0.9;
+        double amount = this.investmentBudget > price * 2 && rand.yieldRandomNumber(1.0) > 0.7 ? 1.0 : 2.0;
+        if (this.investmentBudget < price * amount) {
+            return;
+        }
+        market.addBuyOffer(chosenAsset, this, price, amount);
+        this.investmentBudget -= price * amount;
+        this.frozenFunds += price * amount;
+        if (this.log) {
+            DebugLogger.logMessage("[INVESTOR] Sent buy order for " + amount*price);
+            DebugLogger.logMessage("Current budget: " + this.investmentBudget);
+            DebugLogger.logMessage("Frozen funds: " + this.frozenFunds);
+        }
+    }
+
+    public void processBuyOrder(String assetType, double price, double amount) {
+        double newAmount = this.storedAssets.getOrDefault(assetType, 0.0) + amount;
+        this.frozenFunds -= price * amount;
+        this.storedAssets.put(assetType, newAmount);
+        if (this.log) {
+            DebugLogger.logMessage("[INVESTOR] Processed buy order for " + amount * price);
+            DebugLogger.logMessage("Current budget: " + this.investmentBudget);
+            DebugLogger.logMessage("Frozen funds: " + this.frozenFunds);
+        }
+    }
+
+    public void processBuyWithdrawal(double price, double amount) {
+        this.frozenFunds -= price * amount;
+        this.investmentBudget += price * amount;
+        if (this.log) {
+            DebugLogger.logMessage("[INVESTOR] Process buy withdrawal for " + amount * price);
+        }
+    }
+
+    public double processBuyOrderAlteration(double price, double amount) {
+        double newPrice = price * 1.04;
+        if (this.investmentBudget < (newPrice - price) * amount) {
+            newPrice = price + this.investmentBudget/amount;
+        }
+        this.investmentBudget -= (newPrice - price) * amount;
+        this.frozenFunds += (newPrice - price) * amount;
+        if (this.log) {
+            DebugLogger.logMessage("[INVESTOR] Process buy offer alteration to  " + newPrice * amount);
+            DebugLogger.logMessage("Current budget: " + this.investmentBudget);
+            DebugLogger.logMessage("Frozen funds: " + this.frozenFunds);
+        }
+        return newPrice;
     }
 
     public void sendSellOrder(Market market) {
@@ -39,22 +94,11 @@ public abstract class AssetHolder extends Thread {
             this.storedAssets.put(chosenAsset, left);
         else
             this.storedAssets.remove(chosenAsset);
-    }
-
-    public void sendBuyOrder(Market market) {
-        var rand = RandomDataGenerator.getInstance();
-        String chosenAsset = (String) rand.sampleElement(market.getAvailableAssetTypes().toArray());
-        double price = AssetManager.getInstance().getAssetData(chosenAsset).getLatestSellingPrice() * 0.9;
-        double amount = this.investmentBudget > price * 2 && rand.yieldRandomNumber(1.0) > 0.7 ? 1.0 : 2.0;
-        market.addBuyOffer(chosenAsset, this, price, amount);
-        this.investmentBudget -= price * amount;
-        this.frozenFunds += price * amount;
-    }
-
-    public void processBuyOrder(String assetType, double price, double amount) {
-        double newAmount = this.storedAssets.getOrDefault(assetType, 0.0) + amount;
-        this.frozenFunds -= price * amount;
-        this.storedAssets.put(assetType, newAmount);
+        if (this.log) {
+            DebugLogger.logMessage("[INVESTOR] Sent sell offer for " + price * amount);
+            DebugLogger.logMessage("Current budget: " + this.investmentBudget);
+            DebugLogger.logMessage("Frozen funds: " + this.frozenFunds);
+        }
     }
 
     public void processSellOrder(String assetType, double price, double amount) {
@@ -68,11 +112,32 @@ public abstract class AssetHolder extends Thread {
             this.assetsOnSale.replace(assetType, newAmount);
         else
             this.assetsOnSale.remove(assetType);
+        if (this.log) {
+            DebugLogger.logMessage("[INVESTOR] Processed sell offer for " + price * amount);
+            DebugLogger.logMessage("Current budget: " + this.investmentBudget);
+            DebugLogger.logMessage("Frozen funds: " + this.frozenFunds);
+        }
+    }
+
+    public void processSellWithdrawal(String assetType, double amount) {
+        this.storedAssets.put(assetType, this.storedAssets.getOrDefault(assetType, 0.0) + amount);
+        if (this.log) {
+            DebugLogger.logMessage("[INVESTOR] Processed sell offer withdrawal");
+        }
+    }
+
+    public double processSellOfferAlteration(double price) {
+        if (this.log) {
+            DebugLogger.logMessage("[INVESTOR] Processed sell offer alteration");
+        }
+        return price * 0.96;
     }
 
     public void generateOrders() {
         var rand = RandomDataGenerator.getInstance();
         var market = (Market) rand.sampleElement(this.availableMarkets.toArray());
+        if (market.countSenderOffers(this.id) > 4)
+            return;
         if (rand.yieldRandomNumber(1.0) < 0.5)
             this.sendBuyOrder(market);
         if (rand.yieldRandomNumber(1.0) < 0.5)
@@ -91,6 +156,10 @@ public abstract class AssetHolder extends Thread {
         this.running = false;
     }
 
+    public boolean canWithdraw() {
+        return !this.freezeWithdrawal;
+    }
+
     public boolean isRunning() {
         return this.running;
     }
@@ -98,6 +167,10 @@ public abstract class AssetHolder extends Thread {
     public void start() {
         this.running = true;
         super.start();
+    }
+
+    public void enableLogging() {
+        this.log = true;
     }
 
     abstract public void run();

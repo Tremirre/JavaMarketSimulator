@@ -2,7 +2,7 @@ package simulation.holders;
 
 import simulation.util.RandomDataGenerator;
 
-public class RandomHolderFactory extends HolderFactory{
+public class RandomHolderFactory extends HolderFactory {
     @Override
     public AssetHolder createHolder(HolderType type) {
         switch (type) {

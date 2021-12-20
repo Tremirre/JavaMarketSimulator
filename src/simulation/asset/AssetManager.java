@@ -1,5 +1,6 @@
 package simulation.asset;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class AssetManager {
@@ -67,5 +68,13 @@ public class AssetManager {
 
     public void removeAsset(String uniqueName) {
         this.allAssets.remove(uniqueName);
+    }
+
+    public HashMap<String, Double> getLatestAssetPrices() {
+        var prices = new HashMap<String, Double>();
+        for (var entry : this.allAssets.entrySet()) {
+            prices.put(entry.getKey(), entry.getValue().getLatestSellingPrice());
+        }
+        return prices;
     }
 }

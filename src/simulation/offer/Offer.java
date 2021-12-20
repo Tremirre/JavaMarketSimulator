@@ -20,6 +20,8 @@ public abstract class Offer {
 
     abstract public void updatePrice();
 
+    abstract public void withdraw();
+
     public int getID() {
         return id;
     }
@@ -42,6 +44,10 @@ public abstract class Offer {
 
     public int getDaysSinceGiven() {
         return daysSinceGiven;
+    }
+
+    public void makeOlder() {
+        this.daysSinceGiven++;
     }
 
     public void setSize(double size) {

@@ -9,6 +9,11 @@ public class SellOffer extends Offer {
 
     @Override
     public void updatePrice() {
-        this.price *= 0.9;
+        this.price = this.sender.processSellOfferAlteration(this.price);
+    }
+
+    @Override
+    public void withdraw() {
+        this.sender.processSellWithdrawal(this.assetType, this.size);
     }
 }

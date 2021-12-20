@@ -26,10 +26,11 @@ public class Simulation {
         var stockIndex = new StockMarketIndex();
         stockIndex.addCompany(companies.get(0));
         this.investors = new ArrayList<>();
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < 40; i++) {
             investors.add((Investor) new RandomHolderFactory().createHolder(HolderType.INVESTOR));
             this.investors.get(this.investors.size() - 1).giveAccessToMarkets(new HashSet<>(this.markets));
         }
+        investors.get(0).enableLogging();
         ((StockMarket) this.markets.get(0)).addStockMarketIndex(stockIndex);
         this.companies.get(0).sendSellOffer(this.markets.get(0));
         for (var investor : investors) {
@@ -39,8 +40,11 @@ public class Simulation {
 
     public void runSimulationDay() throws InterruptedException {
         Thread.sleep(100);
-        this.markets.get(0).processAllOffers();
-        this.markets.get(0).updateOffers();
+        for (var market : this.markets) {
+            market.processAllOffers();
+            market.updateOffers();
+            market.removeOutdatedOffers();
+        }
     }
 
     public void stopSimulation() {

@@ -80,25 +80,42 @@ abstract public class Market {
     }
 
     public synchronized void updateOffers() {
-        for (var offer : this.sellOffers)
+        for (var offer : this.sellOffers) {
             offer.updatePrice();
-        for (var offer : this.buyOffers)
+            offer.makeOlder();
+        }
+        for (var offer : this.buyOffers) {
             offer.updatePrice();
+            offer.makeOlder();
+        }
     }
 
-    public void removeOutdatedOffers() {
-        buyOffers.removeIf(offer -> offer.getDaysSinceGiven() > MAX_DAYS);
-        sellOffers.removeIf(offer -> offer.getDaysSinceGiven() > MAX_DAYS);
+    public synchronized void removeOutdatedOffers() {
+        var offersForRemoval = new HashSet<Integer>();
+        for (var offer : this.buyOffers) {
+            if (offer.getDaysSinceGiven() > MAX_DAYS) {
+                offer.withdraw();
+                offersForRemoval.add(offer.getID());
+            }
+        }
+        for (var offer : this.sellOffers) {
+            if (offer.getDaysSinceGiven() > MAX_DAYS && offer.getSender().canWithdraw()) {
+                offer.withdraw();
+                offersForRemoval.add(offer.getID());
+            }
+        }
+        this.buyOffers.removeIf(offer -> offersForRemoval.contains(offer.getID()));
+        this.sellOffers.removeIf(offer -> offersForRemoval.contains(offer.getID()));
     }
-
-    public int countSenderOffers(AssetHolder sender) {
+    
+    public synchronized int countSenderOffers(int id) {
         int total = 0;
         for (var offer : this.buyOffers) {
-            if (offer.getSender().hashCode() == sender.hashCode())
+            if (offer.getSender().getID() == id)
                 total++;
         }
         for (var offer : this.sellOffers) {
-            if (offer.getSender().hashCode() == sender.hashCode())
+            if (offer.getSender().getID() == id)
                 total++;
         }
         return total;
