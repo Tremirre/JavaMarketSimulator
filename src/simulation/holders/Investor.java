@@ -21,6 +21,12 @@ public class Investor extends AssetHolder {
     }
 
     @Override
+    public void print() {
+        System.out.println("Investor " + this.firstName + ' ' + this.lastName);
+        System.out.println("His current funds: " + this.investmentBudget);
+    }
+
+    @Override
     public void run() {
         while (this.running) {
             this.increaseFunds(0.05);

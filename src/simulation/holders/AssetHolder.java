@@ -128,5 +128,7 @@ public abstract class AssetHolder extends Thread {
         super.start();
     }
 
+    abstract public void print();
+
     abstract public void run();
 }

@@ -9,6 +9,11 @@ public class InvestmentFund extends AssetHolder {
     }
 
     @Override
+    public void print() {
+
+    }
+
+    @Override
     public void run() {
 
     }
