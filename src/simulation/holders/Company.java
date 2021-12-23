@@ -51,9 +51,9 @@ public class Company extends AssetHolder {
     public void print() {
         System.out.println(this.name);
         this.address.print();
-        System.out.println(String.format("IPO date: %s", this.IPODate));
-        System.out.println(String.format("Revenue: %f, Profit: %f", this.revenue, this.profit));
-        System.out.println(String.format("Stock name: %s", this.associatedAsset));
+        System.out.println("IPO date: " + this.IPODate);
+        System.out.println("Revenue: " + this.revenue + "Profit: " + this.profit);
+        System.out.println("Stock name: " + this.associatedAsset);
     }
 
     public void sendSellOffer(Market market) {

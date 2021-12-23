@@ -1,12 +1,18 @@
 package simulation.holders;
 
-import java.io.IOException;
+import simulation.util.Constants;
 
 public abstract class HolderFactory {
-    private static int id = 0;
-    abstract AssetHolder createHolder(HolderType type) throws IOException;
-
-    public static int fetchID() {
-        return id++;
+    protected static int id = 0;
+    protected static int count = 0;
+    protected static boolean newThreadExceedsLimit() {
+        if (HolderFactory.id > Constants.MAX_THREADS)
+            return true;
+        count++;
+        return false;
     }
+
+    public abstract Investor createInvestor();
+    public abstract Company createCompany();
+    public abstract InvestmentFund createInvestmentFund();
 }

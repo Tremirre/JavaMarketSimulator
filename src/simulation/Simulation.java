@@ -1,7 +1,6 @@
 package simulation;
 
 import simulation.holders.Company;
-import simulation.holders.HolderType;
 import simulation.holders.Investor;
 import simulation.holders.RandomHolderFactory;
 import simulation.market.Market;
@@ -22,12 +21,12 @@ public class Simulation {
         this.markets = new ArrayList<>();
         this.markets.add(new StockMarket("Test", 0.01, 0.02, "USD"));
         this.companies = new ArrayList<>();
-        this.companies.add((Company) new RandomHolderFactory().createHolder(HolderType.COMPANY));
+        this.companies.add(new RandomHolderFactory().createCompany());
         var stockIndex = new StockMarketIndex();
         stockIndex.addCompany(companies.get(0));
         this.investors = new ArrayList<>();
         for (int i = 0; i < 25; i++) {
-            investors.add((Investor) new RandomHolderFactory().createHolder(HolderType.INVESTOR));
+            investors.add(new RandomHolderFactory().createInvestor());
             this.investors.get(this.investors.size() - 1).giveAccessToMarkets(new HashSet<>(this.markets));
         }
         ((StockMarket) this.markets.get(0)).addStockMarketIndex(stockIndex);
@@ -40,11 +39,9 @@ public class Simulation {
     public void runSimulationDay() throws InterruptedException {
         Thread.sleep(100);
         for (var market : this.markets) {
-            synchronized(market) {
-                market.processAllOffers();
-                market.updateOffers();
-                market.removeOutdatedOffers();
-            }
+            market.processAllOffers();
+            market.updateOffers();
+            market.removeOutdatedOffers();
         }
     }
 
