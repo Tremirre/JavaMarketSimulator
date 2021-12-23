@@ -15,12 +15,15 @@ public class Investor extends AssetHolder {
     }
 
     public void increaseFunds(double probability){
-
+        if (RandomDataGenerator.getInstance().yieldRandomNumber(1) < probability) {
+            this.investmentBudget += 50;
+        }
     }
 
     @Override
     public void run() {
         while (this.running) {
+            this.increaseFunds(0.05);
             this.generateOrders();
             try {
                 Thread.sleep(RandomDataGenerator.getInstance().yieldRandomInteger(30) + 20);
