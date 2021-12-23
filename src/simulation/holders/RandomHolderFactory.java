@@ -1,6 +1,5 @@
 package simulation.holders;
 
-import simulation.util.Constants;
 import simulation.util.RandomDataGenerator;
 
 public class RandomHolderFactory extends HolderFactory {

@@ -6,7 +6,7 @@ public abstract class HolderFactory {
     protected static int id = 0;
     protected static int count = 0;
     protected static boolean newThreadExceedsLimit() {
-        if (HolderFactory.id > Constants.MAX_THREADS)
+        if (count > Constants.MAX_THREADS)
             return true;
         count++;
         return false;
