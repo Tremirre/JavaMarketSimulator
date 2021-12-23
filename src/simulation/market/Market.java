@@ -56,7 +56,7 @@ abstract public class Market {
     public synchronized void processAllOffers() {
         ArrayList<Integer> processedSellOrders = new ArrayList<>();
         for (SellOffer sellOffer : this.sellOffers) {
-            for (BuyOffer buyOffer: this.buyOffers) {
+            for (BuyOffer buyOffer : this.buyOffers) {
                 if (!sellOffer.getAssetType().equals(buyOffer.getAssetType()) ||
                         sellOffer.getPrice() > buyOffer.getPrice()) continue;
                 if (!this.processOffer(buyOffer, sellOffer))

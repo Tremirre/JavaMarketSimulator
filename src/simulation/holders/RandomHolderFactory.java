@@ -19,7 +19,7 @@ public class RandomHolderFactory extends HolderFactory {
                 var date = rand.yieldDate();
                 var address = Address.getRandomAddress();
                 var name = rand.useCompanyName();
-                return new Company(HolderFactory.fetchID(), 100, name, date, address, 10, 0 ,0, 0,0);
+                return new Company(HolderFactory.fetchID(), 10, name, date, address, 10, 0 ,0, 0,0);
             }
             default -> {
                 //raise exception

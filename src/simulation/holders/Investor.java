@@ -23,7 +23,7 @@ public class Investor extends AssetHolder {
         while (this.running) {
             this.generateOrders();
             try {
-                Thread.sleep(RandomDataGenerator.getInstance().yieldRandomInteger(10));
+                Thread.sleep(RandomDataGenerator.getInstance().yieldRandomInteger(30) + 20);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

@@ -2,7 +2,6 @@ package simulation.holders;
 
 import simulation.asset.AssetManager;
 import simulation.market.Market;
-import simulation.util.DebugLogger;
 import simulation.util.RandomDataGenerator;
 
 import java.util.HashMap;
@@ -14,13 +13,10 @@ public abstract class AssetHolder extends Thread {
     private HashSet<Market> availableMarkets;
     protected double investmentBudget;
     protected boolean running = false;
-    protected boolean log = false;
     protected boolean freezeWithdrawal = false;
-    private int id;
+    final private int id;
 
     public AssetHolder(int id, double investmentBudget) {
-        if (this.log)
-            DebugLogger.logMessage("[INVESTOR] Initial funds: " + investmentBudget);
         this.storedAssets = new HashMap<>();
         this.assetsOnSale = new HashMap<>();
         this.availableMarkets = new HashSet<>();
@@ -36,28 +32,17 @@ public abstract class AssetHolder extends Thread {
         if (this.investmentBudget < price * amount) {
             return;
         }
-        market.addBuyOffer(chosenAsset, this, price, amount);
         this.investmentBudget -= price * amount;
-        if (this.log) {
-            DebugLogger.logMessage("[INVESTOR] Sent buy order for " + amount*price);
-            DebugLogger.logMessage("\tCurrent budget: " + this.investmentBudget);
-        }
+        market.addBuyOffer(chosenAsset, this, price, amount);
     }
 
     public void processBuyOrder(String assetType, double price, double amount) {
         double newAmount = this.storedAssets.getOrDefault(assetType, 0.0) + amount;
         this.storedAssets.put(assetType, newAmount);
-        if (this.log) {
-            DebugLogger.logMessage("[INVESTOR] Processed buy order for " + amount * price);
-            DebugLogger.logMessage("\tCurrent budget: " + this.investmentBudget);
-        }
     }
 
     public void processBuyWithdrawal(double price, double amount) {
         this.investmentBudget += price * amount;
-        if (this.log) {
-            DebugLogger.logMessage("[INVESTOR] Process buy withdrawal for " + amount * price);
-        }
     }
 
     public double processBuyOrderAlteration(double price, double amount) {
@@ -66,61 +51,44 @@ public abstract class AssetHolder extends Thread {
             newPrice = price + this.investmentBudget/amount;
         }
         this.investmentBudget -= (newPrice - price) * amount;
-        if (this.log) {
-            DebugLogger.logMessage("[INVESTOR] Process buy offer alteration to  " + newPrice * amount);
-            DebugLogger.logMessage("\tCurrent budget: " + this.investmentBudget);
-        }
         return newPrice;
     }
 
     public void sendSellOrder(Market market) {
-        if (this.storedAssets.isEmpty())
+        var availableAssets = this.storedAssets.keySet();
+        availableAssets.retainAll(market.getAvailableAssetTypes());
+        if (availableAssets.isEmpty())
             return;
         var rand = RandomDataGenerator.getInstance();
-        String chosenAsset = (String) rand.sampleElement(this.storedAssets.keySet().toArray());
+        String chosenAsset = (String) rand.sampleElement(availableAssets.toArray());
         double availableAmount = this.storedAssets.get(chosenAsset);
         double amount = availableAmount > 2 ? (double) Math.round(0.5 * availableAmount) : availableAmount;
         double price = AssetManager.getInstance().getAssetData(chosenAsset).getLatestSellingPrice() * 1.1;
-        market.addSellOffer(chosenAsset, this, price, amount);
-        double left = this.storedAssets.get(chosenAsset) - amount;
+        double left = (this.storedAssets.get(chosenAsset) - amount);
         if (left > 0)
             this.storedAssets.put(chosenAsset, left);
         else
             this.storedAssets.remove(chosenAsset);
-        if (this.log) {
-            DebugLogger.logMessage("[INVESTOR] Sent sell offer for " + price * amount);
-            DebugLogger.logMessage("Current budget: " + this.investmentBudget);
-        }
+        this.assetsOnSale.put(chosenAsset, this.assetsOnSale.getOrDefault(chosenAsset, 0.0) + amount);
+        market.addSellOffer(chosenAsset, this, price, amount);
     }
 
     public void processSellOrder(String assetType, double price, double amount) {
-        if (!this.assetsOnSale.containsKey(assetType)) {
-            // exception
-            return;
-        }
+        if (!this.assetsOnSale.containsKey(assetType))
+            throw new RuntimeException("Invalid asset type in selling order processing: " + assetType);
         double newAmount = this.assetsOnSale.get(assetType) - amount;
         this.investmentBudget += price * amount;
         if (newAmount > 0)
             this.assetsOnSale.replace(assetType, newAmount);
         else
             this.assetsOnSale.remove(assetType);
-        if (this.log) {
-            DebugLogger.logMessage("[INVESTOR] Processed sell offer for " + price * amount);
-            DebugLogger.logMessage("Current budget: " + this.investmentBudget);
-        }
     }
 
     public void processSellWithdrawal(String assetType, double amount) {
         this.storedAssets.put(assetType, this.storedAssets.getOrDefault(assetType, 0.0) + amount);
-        if (this.log) {
-            DebugLogger.logMessage("[INVESTOR] Processed sell offer withdrawal");
-        }
     }
 
     public double processSellOfferAlteration(double price) {
-        if (this.log) {
-            DebugLogger.logMessage("[INVESTOR] Processed sell offer alteration");
-        }
         return price * 0.96;
     }
 
@@ -158,10 +126,6 @@ public abstract class AssetHolder extends Thread {
     public void start() {
         this.running = true;
         super.start();
-    }
-
-    public void enableLogging() {
-        this.log = true;
     }
 
     abstract public void run();
