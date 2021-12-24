@@ -11,7 +11,7 @@ public class CommodityData extends AssetData{
     }
 
     @Override
-    public double getLatestSellingPrice() {
+    public double getLatestAverageSellingPrice() {
         return 0;
     }
 

@@ -12,7 +12,7 @@ public class CurrencyData extends AssetData {
     }
 
     @Override
-    public double getLatestSellingPrice() {
+    public double getLatestAverageSellingPrice() {
         return 0;
     }
 

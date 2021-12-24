@@ -1,5 +1,6 @@
 package simulation;
 
+import simulation.asset.AssetManager;
 import simulation.holders.Company;
 import simulation.holders.Investor;
 import simulation.holders.RandomHolderFactory;
@@ -43,6 +44,7 @@ public class Simulation {
             market.processAllOffers();
             market.updateOffers();
             market.removeOutdatedOffers();
+            AssetManager.getInstance().processEndDay();
         }
     }
 

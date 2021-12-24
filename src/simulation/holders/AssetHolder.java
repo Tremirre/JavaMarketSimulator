@@ -27,7 +27,7 @@ public abstract class AssetHolder extends Thread {
     public void sendBuyOrder(Market market) {
         var rand = RandomDataGenerator.getInstance();
         String chosenAsset = (String) rand.sampleElement(market.getAvailableAssetTypes().toArray());
-        double price = AssetManager.getInstance().getAssetData(chosenAsset).getLatestSellingPrice() * 0.9;
+        double price = AssetManager.getInstance().getAssetData(chosenAsset).getLatestAverageSellingPrice() * 0.9;
         double amount = this.investmentBudget > price * 2 && rand.yieldRandomNumber(1.0) > 0.7 ? 1.0 : 2.0;
         if (this.investmentBudget < price * amount) {
             return;
@@ -63,7 +63,7 @@ public abstract class AssetHolder extends Thread {
         String chosenAsset = (String) rand.sampleElement(availableAssets.toArray());
         double availableAmount = this.storedAssets.get(chosenAsset);
         double amount = availableAmount > 2 ? (double) Math.round(0.5 * availableAmount) : availableAmount;
-        double price = AssetManager.getInstance().getAssetData(chosenAsset).getLatestSellingPrice() * 1.1;
+        double price = AssetManager.getInstance().getAssetData(chosenAsset).getLatestAverageSellingPrice() * 1.1;
         double left = (this.storedAssets.get(chosenAsset) - amount);
         if (left > 0)
             this.storedAssets.put(chosenAsset, left);

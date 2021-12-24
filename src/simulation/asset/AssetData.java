@@ -9,6 +9,7 @@ abstract public class AssetData {
     private double maximalPrice;
     private double minimalPrice;
     private ArrayList<Double> sellingPrices;
+    private ArrayList<Double> salesBuffer;
 
     protected AssetData(int id, String name, double openingPrice) {
         this.id = id;
@@ -18,17 +19,26 @@ abstract public class AssetData {
         this.minimalPrice = openingPrice;
         this.sellingPrices = new ArrayList<>();
         this.sellingPrices.add(this.openingPrice);
+        this.salesBuffer = new ArrayList<>();
     }
 
-    public double getLatestSellingPrice() {
+    public double getLatestAverageSellingPrice() {
         return this.sellingPrices.get(this.sellingPrices.size() - 1);
     }
     public void addLatestSellingPrice(double price) {
-        this.sellingPrices.add(price);
+        this.salesBuffer.add(price);
         if (this.maximalPrice < price)
             this.maximalPrice = price;
         if (this.minimalPrice > price)
             this.minimalPrice = price;
+    }
+
+    public void processDayPrices() {
+        double averagePrice = this.salesBuffer.isEmpty() ? this.getLatestAverageSellingPrice() : 0;
+        for (var price : this.salesBuffer)
+            averagePrice += price/this.salesBuffer.size();
+        this.sellingPrices.add(averagePrice);
+        this.salesBuffer.clear();
     }
 
     public String getUniqueIdentifyingName() {

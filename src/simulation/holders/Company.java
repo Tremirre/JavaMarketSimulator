@@ -57,7 +57,7 @@ public class Company extends AssetHolder {
     }
 
     public void sendSellOffer(Market market) {
-        double price = AssetManager.getInstance().getAssetData(this.associatedAsset).getLatestSellingPrice() * 0.8;
+        double price = AssetManager.getInstance().getAssetData(this.associatedAsset).getLatestAverageSellingPrice() * 0.8;
         market.addSellOffer(this.associatedAsset, this, price, this.storedAssets.get(this.associatedAsset));
     }
 
@@ -95,7 +95,7 @@ public class Company extends AssetHolder {
     }
 
     public double getCapital() {
-        return this.numberOfStocks * AssetManager.getInstance().getAssetData(this.associatedAsset).getLatestSellingPrice();
+        return this.numberOfStocks * AssetManager.getInstance().getAssetData(this.associatedAsset).getLatestAverageSellingPrice();
     }
 
     public int getTradingVolume() {
