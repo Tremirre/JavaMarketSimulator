@@ -10,8 +10,8 @@ public class Main {
         String stock = simulation.companies.get(0).getAssociatedAsset();
         System.out.println(AssetManager.getInstance().getAssetData(stock).getLatestSellingPrice());
         var start = System.nanoTime();
-        for (int i = 0; i < 365; i++) {
-            System.out.println("Simulation day no. " + (i + 1));
+        for (int i = 0; i < 2*365; i++) {
+            //System.out.println("Simulation day no. " + (i + 1));
             System.out.println(AssetManager.getInstance().getAssetData(stock).getLatestSellingPrice());
             try {
                 simulation.runSimulationDay();

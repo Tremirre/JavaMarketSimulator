@@ -6,6 +6,7 @@ import simulation.holders.RandomHolderFactory;
 import simulation.market.Market;
 import simulation.market.StockMarket;
 import simulation.market.StockMarketIndex;
+import simulation.util.Constants;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -37,7 +38,7 @@ public class Simulation {
     }
 
     public void runSimulationDay() throws InterruptedException {
-        Thread.sleep(100);
+        Thread.sleep(Constants.BASE_TRAIDING_TIME);
         for (var market : this.markets) {
             market.processAllOffers();
             market.updateOffers();
