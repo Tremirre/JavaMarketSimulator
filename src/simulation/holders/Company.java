@@ -61,7 +61,7 @@ public class Company extends AssetHolder {
         market.addSellOffer(this.associatedAsset, this, price, this.storedAssets.get(this.associatedAsset));
     }
 
-    public void processSellOrder(String assetType, double price, double amount) {
+    public void processSellOffer(String assetType, double price, double amount) {
         this.storedAssets.put(this.associatedAsset, this.storedAssets.get(this.associatedAsset) - amount);
         this.revenue += price;
     }

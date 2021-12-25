@@ -24,7 +24,7 @@ public abstract class AssetHolder extends Thread {
         this.id = id;
     }
 
-    public void sendBuyOrder(Market market) {
+    public void sendBuyOffer(Market market) {
         var rand = RandomDataGenerator.getInstance();
         String chosenAsset = (String) rand.sampleElement(market.getAvailableAssetTypes().toArray());
         double price = AssetManager.getInstance().getAssetData(chosenAsset).getLatestAverageSellingPrice() * 0.9;
@@ -36,7 +36,7 @@ public abstract class AssetHolder extends Thread {
         market.addBuyOffer(chosenAsset, this, price, amount);
     }
 
-    public void processBuyOrder(String assetType, double price, double amount) {
+    public void processBuyOffer(String assetType, double price, double amount) {
         double newAmount = this.storedAssets.getOrDefault(assetType, 0.0) + amount;
         this.storedAssets.put(assetType, newAmount);
     }
@@ -45,7 +45,7 @@ public abstract class AssetHolder extends Thread {
         this.investmentBudget += price * amount;
     }
 
-    public double processBuyOrderAlteration(double price, double amount) {
+    public double processBuyOfferAlteration(double price, double amount) {
         double newPrice = price * 1.04;
         if (this.investmentBudget < (newPrice - price) * amount) {
             newPrice = price + this.investmentBudget/amount;
@@ -54,7 +54,7 @@ public abstract class AssetHolder extends Thread {
         return newPrice;
     }
 
-    public void sendSellOrder(Market market) {
+    public void sendSellOffer(Market market) {
         var availableAssets = this.storedAssets.keySet();
         availableAssets.retainAll(market.getAvailableAssetTypes());
         if (availableAssets.isEmpty())
@@ -73,7 +73,7 @@ public abstract class AssetHolder extends Thread {
         market.addSellOffer(chosenAsset, this, price, amount);
     }
 
-    public void processSellOrder(String assetType, double price, double amount) {
+    public void processSellOffer(String assetType, double price, double amount) {
         if (!this.assetsOnSale.containsKey(assetType))
             throw new RuntimeException("Invalid asset type in selling order processing: " + assetType);
         double newAmount = this.assetsOnSale.get(assetType) - amount;
@@ -98,9 +98,9 @@ public abstract class AssetHolder extends Thread {
         if (market.countSenderOffers(this.id) > 4)
             return;
         if (rand.yieldRandomNumber(1.0) < 0.5)
-            this.sendBuyOrder(market);
+            this.sendBuyOffer(market);
         if (rand.yieldRandomNumber(1.0) < 0.5)
-            this.sendSellOrder(market);
+            this.sendSellOffer(market);
     }
 
     public void giveAccessToMarkets(HashSet<Market> markets) {
