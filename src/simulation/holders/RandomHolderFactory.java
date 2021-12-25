@@ -1,5 +1,6 @@
 package simulation.holders;
 
+import simulation.util.Constants;
 import simulation.util.RandomDataGenerator;
 
 public class RandomHolderFactory extends HolderFactory {
@@ -20,7 +21,9 @@ public class RandomHolderFactory extends HolderFactory {
         var date = rand.yieldDate();
         var address = Address.getRandomAddress();
         var name = rand.useCompanyName();
-        return new Company(id++, 10, name, date, address, 10, 0 ,0, 0,0);
+        var initialStockValue = rand.yieldRandomInteger(15) + 5;
+        var initialStockSize = (Constants.COMPANY_GENERATION_CONSTANT/initialStockValue) + rand.yieldRandomInteger(20);
+        return new Company(id++, initialStockSize, name, date, address, initialStockValue, 0 ,0, 0,0);
     }
 
     @Override

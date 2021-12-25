@@ -2,24 +2,21 @@ package bst;
 
 import simulation.Simulation;
 import simulation.asset.AssetManager;
+import simulation.util.Constants;
+import simulation.util.DataExporter;
 
 public class Main {
 
     public static void main(String[] args) {
         var simulation = new Simulation();
-        String stock = simulation.companies.get(0).getAssociatedAsset();
-        System.out.println(AssetManager.getInstance().getAssetData(stock).getLatestAverageSellingPrice());
         var start = System.nanoTime();
-        for (int i = 0; i < 2*365; i++) {
-            //System.out.println("Simulation day no. " + (i + 1));
-            System.out.println(AssetManager.getInstance().getAssetData(stock).getLatestAverageSellingPrice());
-            try {
-                simulation.runSimulationDay();
-            } catch(InterruptedException e) {
-                break;
-            }
+        for (int i = 0; i < 2* Constants.YEAR; i++) {
+            System.out.println("Processing day no. " + i);
+            simulation.runSimulationDay();
         }
         simulation.stopSimulation();
         System.out.println("Simulation took " + (System.nanoTime() - start)/1_000_000 + "ms");
+        DataExporter dataEx = new DataExporter();
+        dataEx.exportPrices(AssetManager.getInstance().getAllAssetsPriceHistory());
     }
 }

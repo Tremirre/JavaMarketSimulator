@@ -64,7 +64,7 @@ abstract public class Market {
                 this.removeBuyOffer(buyOffer.getID());
                 break;
             }
-            if (processedSellOrders.size() > 20)
+            if (processedSellOrders.size() > 100)
                 break;
         }
         for (var id : processedSellOrders)

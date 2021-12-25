@@ -22,9 +22,14 @@ abstract public class AssetData {
         this.salesBuffer = new ArrayList<>();
     }
 
+    public ArrayList<Double> getPriceHistory() {
+        return this.sellingPrices;
+    }
+
     public double getLatestAverageSellingPrice() {
         return this.sellingPrices.get(this.sellingPrices.size() - 1);
     }
+
     public void addLatestSellingPrice(double price) {
         this.salesBuffer.add(price);
         if (this.maximalPrice < price)

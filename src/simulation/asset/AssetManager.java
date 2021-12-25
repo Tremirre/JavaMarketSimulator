@@ -1,5 +1,6 @@
 package simulation.asset;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class AssetManager {
@@ -79,6 +80,14 @@ public class AssetManager {
         var prices = new HashMap<String, Double>();
         for (var entry : this.allAssets.entrySet()) {
             prices.put(entry.getKey(), entry.getValue().getLatestAverageSellingPrice());
+        }
+        return prices;
+    }
+
+    public HashMap<String, ArrayList<Double>> getAllAssetsPriceHistory() {
+        var prices = new HashMap<String, ArrayList<Double>>();
+        for (var entry : this.allAssets.entrySet()) {
+            prices.put(entry.getKey(), entry.getValue().getPriceHistory());
         }
         return prices;
     }

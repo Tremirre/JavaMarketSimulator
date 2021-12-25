@@ -13,33 +13,45 @@ import java.util.ArrayList;
 import java.util.HashSet;
 
 public class Simulation {
-    private ArrayList<Market> markets;
-    private ArrayList<Investor> investors;
+    private HashSet<Market> markets;
+    private HashSet<Investor> investors;
     public ArrayList<Company> companies;
     private SimulationConfig simConfig;
 
     public Simulation() {
         this.simConfig = new SimulationConfig();
-        this.markets = new ArrayList<>();
-        this.markets.add(new StockMarket("Test", 0.01, 0.02, "USD"));
+        this.markets = new HashSet<>();
+        var market = new StockMarket("Test", 0.01, 0.02, "USD");
         this.companies = new ArrayList<>();
-        this.companies.add(new RandomHolderFactory().createCompany());
         var stockIndex = new StockMarketIndex();
-        stockIndex.addCompany(companies.get(0));
-        this.investors = new ArrayList<>();
-        for (int i = 0; i < 25; i++) {
-            investors.add(new RandomHolderFactory().createInvestor());
-            this.investors.get(this.investors.size() - 1).giveAccessToMarkets(new HashSet<>(this.markets));
+
+        for (int i = 0; i < 10; i++) {
+            this.companies.add(new RandomHolderFactory().createCompany());
+            stockIndex.addCompany(this.companies.get(this.companies.size() - 1));
         }
-        ((StockMarket) this.markets.get(0)).addStockMarketIndex(stockIndex);
-        this.companies.get(0).sendSellOffer(this.markets.get(0));
-        for (var investor : investors) {
+
+        market.addStockMarketIndex(stockIndex);
+        for (var company : companies) {
+            company.sendSellOffer(market);
+        }
+        this.markets.add(market);
+        this.investors = new HashSet<>();
+        for (int i = 0; i < 300; i++) {
+            var newInvestor = new RandomHolderFactory().createInvestor();
+            newInvestor.giveAccessToMarkets(this.markets);
+            this.investors.add(newInvestor);
+        }
+        for (var investor : this.investors) {
             investor.start();
         }
     }
 
-    public void runSimulationDay() throws InterruptedException {
-        Thread.sleep(Constants.BASE_TRAIDING_TIME);
+    public void runSimulationDay() {
+        try {
+            Thread.sleep(Constants.BASE_TRADING_TIME);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         for (var market : this.markets) {
             market.processAllOffers();
             market.updateOffers();
