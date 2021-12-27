@@ -3,14 +3,14 @@ package simulation.util;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Random;
+import java.util.*;
 
 public class RandomDataGenerator {
     private static RandomDataGenerator instance;
-    private HashMap<String, String[]> addressData;
+    private final HashMap<String, String[]> citiesCountryMapping;
+    private final HashMap<String, HashSet<String>> countriesCurrencyMapping;
+    private final HashMap<String, Double> currenciesRates;
+    private final ArrayList<String> unusedCurrencies;
     private String[] streets;
     private String[] names;
     private String[] surnames;
@@ -22,16 +22,32 @@ public class RandomDataGenerator {
         System.out.println("[LOGGING] Initializing RandomDataGenerator...");
         final String addressPath = "resource\\address_data\\";
         final String holdersPath = "resource\\holders_data\\";
-        var data = new HashMap<String, String[]>();
+        this.citiesCountryMapping = new HashMap<>();
+        this.countriesCurrencyMapping = new HashMap<>();
+        this.currenciesRates = new HashMap<>();
+        this.unusedCurrencies = new ArrayList<>();
         try {
-            String countries = Files.readString(Path.of(addressPath + "countries.txt"));
-            String[] countriesList = countries.split(";");
-            for (String s : countriesList) {
-                String cities = Files.readString(Path.of(addressPath + s.toLowerCase() + ".txt"));
-                String[] citiesList = cities.split(";");
-                data.put(s, citiesList);
+            String countriesCurrencies = Files.readString(Path.of(addressPath + "countries_currencies.txt"));
+            String[] currencyRecords = countriesCurrencies.split("\n");
+            ArrayList<String> countriesList = new ArrayList<>();
+            for (var record : currencyRecords) {
+                String[] unpackedRecord = record.split(";");
+                var country = unpackedRecord[0];
+                var currency = unpackedRecord[1];
+                var rate = Double.parseDouble(unpackedRecord[2]);
+                countriesList.add(country);
+                this.currenciesRates.put(currency, rate);
+                if (!this.countriesCurrencyMapping.containsKey(currency)) {
+                    this.countriesCurrencyMapping.put(currency, new HashSet<>());
+                }
+                this.countriesCurrencyMapping.get(currency).add(country);
             }
-            this.addressData = data;
+            this.unusedCurrencies.addAll(this.countriesCurrencyMapping.keySet());
+            for (String country : countriesList) {
+                String cities = Files.readString(Path.of(addressPath + country.toLowerCase() + ".txt"));
+                String[] citiesList = cities.split(";");
+                citiesCountryMapping.put(country, citiesList);
+            }
             String allStreets = Files.readString(Path.of(addressPath + "street_names.txt"));
             this.streets = allStreets.split(";");
             String allNames = Files.readString(Path.of(holdersPath + "names.txt"));
@@ -49,16 +65,16 @@ public class RandomDataGenerator {
     }
 
     public String yieldCountry() {
-        var keys = this.addressData.keySet();
+        var keys = this.citiesCountryMapping.keySet();
         String[] countries = keys.toArray(new String[0]);
         int randomIdx = generator.nextInt(countries.length);
         return countries[randomIdx];
     }
 
     public String yieldCityForCountry(String country) {
-        if (!this.addressData.containsKey(country))
+        if (!this.citiesCountryMapping.containsKey(country))
             return null;
-        String[] cities = this.addressData.get(country);
+        String[] cities = this.citiesCountryMapping.get(country);
         int randomIdx = generator.nextInt(cities.length);
         return cities[randomIdx];
     }
@@ -95,10 +111,26 @@ public class RandomDataGenerator {
     }
 
     public String useCompanyName() {
-        if (this.companyNames.size() == 0)
-            return this.yieldRandomString(10);
-        var selected = this.companyNames.get(this.generator.nextInt(this.companyNames.size()));
-        this.companyNames.remove(selected);
+        return this.takeUsableResource(this.companyNames);
+    }
+
+    public String useCurrency() {
+        return this.takeUsableResource(this.unusedCurrencies);
+    }
+
+    public HashSet<String> yieldChosenCurrencyCountriesOfUse(String currency) {
+        return this.countriesCurrencyMapping.get(currency);
+    }
+
+    public double yieldChosenCurrencyExchangeRate(String currency) {
+        return this.currenciesRates.get(currency);
+    }
+
+    private String takeUsableResource(ArrayList<String> resource) {
+        if (resource.size() == 0)
+            return null;
+        var selected = (String) this.sampleElement(resource.toArray());
+        resource.remove(selected);
         return selected;
     }
 

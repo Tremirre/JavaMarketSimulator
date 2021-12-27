@@ -1,8 +1,6 @@
 package simulation.market;
 
 import simulation.asset.AssetManager;
-import simulation.offer.BuyOffer;
-import simulation.offer.SellOffer;
 
 import java.util.HashSet;
 
@@ -18,7 +16,7 @@ public class CurrenciesMarket extends Market{
     @Override
     public void initializeMarket() {
         var manager = AssetManager.getInstance();
-        var newCurrency = manager.createCurrencyAsset("US Dollar", 1.00, new String[]{"United States"});
+        var newCurrency = manager.addCurrencyAsset("US Dollar", 1.00, new String[]{"United States"});
         this.currencies.add(newCurrency.getUniqueIdentifyingName());
     }
 

@@ -38,7 +38,7 @@ public class Company extends AssetHolder {
         for (int i = 0; i < name.length(); i++) {
             if (Character.isLetter(name.charAt(i))) stockName.append(name.charAt(i));
         }
-        var stock = AssetManager.getInstance().createStockAsset(stockName.toString().toUpperCase(), IPOShareValue, id);
+        var stock = AssetManager.getInstance().addStockAsset(stockName.toString().toUpperCase(), IPOShareValue, id);
         this.associatedAsset = stock.getUniqueIdentifyingName();
         this.storedAssets.put(this.associatedAsset, (double) numberOfStocks);
         this.freezeWithdrawal = true;

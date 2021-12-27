@@ -1,0 +1,32 @@
+Japan;Yen;114.37
+India;Indian Rupee;75.1
+China;Yuan;6.36
+Brazil;Brazilian Real;5.67
+Mexico;Mexican Peso;20.61
+Egypt;Egyptian Pound;15.72
+United States;US Dollar;1
+Russia;Ruble;73.58
+Turkey;Turkish Lira;10.85
+France;Euro;0.88
+United Kingdom;British Pound;0.75
+Spain;Euro;0.88
+Canada;Canadian Dollar;1.28
+Australia;Australian Dollar;1.38
+Germany;Euro;0.88
+Ukraine;Hryvnia;27.21
+Italy;Euro;0.88
+Poland;Zloty;4.09
+Belgium;Euro;0.88
+Netherlands;Euro;0.88
+Mongolia;Tugrik;2851.09
+Czechia;Czech Koruna;22.14
+Sweden;Swedish Krona;9.11
+Norway;Norwegian Krone;8.85
+Greece;Euro;0.88
+Finland;Euro;0.88
+Latvia;Euro;0.88
+Denmark;Danish Krone;6.57
+Lithuania;Euro;0.88
+Portugal;Euro;0.88
+Estonia;Euro;0.88
+Switzerland;Swiss Franc;0.94

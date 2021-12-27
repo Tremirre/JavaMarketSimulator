@@ -21,6 +21,7 @@ public class RandomHolderFactory extends HolderFactory {
         var date = rand.yieldDate();
         var address = Address.getRandomAddress();
         var name = rand.useCompanyName();
+        name = name == null ? rand.yieldRandomString(10) : name;
         var initialStockValue = rand.yieldRandomInteger(15) + 5;
         var initialStockSize = (Constants.COMPANY_GENERATION_CONSTANT/initialStockValue) + rand.yieldRandomInteger(20);
         return new Company(id++, initialStockSize, name, date, address, initialStockValue, 0 ,0, 0,0);
