@@ -36,7 +36,7 @@ public class Simulation {
         }
         this.markets.add(market);
         this.investors = new HashSet<>();
-        for (int i = 0; i < 300; i++) {
+        for (int i = 0; i < 200; i++) {
             var newInvestor = new RandomHolderFactory().createInvestor();
             newInvestor.giveAccessToMarkets(this.markets);
             this.investors.add(newInvestor);

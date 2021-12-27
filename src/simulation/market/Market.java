@@ -6,6 +6,7 @@ import simulation.holders.AssetHolder;
 import simulation.offer.BuyOffer;
 import simulation.offer.SellOffer;
 import simulation.offer.StandardOfferFactory;
+import simulation.util.RandomService;
 
 import java.util.ArrayList;
 import java.util.HashSet;

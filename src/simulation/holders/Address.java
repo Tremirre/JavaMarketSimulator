@@ -1,6 +1,6 @@
 package simulation.holders;
 
-import simulation.util.RandomDataGenerator;
+import simulation.util.RandomService;
 
 public class Address {
     private String country;
@@ -18,7 +18,7 @@ public class Address {
     }
 
     public static Address getRandomAddress() {
-        var rand = RandomDataGenerator.getInstance();
+        var rand = RandomService.getInstance();
         String country = rand.yieldCountry();
         return new Address(country,
                 rand.yieldCityForCountry(country),

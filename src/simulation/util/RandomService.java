@@ -5,8 +5,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
 
-public class RandomDataGenerator {
-    private static RandomDataGenerator instance;
+public class RandomService {
+    private static RandomService instance;
     private final HashMap<String, String[]> citiesCountryMapping;
     private final HashMap<String, HashSet<String>> countriesCurrencyMapping;
     private final HashMap<String, Double> currenciesRates;
@@ -18,7 +18,7 @@ public class RandomDataGenerator {
     private final Random generator;
     private static final int SEED = -1;
 
-    private RandomDataGenerator() {
+    private RandomService() {
         System.out.println("[LOGGING] Initializing RandomDataGenerator...");
         final String addressPath = "resource\\address_data\\";
         final String holdersPath = "resource\\holders_data\\";
@@ -157,9 +157,9 @@ public class RandomDataGenerator {
         return String.valueOf(year) + '-' + monthD + '-' + dayD;
     }
 
-    public static RandomDataGenerator getInstance() {
+    public static RandomService getInstance() {
         if (instance == null) {
-            instance = new RandomDataGenerator();
+            instance = new RandomService();
         }
         return instance;
     }

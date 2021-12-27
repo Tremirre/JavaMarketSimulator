@@ -1,11 +1,11 @@
 package simulation.asset;
 
-import simulation.util.RandomDataGenerator;
+import simulation.util.RandomService;
 
 public class RandomNonDiscreteAssetFactory extends NonDiscreteAssetFactory {
     @Override
     public String createCurrencyAsset() {
-        var rand = RandomDataGenerator.getInstance();
+        var rand = RandomService.getInstance();
         var currencyName = rand.useCurrency();
         var rate = rand.yieldChosenCurrencyExchangeRate(currencyName);
         var countriesOfUse = rand.yieldChosenCurrencyCountriesOfUse(currencyName);
@@ -16,7 +16,7 @@ public class RandomNonDiscreteAssetFactory extends NonDiscreteAssetFactory {
 
     @Override
     public String createCommodityAsset() {
-        var rand = RandomDataGenerator.getInstance();
+        var rand = RandomService.getInstance();
         return null;
         //AssetManager.getInstance().addCommodityAsset();
     }

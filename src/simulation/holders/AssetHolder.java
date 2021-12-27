@@ -2,7 +2,7 @@ package simulation.holders;
 
 import simulation.asset.AssetManager;
 import simulation.market.Market;
-import simulation.util.RandomDataGenerator;
+import simulation.util.RandomService;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -25,7 +25,7 @@ public abstract class AssetHolder extends Thread {
     }
 
     public void sendBuyOffer(Market market) {
-        var rand = RandomDataGenerator.getInstance();
+        var rand = RandomService.getInstance();
         String chosenAsset = (String) rand.sampleElement(market.getAvailableAssetTypes().toArray());
         double price = AssetManager.getInstance().getAssetData(chosenAsset).getLatestAverageSellingPrice() * 0.9;
         double amount = this.investmentBudget > price * 2 && rand.yieldRandomNumber(1.0) > 0.7 ? 1.0 : 2.0;
@@ -59,7 +59,7 @@ public abstract class AssetHolder extends Thread {
         availableAssets.retainAll(market.getAvailableAssetTypes());
         if (availableAssets.isEmpty())
             return;
-        var rand = RandomDataGenerator.getInstance();
+        var rand = RandomService.getInstance();
         String chosenAsset = (String) rand.sampleElement(availableAssets.toArray());
         double availableAmount = this.storedAssets.get(chosenAsset);
         double amount = availableAmount > 2 ? (double) Math.round(0.5 * availableAmount) : availableAmount;
@@ -93,7 +93,7 @@ public abstract class AssetHolder extends Thread {
     }
 
     public void generateOrders() {
-        var rand = RandomDataGenerator.getInstance();
+        var rand = RandomService.getInstance();
         var market = (Market) rand.sampleElement(this.availableMarkets.toArray());
         if (market.countSenderOffers(this.id) > 4)
             return;

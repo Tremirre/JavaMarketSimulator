@@ -1,7 +1,7 @@
 package simulation.holders;
 
 import simulation.util.Constants;
-import simulation.util.RandomDataGenerator;
+import simulation.util.RandomService;
 
 public class Investor extends AssetHolder {
     private String firstName;
@@ -16,7 +16,7 @@ public class Investor extends AssetHolder {
     }
 
     public void increaseFunds(double probability){
-        if (RandomDataGenerator.getInstance().yieldRandomNumber(1) < probability) {
+        if (RandomService.getInstance().yieldRandomNumber(1) < probability) {
             this.investmentBudget += 50;
         }
     }
@@ -33,7 +33,7 @@ public class Investor extends AssetHolder {
             this.increaseFunds(0.05);
             this.generateOrders();
             try {
-                Thread.sleep(RandomDataGenerator.getInstance().yieldRandomInteger(Constants.INVESTOR_SLEEP_TIME_DEVIATION) +
+                Thread.sleep(RandomService.getInstance().yieldRandomInteger(Constants.INVESTOR_SLEEP_TIME_DEVIATION) +
                         Constants.BASE_INVESTOR_SLEEP_TIME);
             } catch (InterruptedException e) {
                 e.printStackTrace();
