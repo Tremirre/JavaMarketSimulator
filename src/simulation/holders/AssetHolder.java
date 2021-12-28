@@ -30,7 +30,7 @@ public abstract class AssetHolder extends Thread {
         var rand = RandomService.getInstance();
         String chosenAsset = (String) rand.sampleElement(market.getAvailableAssetTypes().toArray());
         double price = AssetManager.getInstance().getAssetData(chosenAsset).getLatestAverageSellingPrice() * 0.9;
-        double amount = 1.0;
+        double amount;
         if (!AssetManager.getInstance().getAssetData(chosenAsset).isSplittable()) {
             amount = rand.yieldRandomInteger(5);
             while (this.investmentBudget < price * amount && amount > 0) {
@@ -49,7 +49,8 @@ public abstract class AssetHolder extends Thread {
         market.addBuyOffer(chosenAsset, this, price, amount);
     }
 
-    public void processBuyOffer(String assetType, double price, double amount) {
+    public void processBuyOffer(String assetType, double overPay, double amount) {
+        this.investmentBudget += overPay;
         double newAmount = this.storedAssets.getOrDefault(assetType, 0.0) + amount;
         this.storedAssets.put(assetType, newAmount);
     }

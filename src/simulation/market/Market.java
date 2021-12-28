@@ -48,7 +48,8 @@ abstract public class Market {
         var commonPrice = sellOffer.getPrice();
         var assetType = sellOffer.getAssetType();
         var amount = Math.min(sellOffer.getSize(), buyOffer.getSize());
-        buyer.processBuyOffer(assetType, commonPrice, amount);
+        var priceDiff = buyOffer.getPrice() * buyOffer.getSize() - sellOffer.getPrice() * amount;
+        buyer.processBuyOffer(assetType, priceDiff, amount);
         seller.processSellOffer(assetType, commonPrice, amount);
         AssetManager.getInstance().getAssetData(assetType).addLatestSellingPrice(commonPrice);
         sellOffer.setSize(sellOffer.getSize() - amount);
