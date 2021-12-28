@@ -10,6 +10,7 @@ abstract public class AssetData {
     private double minimalPrice;
     private ArrayList<Double> sellingPrices;
     private ArrayList<Double> salesBuffer;
+    protected boolean splittable;
 
     protected AssetData(int id, String name, double openingPrice) {
         this.id = id;
@@ -29,6 +30,8 @@ abstract public class AssetData {
     public double getLatestAverageSellingPrice() {
         return this.sellingPrices.get(this.sellingPrices.size() - 1);
     }
+
+    public boolean isSplittable() { return this.splittable; }
 
     public void addLatestSellingPrice(double price) {
         this.salesBuffer.add(price);

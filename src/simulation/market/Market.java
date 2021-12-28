@@ -1,18 +1,18 @@
 package simulation.market;
 
+import simulation.SimulationConfig;
 import simulation.asset.AssetManager;
 import simulation.holders.Address;
 import simulation.holders.AssetHolder;
 import simulation.offer.BuyOffer;
 import simulation.offer.SellOffer;
 import simulation.offer.StandardOfferFactory;
-import simulation.util.RandomService;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 
 abstract public class Market {
-    final static int MAX_DAYS = 10;
+    final static int MAX_DAYS = 20;
     private String name;
     private Address address;
     private double buyFee;
@@ -27,6 +27,7 @@ abstract public class Market {
         this.sellFee = sellFee;
         this.buyOffers = new ArrayList<>();
         this.sellOffers = new ArrayList<>();
+        this.initializeMarket();
     }
 
     abstract public void initializeMarket();
@@ -65,7 +66,7 @@ abstract public class Market {
                 this.removeBuyOffer(buyOffer.getID());
                 break;
             }
-            if (processedSellOrders.size() > 100)
+            if (processedSellOrders.size() > SimulationConfig.getInstance().getMaxTransactionsPerDayPerMarket())
                 break;
         }
         for (var id : processedSellOrders)

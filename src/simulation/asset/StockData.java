@@ -6,5 +6,6 @@ public class StockData extends AssetData{
     protected StockData(int id, String name, double openingPrice, int companyID) {
         super(id, name, openingPrice);
         this.companyID = companyID;
+        this.splittable = false;
     }
 }

@@ -25,11 +25,24 @@ public abstract class AssetHolder extends Thread {
     }
 
     public void sendBuyOffer(Market market) {
+        if (this.investmentBudget < 1)
+            return;
         var rand = RandomService.getInstance();
         String chosenAsset = (String) rand.sampleElement(market.getAvailableAssetTypes().toArray());
         double price = AssetManager.getInstance().getAssetData(chosenAsset).getLatestAverageSellingPrice() * 0.9;
-        double amount = this.investmentBudget > price * 2 && rand.yieldRandomNumber(1.0) > 0.7 ? 1.0 : 2.0;
-        if (this.investmentBudget < price * amount) {
+        double amount = 1.0;
+        if (!AssetManager.getInstance().getAssetData(chosenAsset).isSplittable()) {
+            amount = rand.yieldRandomInteger(5);
+            while (this.investmentBudget < price * amount && amount > 0) {
+                amount--;
+            }
+        } else {
+            amount = rand.yieldRandomNumber(3.5) + 0.5;
+            while (this.investmentBudget < price * amount && amount > 0.1) {
+                amount/=2;
+            }
+        }
+        if (amount < 0.25) {
             return;
         }
         this.investmentBudget -= price * amount;
@@ -129,6 +142,4 @@ public abstract class AssetHolder extends Thread {
     }
 
     abstract public void print();
-
-    abstract public void run();
 }

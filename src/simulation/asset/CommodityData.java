@@ -8,6 +8,7 @@ public class CommodityData extends AssetData{
         super(id, name, openingPrice);
         this.traidingUnit = tU;
         this.traidingCurrency = tC;
+        this.splittable = true;
     }
 
     @Override

@@ -9,16 +9,7 @@ public class CurrencyData extends AssetData {
     protected CurrencyData(int id, String name, double openingPrice, String[] countries) {
         super(id, name, openingPrice);
         this.countriesOfUse = new HashSet<>(Arrays.asList(countries));
-    }
-
-    @Override
-    public double getLatestAverageSellingPrice() {
-        return 0;
-    }
-
-    @Override
-    public void addLatestSellingPrice(double price) {
-
+        this.splittable = true;
     }
 
     public void addCountryOfUse(String country) {

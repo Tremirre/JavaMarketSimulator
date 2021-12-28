@@ -10,7 +10,6 @@ public class StockMarket extends Market{
     public StockMarket(String name, double buyFee, double sellFee, String currency) {
         super(name + " Stock", buyFee, sellFee);
         this.traidingCurrency = currency;
-        this.stockMarketIndexes = new ArrayList<>();
     }
 
     public void addStockMarketIndex(StockMarketIndex idx) {
@@ -19,7 +18,7 @@ public class StockMarket extends Market{
 
     @Override
     public void initializeMarket() {
-
+        this.stockMarketIndexes = new ArrayList<>();
     }
 
     @Override

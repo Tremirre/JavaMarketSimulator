@@ -4,6 +4,7 @@ import simulation.asset.AssetManager;
 import simulation.holders.Company;
 import simulation.holders.Investor;
 import simulation.holders.RandomHolderFactory;
+import simulation.market.CurrenciesMarket;
 import simulation.market.Market;
 import simulation.market.StockMarket;
 import simulation.market.StockMarketIndex;
@@ -21,29 +22,9 @@ public class Simulation {
     public Simulation() {
         this.simConfig = new SimulationConfig();
         this.markets = new HashSet<>();
-        var market = new StockMarket("Test", 0.01, 0.02, "USD");
-        this.companies = new ArrayList<>();
-        var stockIndex = new StockMarketIndex();
-
-        for (int i = 0; i < 10; i++) {
-            this.companies.add(new RandomHolderFactory().createCompany());
-            stockIndex.addCompany(this.companies.get(this.companies.size() - 1));
-        }
-
-        market.addStockMarketIndex(stockIndex);
-        for (var company : companies) {
-            company.sendSellOffer(market);
-        }
-        this.markets.add(market);
-        this.investors = new HashSet<>();
-        for (int i = 0; i < 200; i++) {
-            var newInvestor = new RandomHolderFactory().createInvestor();
-            newInvestor.giveAccessToMarkets(this.markets);
-            this.investors.add(newInvestor);
-        }
-        for (var investor : this.investors) {
-            investor.start();
-        }
+        this.setupCurrenciesMarket();
+        this.setupStockMarket();
+        this.setupInvestors();
     }
 
     public void runSimulationDay() {
@@ -63,6 +44,40 @@ public class Simulation {
     public void stopSimulation() {
         for (var investor : this.investors) {
             investor.stopRunning();
+        }
+    }
+
+    private void setupStockMarket() {
+        var market = new StockMarket("Test", 0.01, 0.02, "US Dollar");
+        this.companies = new ArrayList<>();
+        var stockIndex = new StockMarketIndex();
+
+        for (int i = 0; i < 10; i++) {
+            this.companies.add(new RandomHolderFactory().createCompany());
+            stockIndex.addCompany(this.companies.get(this.companies.size() - 1));
+        }
+
+        market.addStockMarketIndex(stockIndex);
+        for (var company : companies) {
+            company.sendSellOffer(market);
+        }
+        this.markets.add(market);
+    }
+
+    private void setupCurrenciesMarket() {
+        var market = new CurrenciesMarket("Test", 0.01, 0.02);
+        this.markets.add(market);
+    }
+
+    private void setupInvestors() {
+        this.investors = new HashSet<>();
+        for (int i = 0; i < 200; i++) {
+            var newInvestor = new RandomHolderFactory().createInvestor();
+            newInvestor.giveAccessToMarkets(this.markets);
+            this.investors.add(newInvestor);
+        }
+        for (var investor : this.investors) {
+            investor.start();
         }
     }
 }
