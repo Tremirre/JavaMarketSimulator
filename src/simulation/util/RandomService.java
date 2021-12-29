@@ -7,55 +7,92 @@ import java.util.*;
 
 public class RandomService {
     private static RandomService instance;
+    private final static String addressPath = "resource\\address_data\\";
+    private final static String holdersPath = "resource\\holders_data\\";
+    private final static String assetPath = "resource\\asset_data\\";
+
     private final HashMap<String, String[]> citiesCountryMapping;
+
     private final HashMap<String, HashSet<String>> countriesCurrencyMapping;
     private final HashMap<String, Double> currenciesRates;
     private final ArrayList<String> unusedCurrencies;
+
+    private final HashMap<String, Double> commoditiesRates;
+    private final HashMap<String, String> commoditiesUnits;
+    private final ArrayList<String>  unusedCommodities;
+
     private String[] streets;
     private String[] names;
     private String[] surnames;
     private ArrayList<String> companyNames;
     private final Random generator;
-    private static final int SEED = -1;
+    private static final int SEED = 0;
+
+    private void loadCurrenciesAndCountries() throws IOException {
+        String countriesCurrencies = Files.readString(Path.of(assetPath + "countries_currencies.txt"));
+        String[] currencyRecords = countriesCurrencies.split("\n");
+        for (var record : currencyRecords) {
+            String[] unpackedRecord = record.split(";");
+            var country = unpackedRecord[0];
+            var currency = unpackedRecord[1];
+            var rate = Double.parseDouble(unpackedRecord[2]);
+            citiesCountryMapping.put(country, null);
+            this.currenciesRates.put(currency, rate);
+            if (!this.countriesCurrencyMapping.containsKey(currency)) {
+                this.countriesCurrencyMapping.put(currency, new HashSet<>());
+            }
+            this.countriesCurrencyMapping.get(currency).add(country);
+        }
+        this.unusedCurrencies.addAll(this.countriesCurrencyMapping.keySet());
+    }
+
+    private void loadCities() throws IOException {
+        for (String country : this.citiesCountryMapping.keySet()) {
+            String cities = Files.readString(Path.of(addressPath + country.toLowerCase() + ".txt"));
+            String[] citiesList = cities.split(";");
+            citiesCountryMapping.put(country, citiesList);
+        }
+    }
+
+    private void loadCommodities() throws IOException {
+        String commodities = Files.readString(Path.of(assetPath + "commodity_data.txt"));
+        String[] commoditiesRecords = commodities.split("\n");
+        for (String record : commoditiesRecords) {
+            String[] unpackedRecord = record.split(";");
+            var commodityName = unpackedRecord[0];
+            var commodityUnit = unpackedRecord[1];
+            var commodityRate = Double.parseDouble(unpackedRecord[2]);
+            this.commoditiesRates.put(commodityName, commodityRate);
+            this.commoditiesUnits.put(commodityName, commodityUnit);
+            this.unusedCommodities.add(commodityName);
+        }
+    }
+
+    private void loadAddressData() throws IOException {
+        String allStreets = Files.readString(Path.of(addressPath + "street_names.txt"));
+        this.streets = allStreets.split(";");
+        String allNames = Files.readString(Path.of(holdersPath + "names.txt"));
+        this.names = allNames.split(";");
+        String allSurnames = Files.readString(Path.of(holdersPath + "surnames.txt"));
+        this.surnames = allSurnames.split(";");
+        String allCompanyNames = Files.readString(Path.of(holdersPath + "companies.txt"));
+        this.companyNames = new ArrayList<>(Arrays.asList(allCompanyNames.split(";")));
+    }
 
     private RandomService() {
         System.out.println("[LOGGING] Initializing RandomDataGenerator...");
-        final String addressPath = "resource\\address_data\\";
-        final String holdersPath = "resource\\holders_data\\";
         this.citiesCountryMapping = new HashMap<>();
         this.countriesCurrencyMapping = new HashMap<>();
         this.currenciesRates = new HashMap<>();
+        this.commoditiesRates = new HashMap<>();
+        this.commoditiesUnits = new HashMap<>();
         this.unusedCurrencies = new ArrayList<>();
+        this.unusedCommodities = new ArrayList<>();
         try {
-            String countriesCurrencies = Files.readString(Path.of(addressPath + "countries_currencies.txt"));
-            String[] currencyRecords = countriesCurrencies.split("\n");
-            ArrayList<String> countriesList = new ArrayList<>();
-            for (var record : currencyRecords) {
-                String[] unpackedRecord = record.split(";");
-                var country = unpackedRecord[0];
-                var currency = unpackedRecord[1];
-                var rate = Double.parseDouble(unpackedRecord[2]);
-                countriesList.add(country);
-                this.currenciesRates.put(currency, rate);
-                if (!this.countriesCurrencyMapping.containsKey(currency)) {
-                    this.countriesCurrencyMapping.put(currency, new HashSet<>());
-                }
-                this.countriesCurrencyMapping.get(currency).add(country);
-            }
-            this.unusedCurrencies.addAll(this.countriesCurrencyMapping.keySet());
-            for (String country : countriesList) {
-                String cities = Files.readString(Path.of(addressPath + country.toLowerCase() + ".txt"));
-                String[] citiesList = cities.split(";");
-                citiesCountryMapping.put(country, citiesList);
-            }
-            String allStreets = Files.readString(Path.of(addressPath + "street_names.txt"));
-            this.streets = allStreets.split(";");
-            String allNames = Files.readString(Path.of(holdersPath + "names.txt"));
-            this.names = allNames.split(";");
-            String allSurnames = Files.readString(Path.of(holdersPath + "surnames.txt"));
-            this.surnames = allSurnames.split(";");
-            String allCompanyNames = Files.readString(Path.of(holdersPath + "companies.txt"));
-            this.companyNames = new ArrayList<>(Arrays.asList(allCompanyNames.split(";")));
+            this.loadCurrenciesAndCountries();
+            this.loadCities();
+            this.loadCommodities();
+            this.loadAddressData();
         } catch (IOException e) {
             System.out.println("Failed to load a resource!");
             System.out.println(e.getMessage());
@@ -116,6 +153,18 @@ public class RandomService {
 
     public String useCurrency() {
         return this.takeUsableResource(this.unusedCurrencies);
+    }
+
+    public String useCommodity() {
+        return this.takeUsableResource(this.unusedCommodities);
+    }
+
+    public String yieldChosenCommodityUnit(String commodity) {
+        return this.commoditiesUnits.get(commodity);
+    }
+
+    public double yieldChosenCommodityExchangeRate(String commodity) {
+        return this.commoditiesRates.get(commodity);
     }
 
     public HashSet<String> yieldChosenCurrencyCountriesOfUse(String currency) {

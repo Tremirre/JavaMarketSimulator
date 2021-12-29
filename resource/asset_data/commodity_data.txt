@@ -1,0 +1,32 @@
+Crude Oil;barrel;77
+Coal;metric ton;171
+Uranium;pound;43.7
+Tin;kilogram;39.26
+Aluminum;kilogram;2.8
+Gold;ounce;1804.92
+Silver;ounce;22.83
+Copper;ounce;4.41
+Steel;metric ton;715.25
+Wheat;bushel;788.75
+Cheese;pound;1.75
+Coffee;pound;228.9
+Wool;kilogram;13.58
+Rice;hundredweight;14.76
+Corn;bushel;605.5
+Beef;kilogram;21.65
+Live Cattle;pound;139.37
+Gasoline;gallon;2.26
+Heating Oil;gallon;2.37
+Naphtha;kilogram;0.69
+Copper;pound;4.4
+Iron Ore;metric ton;115
+Lithium;kilogram;42.08
+Platinum;ounce;969.49
+Lumber;board feet;1.156
+Sugar;pound;19.1
+Tea;kilogram;2.92
+Cocoa;metric ton;2515
+Nickel;kilogram;20.138
+Lead;kilogram;2.308
+Molybdenum;kilogram;44.75
+Cobalt;kilogram;70.5

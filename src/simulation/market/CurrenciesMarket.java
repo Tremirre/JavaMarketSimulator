@@ -30,8 +30,8 @@ public class CurrenciesMarket extends Market{
         return this.currencies;
     }
 
-    public void addNewCurrency(String assetType) {
-        this.currencies.add(assetType);
-        this.ios.sendInitialOffer(this, assetType);
+    public void addNewCurrency(String currency) {
+        this.currencies.add(currency);
+        this.ios.sendInitialOffer(this, currency);
     }
 }

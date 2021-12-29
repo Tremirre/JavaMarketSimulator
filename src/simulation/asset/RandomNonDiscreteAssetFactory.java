@@ -17,7 +17,11 @@ public class RandomNonDiscreteAssetFactory extends NonDiscreteAssetFactory {
     @Override
     public String createCommodityAsset() {
         var rand = RandomService.getInstance();
-        return null;
-        //AssetManager.getInstance().addCommodityAsset();
+        var commodityName = rand.useCommodity();
+        var rate = rand.yieldChosenCommodityExchangeRate(commodityName);
+        var unit = rand.yieldChosenCommodityUnit(commodityName);
+        return AssetManager.getInstance()
+                .addCommodityAsset(commodityName, rate, unit, "US Dollar")
+                .getUniqueIdentifyingName();
     }
 }

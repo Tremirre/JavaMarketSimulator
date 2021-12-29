@@ -4,10 +4,7 @@ import simulation.asset.AssetManager;
 import simulation.holders.Company;
 import simulation.holders.Investor;
 import simulation.holders.RandomHolderFactory;
-import simulation.market.CurrenciesMarket;
-import simulation.market.Market;
-import simulation.market.StockMarket;
-import simulation.market.StockMarketIndex;
+import simulation.market.*;
 import simulation.util.Constants;
 import simulation.util.GlobalMarketLock;
 
@@ -22,9 +19,9 @@ public class Simulation {
     public Simulation() {
         this.markets = new ArrayList<>();
         this.companies = new ArrayList<>();
+        this.setupStockMarket();
         this.setupCurrenciesMarket();
-        this.setupStockMarket();
-        this.setupStockMarket();
+        this.setupCommoditiesMarket();
         this.setupInvestors();
     }
 
@@ -64,6 +61,11 @@ public class Simulation {
 
     private void setupCurrenciesMarket() {
         var market = new CurrenciesMarket("Test", 0.01, 0.02);
+        this.markets.add(market);
+    }
+
+    private void setupCommoditiesMarket() {
+        var market = new CommoditiesMarket("Test", 0.01, 0.2);
         this.markets.add(market);
     }
 

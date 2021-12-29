@@ -10,14 +10,4 @@ public class CommodityData extends AssetData{
         this.traidingCurrency = tC;
         this.splittable = true;
     }
-
-    @Override
-    public double getLatestAverageSellingPrice() {
-        return 0;
-    }
-
-    @Override
-    public void addLatestSellingPrice(double price) {
-
-    }
 }

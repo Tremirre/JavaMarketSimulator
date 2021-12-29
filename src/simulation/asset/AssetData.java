@@ -45,6 +45,9 @@ abstract public class AssetData {
         double averagePrice = this.salesBuffer.isEmpty() ? this.getLatestAverageSellingPrice() : 0;
         for (var price : this.salesBuffer)
             averagePrice += price/this.salesBuffer.size();
+        /*
+        if (averagePrice < openingPrice/10)
+            averagePrice *= 2;*/
         this.sellingPrices.add(averagePrice);
         this.salesBuffer.clear();
     }
