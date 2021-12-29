@@ -39,20 +39,11 @@ public class Simulation {
             e.printStackTrace();
         }
         GlobalMarketLock.writeLock();
-        /*for (var market : this.markets) {
+        for (var market : this.markets) {
             market.processAllOffers();
             market.updateOffers();
             market.removeOutdatedOffers();
-        }*/
-
-        var market1 = this.markets.get(0);
-        var market2 = this.markets.get(1);
-        market1.processAllOffers();
-        market2.processAllOffers();
-        market1.updateOffers();
-        market2.updateOffers();
-        market1.removeOutdatedOffers();
-        market2.removeOutdatedOffers();
+        }
         GlobalMarketLock.writeUnlock();
         AssetManager.getInstance().processEndDay();
     }
@@ -71,11 +62,7 @@ public class Simulation {
             this.companies.add(new RandomHolderFactory().createCompany());
             stockIndex.addCompany(this.companies.get(this.companies.size() - 1));
         }
-
         market.addStockMarketIndex(stockIndex);
-        for (var company : companies) {
-            company.sendSellOffer(market);
-        }
         this.markets.add(market);
     }
 
