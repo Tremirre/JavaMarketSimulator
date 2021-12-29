@@ -25,7 +25,7 @@ public class Simulation {
         this.simConfig = new SimulationConfig();
         this.markets = new ArrayList<>();
         this.companies = new ArrayList<>();
-        //this.setupCurrenciesMarket();
+        this.setupCurrenciesMarket();
         this.setupStockMarket();
         this.setupStockMarket();
         this.setupInvestors();
@@ -44,8 +44,8 @@ public class Simulation {
             market.updateOffers();
             market.removeOutdatedOffers();
         }
-        GlobalMarketLock.writeUnlock();
         AssetManager.getInstance().processEndDay();
+        GlobalMarketLock.writeUnlock();
     }
 
     public void stopSimulation() {
@@ -81,14 +81,5 @@ public class Simulation {
         for (var investor : this.investors) {
             investor.start();
         }
-    }
-
-    private double countInvestorsAssets() {
-        double total = 0;
-        for (var inv : this.investors) {
-            for (var entry : inv.storedAssets.entrySet())
-                total += entry.getValue();
-        }
-        return total;
     }
 }
