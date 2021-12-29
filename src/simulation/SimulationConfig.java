@@ -3,6 +3,15 @@ package simulation;
 public class SimulationConfig {
     private static SimulationConfig instance;
     private int maxTransactionsPerDayPerMarket = 200;
+    private int maxOfferAge = 20;
+
+    public int getMaxOfferAge() {
+        return maxOfferAge;
+    }
+
+    public void setMaxOfferAge(int maxOfferAge) {
+        this.maxOfferAge = maxOfferAge;
+    }
 
     public int getMaxTransactionsPerDayPerMarket() {
         return maxTransactionsPerDayPerMarket;

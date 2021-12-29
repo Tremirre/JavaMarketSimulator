@@ -5,6 +5,7 @@ import simulation.asset.AssetManager;
 import simulation.holders.Address;
 import simulation.holders.AssetHolder;
 import simulation.offer.BuyOffer;
+import simulation.offer.Offer;
 import simulation.offer.SellOffer;
 import simulation.offer.StandardOfferFactory;
 
@@ -12,7 +13,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 
 abstract public class Market {
-    final static int MAX_DAYS = 20;
     private String name;
     private Address address;
     private double buyFee;
@@ -58,8 +58,8 @@ abstract public class Market {
 
     public void processAllOffers() {
         ArrayList<Integer> processedSellOrders = new ArrayList<>();
-        for (SellOffer sellOffer : this.sellOffers) {
-            for (BuyOffer buyOffer : this.buyOffers) {
+        for (var sellOffer : this.sellOffers) {
+            for (var buyOffer : this.buyOffers) {
                 if (!sellOffer.getAssetType().equals(buyOffer.getAssetType()) ||
                         sellOffer.getPrice() > buyOffer.getPrice()) continue;
                 if (!this.processOffer(buyOffer, sellOffer))
@@ -74,20 +74,27 @@ abstract public class Market {
             this.removeSellOffer(id);
     }
 
+    protected void removeFromOffersList(ArrayList<? extends Offer> offers, int offerID) {
+        for (var offer : offers) {
+            if (offer.getID() == offerID) {
+                offers.remove(offer);
+                return;
+            }
+        }
+    }
+
     public void removeBuyOffer(int offerID) {
-        buyOffers.removeIf(offer -> offer.getID() == offerID);
+        this.removeFromOffersList(this.buyOffers, offerID);
     }
 
     public void removeSellOffer(int offerID) {
-        sellOffers.removeIf(offer -> offer.getID() == offerID);
+        this.removeFromOffersList(this.sellOffers, offerID);
     }
 
     public void updateOffers() {
-        for (var offer : this.sellOffers) {
-            offer.updatePrice();
-            offer.makeOlder();
-        }
-        for (var offer : this.buyOffers) {
+        var allOffers = new HashSet<Offer>(this.buyOffers);
+        allOffers.addAll(this.sellOffers);
+        for (var offer : allOffers) {
             offer.updatePrice();
             offer.makeOlder();
         }
@@ -95,14 +102,11 @@ abstract public class Market {
 
     public void removeOutdatedOffers() {
         var offersForRemoval = new HashSet<Integer>();
-        for (var offer : this.buyOffers) {
-            if (offer.getDaysSinceGiven() > MAX_DAYS) {
-                offer.withdraw();
-                offersForRemoval.add(offer.getID());
-            }
-        }
-        for (var offer : this.sellOffers) {
-            if (offer.getDaysSinceGiven() > MAX_DAYS && offer.getSender().canWithdraw()) {
+        var allOffers = new HashSet<Offer>(this.buyOffers);
+        allOffers.addAll(this.sellOffers);
+        for (var offer : allOffers) {
+            if (offer.getDaysSinceGiven() > SimulationConfig.getInstance().getMaxOfferAge()
+                    && offer.getSender().canWithdraw()) {
                 offer.withdraw();
                 offersForRemoval.add(offer.getID());
             }

@@ -8,8 +8,8 @@ public class StandardOfferFactory implements IOfferFactory {
     @Override
     public Offer createOffer(String assetType, AssetHolder sender, double price, double size, boolean sellOffer) {
         if(sellOffer) {
-            return new SellOffer(StandardOfferFactory.id++, assetType, sender, price, size);
+            return new SellOffer(id++, assetType, sender, price, size);
         }
-        return new BuyOffer(StandardOfferFactory.id++, assetType, sender, price, size);
+        return new BuyOffer(id++, assetType, sender, price, size);
     }
 }

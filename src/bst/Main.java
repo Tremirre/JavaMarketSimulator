@@ -9,7 +9,7 @@ public class Main {
     public static void main(String[] args) {
         var simulation = new Simulation();
         var start = System.nanoTime();
-        for (int i = 0; i < 2* Constants.YEAR; i++) {
+        for (int i = 0; i < 2 * Constants.YEAR; i++) {
             System.out.println("Processing day no. " + i);
             simulation.runSimulationDay();
         }

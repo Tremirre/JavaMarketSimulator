@@ -8,8 +8,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 
 public abstract class AssetHolder extends Thread {
-    protected volatile HashMap<String, Double> storedAssets;
-    protected volatile HashMap<String, Double> assetsOnSale;
+    public volatile HashMap<String, Double> storedAssets;
     private HashSet<Market> availableMarkets;
     protected double investmentBudget;
     protected boolean running = false;
@@ -18,7 +17,6 @@ public abstract class AssetHolder extends Thread {
 
     public AssetHolder(int id, double investmentBudget) {
         this.storedAssets = new HashMap<>();
-        this.assetsOnSale = new HashMap<>();
         this.availableMarkets = new HashSet<>();
         this.investmentBudget = investmentBudget;
         this.id = id;
@@ -83,19 +81,11 @@ public abstract class AssetHolder extends Thread {
             this.storedAssets.put(chosenAsset, left);
         else
             this.storedAssets.remove(chosenAsset);
-        this.assetsOnSale.put(chosenAsset, this.assetsOnSale.getOrDefault(chosenAsset, 0.0) + amount);
         market.addSellOffer(chosenAsset, this, price, amount);
     }
 
     public void processSellOffer(String assetType, double price, double amount) {
-        if (!this.assetsOnSale.containsKey(assetType))
-            throw new RuntimeException("Invalid asset type in selling order processing: " + assetType);
-        double newAmount = this.assetsOnSale.get(assetType) - amount;
         this.investmentBudget += price * amount;
-        if (newAmount > 0)
-            this.assetsOnSale.replace(assetType, newAmount);
-        else
-            this.assetsOnSale.remove(assetType);
     }
 
     public void processSellWithdrawal(String assetType, double amount) {
