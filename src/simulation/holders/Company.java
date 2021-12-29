@@ -56,12 +56,12 @@ public class Company extends AssetHolder {
         System.out.println("Stock name: " + this.associatedAsset);
     }
 
-    public void sendSellOffer(Market market) {
+    public synchronized void sendSellOffer(Market market) {
         double price = AssetManager.getInstance().getAssetData(this.associatedAsset).getLatestAverageSellingPrice() * 0.8;
         market.addSellOffer(this.associatedAsset, this, price, this.storedAssets.get(this.associatedAsset));
     }
 
-    public void processSellOffer(String assetType, double price, double amount) {
+    public synchronized void processSellOffer(String assetType, double price, double amount) {
         this.storedAssets.put(this.associatedAsset, this.storedAssets.get(this.associatedAsset) - amount);
         this.revenue += price;
     }

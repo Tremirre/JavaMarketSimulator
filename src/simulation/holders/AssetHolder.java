@@ -8,8 +8,8 @@ import java.util.HashMap;
 import java.util.HashSet;
 
 public abstract class AssetHolder extends Thread {
-    HashMap<String, Double> storedAssets;
-    HashMap<String, Double> assetsOnSale;
+    protected volatile HashMap<String, Double> storedAssets;
+    protected volatile HashMap<String, Double> assetsOnSale;
     private HashSet<Market> availableMarkets;
     protected double investmentBudget;
     protected boolean running = false;

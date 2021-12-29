@@ -6,7 +6,6 @@ import simulation.util.Constants;
 import simulation.util.DataExporter;
 
 public class Main {
-
     public static void main(String[] args) {
         var simulation = new Simulation();
         var start = System.nanoTime();

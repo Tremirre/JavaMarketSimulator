@@ -48,7 +48,7 @@ abstract public class Market {
         var commonPrice = sellOffer.getPrice();
         var assetType = sellOffer.getAssetType();
         var amount = Math.min(sellOffer.getSize(), buyOffer.getSize());
-        var priceDiff = buyOffer.getPrice() * buyOffer.getSize() - sellOffer.getPrice() * amount;
+        var priceDiff = buyOffer.getPrice() * buyOffer.getSize() - commonPrice * amount;
         buyer.processBuyOffer(assetType, priceDiff, amount);
         seller.processSellOffer(assetType, commonPrice, amount);
         AssetManager.getInstance().getAssetData(assetType).addLatestSellingPrice(commonPrice);
@@ -56,7 +56,7 @@ abstract public class Market {
         return (sellOffer.getSize() > 0);
     }
 
-    public synchronized void processAllOffers() {
+    public void processAllOffers() {
         ArrayList<Integer> processedSellOrders = new ArrayList<>();
         for (SellOffer sellOffer : this.sellOffers) {
             for (BuyOffer buyOffer : this.buyOffers) {
@@ -82,7 +82,7 @@ abstract public class Market {
         sellOffers.removeIf(offer -> offer.getID() == offerID);
     }
 
-    public synchronized void updateOffers() {
+    public void updateOffers() {
         for (var offer : this.sellOffers) {
             offer.updatePrice();
             offer.makeOlder();
@@ -93,7 +93,7 @@ abstract public class Market {
         }
     }
 
-    public synchronized void removeOutdatedOffers() {
+    public void removeOutdatedOffers() {
         var offersForRemoval = new HashSet<Integer>();
         for (var offer : this.buyOffers) {
             if (offer.getDaysSinceGiven() > MAX_DAYS) {

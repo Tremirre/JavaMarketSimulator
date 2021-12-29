@@ -9,6 +9,7 @@ import simulation.market.Market;
 import simulation.market.StockMarket;
 import simulation.market.StockMarketIndex;
 import simulation.util.Constants;
+import simulation.util.GlobalMarketLock;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -22,7 +23,9 @@ public class Simulation {
     public Simulation() {
         this.simConfig = new SimulationConfig();
         this.markets = new HashSet<>();
-        this.setupCurrenciesMarket();
+        this.companies = new ArrayList<>();
+        //this.setupCurrenciesMarket();
+        this.setupStockMarket();
         this.setupStockMarket();
         this.setupInvestors();
     }
@@ -33,12 +36,14 @@ public class Simulation {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        GlobalMarketLock.writeLock();
         for (var market : this.markets) {
             market.processAllOffers();
             market.updateOffers();
             market.removeOutdatedOffers();
-            AssetManager.getInstance().processEndDay();
         }
+        GlobalMarketLock.writeUnlock();
+        AssetManager.getInstance().processEndDay();
     }
 
     public void stopSimulation() {
@@ -49,7 +54,6 @@ public class Simulation {
 
     private void setupStockMarket() {
         var market = new StockMarket("Test", 0.01, 0.02, "US Dollar");
-        this.companies = new ArrayList<>();
         var stockIndex = new StockMarketIndex();
 
         for (int i = 0; i < 10; i++) {
@@ -71,7 +75,7 @@ public class Simulation {
 
     private void setupInvestors() {
         this.investors = new HashSet<>();
-        for (int i = 0; i < 200; i++) {
+        for (int i = 0; i < 10; i++) {
             var newInvestor = new RandomHolderFactory().createInvestor();
             newInvestor.giveAccessToMarkets(this.markets);
             this.investors.add(newInvestor);
