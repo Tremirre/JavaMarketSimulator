@@ -8,8 +8,8 @@ import java.util.HashMap;
 import java.util.HashSet;
 
 public abstract class AssetHolder extends Thread {
-    public volatile HashMap<String, Double> storedAssets;
-    private HashSet<Market> availableMarkets;
+    protected HashMap<String, Double> storedAssets;
+    private  HashSet<Market> availableMarkets;
     protected double investmentBudget;
     protected boolean running = false;
     protected boolean freezeWithdrawal = false;
@@ -22,7 +22,7 @@ public abstract class AssetHolder extends Thread {
         this.id = id;
     }
 
-    public void sendBuyOffer(Market market) {
+    protected void sendBuyOffer(Market market) {
         if (this.investmentBudget < 1)
             return;
         var rand = RandomService.getInstance();
@@ -35,7 +35,7 @@ public abstract class AssetHolder extends Thread {
                 amount--;
             }
         } else {
-            amount = rand.yieldRandomNumber(3.5) + 0.5;
+            amount = rand.yieldRandomNumber(4.5) + 0.5;
             while (this.investmentBudget < price * amount && amount > 0.1) {
                 amount/=2;
             }
@@ -66,8 +66,8 @@ public abstract class AssetHolder extends Thread {
         return newPrice;
     }
 
-    public void sendSellOffer(Market market) {
-        var availableAssets = this.storedAssets.keySet();
+    protected void sendSellOffer(Market market) {
+        var availableAssets = new HashSet<>(this.storedAssets.keySet());
         availableAssets.retainAll(market.getAvailableAssetTypes());
         if (availableAssets.isEmpty())
             return;
@@ -96,11 +96,9 @@ public abstract class AssetHolder extends Thread {
         return price * 0.96;
     }
 
-    public void generateOrders() {
+    protected void generateOrders() {
         var rand = RandomService.getInstance();
         var market = (Market) rand.sampleElement(this.availableMarkets.toArray());
-        if (market.countSenderOffers(this.id) > 4)
-            return;
         if (rand.yieldRandomNumber(1.0) < 0.5)
             this.sendBuyOffer(market);
         if (rand.yieldRandomNumber(1.0) < 0.5)

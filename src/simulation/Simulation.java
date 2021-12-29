@@ -18,18 +18,14 @@ public class Simulation {
     private ArrayList<Market> markets;
     private HashSet<Investor> investors;
     public ArrayList<Company> companies;
-    private SimulationConfig simConfig;
-    public static Simulation instance;
 
     public Simulation() {
-        this.simConfig = new SimulationConfig();
         this.markets = new ArrayList<>();
         this.companies = new ArrayList<>();
-        //this.setupCurrenciesMarket();
+        this.setupCurrenciesMarket();
         this.setupStockMarket();
         this.setupStockMarket();
         this.setupInvestors();
-        instance = this;
     }
 
     public void runSimulationDay() {
@@ -44,8 +40,8 @@ public class Simulation {
             market.updateOffers();
             market.removeOutdatedOffers();
         }
-        GlobalMarketLock.writeUnlock();
         AssetManager.getInstance().processEndDay();
+        GlobalMarketLock.writeUnlock();
     }
 
     public void stopSimulation() {
@@ -81,14 +77,5 @@ public class Simulation {
         for (var investor : this.investors) {
             investor.start();
         }
-    }
-
-    private double countInvestorsAssets() {
-        double total = 0;
-        for (var inv : this.investors) {
-            for (var entry : inv.storedAssets.entrySet())
-                total += entry.getValue();
-        }
-        return total;
     }
 }
