@@ -1,19 +1,16 @@
 package simulation.offer;
 
-import simulation.holders.AssetHolder;
-
 public abstract class Offer {
     protected int id;
     protected String assetType;
-    protected AssetHolder sender;
+    protected Entity sender;
     protected double price;
     protected double size;
     protected int daysSinceGiven = 0;
 
-    Offer(int id, String assetType, AssetHolder sender, double price, double size) {
+    Offer(int id, String assetType, double price, double size) {
         this.id = id;
         this.assetType = assetType;
-        this.sender = sender;
         this.price = price;
         this.size = size;
     }
@@ -23,27 +20,25 @@ public abstract class Offer {
     abstract public void withdraw();
 
     public int getID() {
-        return id;
+        return this.id;
     }
 
     public String getAssetType() {
-        return assetType;
-    }
-
-    public AssetHolder getSender() {
-        return sender;
+        return this.assetType;
     }
 
     public double getPrice() {
-        return price;
+        return this.price;
     }
 
     public double getSize() {
-        return size;
+        return this.size;
     }
 
+    public Entity getSender() {return this.sender;}
+
     public int getDaysSinceGiven() {
-        return daysSinceGiven;
+        return this.daysSinceGiven;
     }
 
     public void makeOlder() {

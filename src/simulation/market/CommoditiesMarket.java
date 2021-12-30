@@ -1,14 +1,13 @@
 package simulation.market;
 
 import simulation.asset.RandomNonDiscreteAssetFactory;
-import simulation.holders.InitialOffersSender;
 import simulation.util.RandomService;
 
 import java.util.HashSet;
 
 public class CommoditiesMarket extends Market{
     private HashSet<String> commodities;
-    private InitialOffersSender ios;
+    private InitialVoidSeller ivs;
 
     public CommoditiesMarket(String name, double buyFee, double sellFee) {
         super(name + " Commodity", buyFee, sellFee);
@@ -17,9 +16,9 @@ public class CommoditiesMarket extends Market{
     @Override
     public void initializeMarket() {
         this.commodities = new HashSet<>();
-        this.ios = new InitialOffersSender();
-        var inititalNumberOfCommodities = RandomService.getInstance().yieldRandomInteger(5) + 1;
-        for (int i = 0; i< inititalNumberOfCommodities; i++) {
+        this.ivs = new InitialVoidSeller();
+        var initialNumberOfCommodities = RandomService.getInstance().yieldRandomInteger(5) + 1;
+        for (int i = 0; i< initialNumberOfCommodities; i++) {
             var newCommodity = new RandomNonDiscreteAssetFactory().createCommodityAsset();
             this.addNewCommodity(newCommodity);
         }
@@ -32,6 +31,6 @@ public class CommoditiesMarket extends Market{
 
     public void addNewCommodity(String commodity) {
         this.commodities.add(commodity);
-        this.ios.sendInitialOffer(this, commodity);
+        this.ivs.sendInitialOffer(this, commodity);
     }
 }

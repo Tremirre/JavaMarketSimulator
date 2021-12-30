@@ -3,11 +3,7 @@ package simulation.market;
 import simulation.SimulationConfig;
 import simulation.asset.AssetManager;
 import simulation.holders.Address;
-import simulation.holders.AssetHolder;
-import simulation.offer.BuyOffer;
-import simulation.offer.Offer;
-import simulation.offer.SellOffer;
-import simulation.offer.StandardOfferFactory;
+import simulation.offer.*;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -32,13 +28,13 @@ abstract public class Market {
 
     abstract public void initializeMarket();
 
-    public synchronized void addBuyOffer(String assetType, AssetHolder sender, double price, double size) {
-        BuyOffer offer = (BuyOffer) new StandardOfferFactory().createOffer(assetType, sender, price, size, false);
+    public synchronized void addBuyOffer(String assetType, BuyingEntity sender, double price, double size) {
+        BuyOffer offer = new StandardOfferFactory().createBuyOffer(assetType, sender, price, size);
         this.buyOffers.add(offer);
     }
 
-    public synchronized void addSellOffer(String assetType, AssetHolder sender, double price, double size) {
-        SellOffer offer = (SellOffer) new StandardOfferFactory().createOffer(assetType, sender, price, size, true);
+    public synchronized void addSellOffer(String assetType, SellingEntity sender, double price, double size) {
+        SellOffer offer = new StandardOfferFactory().createSellOffer(assetType, sender, price, size);
         this.sellOffers.add(offer);
     }
 

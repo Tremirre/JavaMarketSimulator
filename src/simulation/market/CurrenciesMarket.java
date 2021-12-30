@@ -1,14 +1,13 @@
 package simulation.market;
 
 import simulation.asset.RandomNonDiscreteAssetFactory;
-import simulation.holders.InitialOffersSender;
 import simulation.util.RandomService;
 
 import java.util.HashSet;
 
-public class CurrenciesMarket extends Market{
+public class CurrenciesMarket extends Market {
     private HashSet<String> currencies;
-    private InitialOffersSender ios;
+    private InitialVoidSeller ivs;
 
     public CurrenciesMarket(String name, double buyFee, double sellFee) {
         super(name + " Currency", buyFee, sellFee);
@@ -17,7 +16,7 @@ public class CurrenciesMarket extends Market{
     @Override
     public void initializeMarket() {
         this.currencies = new HashSet<>();
-        this.ios = new InitialOffersSender();
+        this.ivs = new InitialVoidSeller();
         var initialNumberOfCurrencies = RandomService.getInstance().yieldRandomNumber(5) + 1;
         for (int i = 0; i < initialNumberOfCurrencies; i++) {
             var newCurrency = new RandomNonDiscreteAssetFactory().createCurrencyAsset();
@@ -32,6 +31,6 @@ public class CurrenciesMarket extends Market{
 
     public void addNewCurrency(String currency) {
         this.currencies.add(currency);
-        this.ios.sendInitialOffer(this, currency);
+        this.ivs.sendInitialOffer(this, currency);
     }
 }

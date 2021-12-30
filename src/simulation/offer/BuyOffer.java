@@ -1,10 +1,11 @@
 package simulation.offer;
 
-import simulation.holders.AssetHolder;
-
 public class BuyOffer extends Offer {
-    BuyOffer(int id, String assetType, AssetHolder sender, double price, double size) {
-        super(id, assetType, sender, price, size);
+    protected BuyingEntity sender;
+
+    BuyOffer(int id, String assetType, BuyingEntity sender, double price, double size) {
+        super(id, assetType, price, size);
+        this.sender = sender;
     }
 
     @Override
@@ -16,4 +17,6 @@ public class BuyOffer extends Offer {
     public void withdraw() {
         this.sender.processBuyWithdrawal(this.price, this.size);
     }
+
+    public BuyingEntity getSender() {return this.sender;}
 }
