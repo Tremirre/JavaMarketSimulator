@@ -19,7 +19,6 @@ public class Simulation {
 
     public Simulation() {
         this.markets = new ArrayList<>();
-        this.companies = new ArrayList<>();
         this.setupStockMarket();
         this.setupCurrenciesMarket();
         this.setupCommoditiesMarket();
@@ -57,13 +56,6 @@ public class Simulation {
 
     private void setupStockMarket() {
         var market = new StockMarket("StockTest" + this.markets.size(), 0.01, 0.02, "US Dollar");
-        var stockIndex = new StockMarketIndex();
-
-        for (int i = 0; i < 3; i++) {
-            this.companies.add(new RandomHolderFactory().createCompany());
-            stockIndex.addCompany(this.companies.get(this.companies.size() - 1));
-        }
-        market.addStockMarketIndex(stockIndex);
         this.markets.add(market);
     }
 
