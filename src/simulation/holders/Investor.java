@@ -1,5 +1,6 @@
 package simulation.holders;
 
+import simulation.holders.strategies.InvestmentStrategy;
 import simulation.util.Constants;
 import simulation.util.GlobalMarketLock;
 import simulation.util.RandomService;
@@ -7,13 +8,11 @@ import simulation.util.RandomService;
 public class Investor extends AssetHolder {
     private String firstName;
     private String lastName;
-    private double investmentInertia;
 
-    public Investor(int id, double funds, String firstName, String lastName, double investmentInertia) {
-        super(id, funds);
+    public Investor(int id, double funds, String firstName, String lastName, InvestmentStrategy strategy) {
+        super(id, funds, strategy);
         this.firstName = firstName;
         this.lastName = lastName;
-        this.investmentInertia = investmentInertia;
     }
 
     public void increaseFunds(double probability){

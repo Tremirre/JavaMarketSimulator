@@ -1,6 +1,6 @@
 package simulation.offer;
 
-public class StandardOfferFactory implements IOfferFactory {
+public class StandardOfferFactory implements OfferFactory {
     private static int id = 0;
 
     @Override

@@ -1,6 +1,7 @@
 package simulation.holders;
 
 import simulation.asset.AssetManager;
+import simulation.holders.strategies.InvestmentStrategy;
 import simulation.market.Market;
 import simulation.offer.BuyingEntity;
 import simulation.offer.SellingEntity;
@@ -15,36 +16,25 @@ public abstract class AssetHolder extends Thread implements SellingEntity, Buyin
     protected double investmentBudget;
     protected boolean running = false;
     protected boolean freezeWithdrawal = false;
+    private InvestmentStrategy strategy;
     final private int id;
 
-    public AssetHolder(int id, double investmentBudget) {
+    public AssetHolder(int id, double investmentBudget, InvestmentStrategy strategy) {
         this.storedAssets = new HashMap<>();
         this.availableMarkets = new HashSet<>();
         this.investmentBudget = investmentBudget;
         this.id = id;
+        this.strategy = strategy;
     }
 
     protected void sendBuyOffer(Market market) {
         if (this.investmentBudget < 1)
             return;
-        var rand = RandomService.getInstance();
-        String chosenAsset = (String) rand.sampleElement(market.getAvailableAssetTypes().toArray());
-        double price = AssetManager.getInstance().getAssetData(chosenAsset).getLatestAverageSellingPrice() * 0.9;
-        double amount;
-        if (!AssetManager.getInstance().getAssetData(chosenAsset).isSplittable()) {
-            amount = rand.yieldRandomInteger(5);
-            while (this.investmentBudget < price * amount && amount > 0) {
-                amount--;
-            }
-        } else {
-            amount = rand.yieldRandomNumber(4.5) + 0.5;
-            while (this.investmentBudget < price * amount && amount > 0.1) {
-                amount/=2;
-            }
-        }
-        if (amount < 0.25) {
+        String chosenAsset = this.strategy.chooseAssetToBuy(market.getAvailableAssetTypes());
+        double price = this.strategy.determineOptimalBuyingPrice(chosenAsset);
+        double amount = this.strategy.determineOptimalBuyingSize(chosenAsset, price, this.investmentBudget);
+        if (amount <= 0)
             return;
-        }
         this.investmentBudget -= price * amount;
         market.addBuyOffer(chosenAsset, this, price, amount);
     }
@@ -60,10 +50,7 @@ public abstract class AssetHolder extends Thread implements SellingEntity, Buyin
     }
 
     public double processBuyOfferAlteration(double price, double amount) {
-        double newPrice = price * 1.04;
-        if (this.investmentBudget < (newPrice - price) * amount) {
-            newPrice = price + this.investmentBudget/amount;
-        }
+        double newPrice = this.strategy.updateBuyPrice(price, amount, this.investmentBudget);
         this.investmentBudget -= (newPrice - price) * amount;
         return newPrice;
     }
@@ -73,11 +60,9 @@ public abstract class AssetHolder extends Thread implements SellingEntity, Buyin
         availableAssets.retainAll(market.getAvailableAssetTypes());
         if (availableAssets.isEmpty())
             return;
-        var rand = RandomService.getInstance();
-        String chosenAsset = (String) rand.sampleElement(availableAssets.toArray());
-        double availableAmount = this.storedAssets.get(chosenAsset);
-        double amount = availableAmount > 2 ? (double) Math.round(0.5 * availableAmount) : availableAmount;
-        double price = AssetManager.getInstance().getAssetData(chosenAsset).getLatestAverageSellingPrice() * 1.1;
+        String chosenAsset = this.strategy.chooseAssetToBuy(this.storedAssets.keySet());
+        double amount = this.strategy.determineOptimalSellingSize(chosenAsset, this.storedAssets.get(chosenAsset));
+        double price = this.strategy.determineOptimalSellingPrice(chosenAsset);
         double left = (this.storedAssets.get(chosenAsset) - amount);
         if (left > 0)
             this.storedAssets.put(chosenAsset, left);
@@ -95,7 +80,7 @@ public abstract class AssetHolder extends Thread implements SellingEntity, Buyin
     }
 
     public double processSellOfferAlteration(double price) {
-        return price * 0.96;
+        return this.strategy.updateSellPrice(price);
     }
 
     protected void generateOrders() {

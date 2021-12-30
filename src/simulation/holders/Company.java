@@ -1,6 +1,7 @@
 package simulation.holders;
 
 import simulation.asset.AssetManager;
+import simulation.holders.strategies.PassiveCompanyStrategy;
 import simulation.market.Market;
 import simulation.market.StockMarket;
 
@@ -25,7 +26,7 @@ public class Company extends AssetHolder {
                    double revenue,
                    int tradingVolume,
                    int totalSales) {
-        super(id, 0);
+        super(id, 0, new PassiveCompanyStrategy());
         this.name = name;
         this.IPODate = IPODate;
         this.address = address;

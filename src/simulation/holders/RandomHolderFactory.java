@@ -1,5 +1,6 @@
 package simulation.holders;
 
+import simulation.holders.strategies.NaiveInvestmentStrategy;
 import simulation.util.Constants;
 import simulation.util.RandomService;
 
@@ -10,7 +11,8 @@ public class RandomHolderFactory extends HolderFactory {
             return null;
         var rand = RandomService.getInstance();
         var funds = RandomService.getInstance().yieldRandomGaussianNumber(20, 100);
-        return new Investor(id++, funds, rand.yieldName(), rand.yieldSurname(), 0.9);
+        return new Investor(id++, funds, rand.yieldName(), rand.yieldSurname(),
+                new NaiveInvestmentStrategy(rand.yieldRandomNumber(0.1) + 0.85));
     }
 
     @Override
@@ -31,6 +33,6 @@ public class RandomHolderFactory extends HolderFactory {
     public InvestmentFund createInvestmentFund() {
         if (newThreadExceedsLimit())
             return null;
-        return new InvestmentFund(id++, 0);
+        return new InvestmentFund(id++,0, new NaiveInvestmentStrategy());
     }
 }
