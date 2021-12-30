@@ -7,4 +7,8 @@ public final class Constants {
     public static final int INVESTOR_SLEEP_TIME_DEVIATION = 5;
     public static final int YEAR = 365;
     public static final int COMPANY_GENERATION_CONSTANT = 500;
+    public static final int COMPANY_MINIMAL_REVENUE = 20000;
+    public static final int COMPANY_MAXIMAL_ADDITIONAL_REVENUE = 20000;
+    public static final int COMPANY_MINIMAL_PROFIT = -5000;
+    public static final int COMPANY_MAXIMAL_ADDITIONAL_PROFIT = 15000;
 }

@@ -1,6 +1,5 @@
 package simulation.holders;
 
-import simulation.asset.AssetManager;
 import simulation.holders.strategies.InvestmentStrategy;
 import simulation.market.Market;
 import simulation.offer.BuyingEntity;
@@ -16,7 +15,7 @@ public abstract class AssetHolder extends Thread implements SellingEntity, Buyin
     protected double investmentBudget;
     protected boolean running = false;
     protected boolean freezeWithdrawal = false;
-    private InvestmentStrategy strategy;
+    private final InvestmentStrategy strategy;
     final private int id;
 
     public AssetHolder(int id, double investmentBudget, InvestmentStrategy strategy) {
@@ -60,7 +59,7 @@ public abstract class AssetHolder extends Thread implements SellingEntity, Buyin
         availableAssets.retainAll(market.getAvailableAssetTypes());
         if (availableAssets.isEmpty())
             return;
-        String chosenAsset = this.strategy.chooseAssetToBuy(this.storedAssets.keySet());
+        String chosenAsset = this.strategy.chooseAssetToSell(this.storedAssets.keySet());
         double amount = this.strategy.determineOptimalSellingSize(chosenAsset, this.storedAssets.get(chosenAsset));
         double price = this.strategy.determineOptimalSellingPrice(chosenAsset);
         double left = (this.storedAssets.get(chosenAsset) - amount);

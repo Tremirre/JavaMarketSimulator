@@ -19,7 +19,7 @@ public class PassiveCompanyStrategy implements InvestmentStrategy{
     @Override
     public String chooseAssetToSell(Set<String> ownedAssets) {
         if (ownedAssets.size() > 1) {
-            throw new RuntimeException("COMPANY HAS MORE THAN ONE ASSOSIATED ASSET!");
+            throw new RuntimeException("COMPANY HAS MORE THAN ONE ASSOCIATED ASSET!");
         }
         return ownedAssets.toArray(new String[0])[0];
     }
@@ -27,5 +27,10 @@ public class PassiveCompanyStrategy implements InvestmentStrategy{
     @Override
     public double determineOptimalSellingPrice(String chosenAsset) {
         return 0.8 * AssetManager.getInstance().getAssetData(chosenAsset).getLatestAverageSellingPrice();
+    }
+
+    @Override
+    public double determineOptimalSellingSize(String chosenAsset, double availableAmount) {
+        return availableAmount;
     }
 }

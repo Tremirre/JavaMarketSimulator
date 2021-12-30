@@ -13,7 +13,7 @@ public class Main {
             System.out.println("Processing day no. " + i);
             simulation.runSimulationDay();
         }
-        simulation.stopSimulation();
+        simulation.stop();
         System.out.println("Simulation took " + (System.nanoTime() - start)/1_000_000 + "ms");
         DataExporter dataEx = new DataExporter();
         dataEx.exportPrices(AssetManager.getInstance().getAllAssetsPriceHistory());

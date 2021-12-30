@@ -2,7 +2,6 @@ package simulation.holders;
 
 import simulation.asset.AssetManager;
 import simulation.holders.strategies.PassiveCompanyStrategy;
-import simulation.market.Market;
 import simulation.market.StockMarket;
 
 public class Company extends AssetHolder {
@@ -12,8 +11,8 @@ public class Company extends AssetHolder {
     private double profit;
     private double revenue;
     private final String associatedAsset;
-    private int tradingVolume;
-    private int totalSales;
+    private int dailyTradingVolume;
+    private double dailyTotalSales;
     private int numberOfStocks;
 
     public Company(int id,
@@ -23,18 +22,16 @@ public class Company extends AssetHolder {
                    Address address,
                    double IPOShareValue,
                    double profit,
-                   double revenue,
-                   int tradingVolume,
-                   int totalSales) {
+                   double revenue) {
         super(id, 0, new PassiveCompanyStrategy());
         this.name = name;
         this.IPODate = IPODate;
         this.address = address;
         this.profit = profit;
         this.revenue = revenue; //Optimal strategy: stock price / company profit = 10
-        this.tradingVolume = tradingVolume; //number of transactions of stocks of that company
+        this.dailyTradingVolume = 0; //number of transactions of stocks of that company
         this.numberOfStocks = numberOfStocks; // Capital = stock price * number of stock
-        this.totalSales = totalSales; // total value of transactions of stocks of that company
+        this.dailyTotalSales = 0; // total value of transactions of stocks of that company
         StringBuilder stockName = new StringBuilder();
         for (int i = 0; i < name.length(); i++) {
             if (Character.isLetter(name.charAt(i))) stockName.append(name.charAt(i));
@@ -49,6 +46,10 @@ public class Company extends AssetHolder {
 
     }
 
+    public void sendInitialOffer(StockMarket stockMarket) {
+        this.sendSellOffer(stockMarket);
+    }
+
     public void print() {
         System.out.println(this.name);
         this.address.print();
@@ -57,14 +58,8 @@ public class Company extends AssetHolder {
         System.out.println("Stock name: " + this.associatedAsset);
     }
 
-    public synchronized void sendSellOffer(Market market) {
-        double price = AssetManager.getInstance().getAssetData(this.associatedAsset).getLatestAverageSellingPrice() * 0.8;
-        market.addSellOffer(this.associatedAsset, this, price, this.storedAssets.get(this.associatedAsset));
-    }
-
     public synchronized void processSellOffer(String assetType, double price, double amount) {
-        this.storedAssets.put(this.associatedAsset, this.storedAssets.get(this.associatedAsset) - amount);
-        this.revenue += price;
+        this.revenue += price * amount;
     }
 
     public String getCompanyName() {
@@ -99,20 +94,12 @@ public class Company extends AssetHolder {
         return this.numberOfStocks * AssetManager.getInstance().getAssetData(this.associatedAsset).getLatestAverageSellingPrice();
     }
 
-    public int getTradingVolume() {
-        return tradingVolume;
+    public synchronized void addToVolume(double amount) {
+        this.dailyTradingVolume += amount;
     }
 
-    public void setTradingVolume(int tradingVolume) {
-        this.tradingVolume = tradingVolume;
-    }
-
-    public int getTotalSales() {
-        return totalSales;
-    }
-
-    public void setTotalSales(int totalSales) {
-        this.totalSales = totalSales;
+    public synchronized void addToSales(double price) {
+        this.dailyTotalSales += price;
     }
 
     public Address getAddress() {

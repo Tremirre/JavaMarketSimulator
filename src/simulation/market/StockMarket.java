@@ -15,7 +15,7 @@ public class StockMarket extends Market{
     public void addStockMarketIndex(StockMarketIndex idx) {
         this.stockMarketIndexes.add(idx);
         for (var company : idx.getCompanies())
-            company.sendSellOffer(this);
+            company.sendInitialOffer(this);
     }
 
     @Override

@@ -12,7 +12,7 @@ public class RandomHolderFactory extends HolderFactory {
         var rand = RandomService.getInstance();
         var funds = RandomService.getInstance().yieldRandomGaussianNumber(20, 100);
         return new Investor(id++, funds, rand.yieldName(), rand.yieldSurname(),
-                new NaiveInvestmentStrategy(rand.yieldRandomNumber(0.1) + 0.85));
+                new NaiveInvestmentStrategy(rand.yieldRandomGaussianNumber(0.03, 0.9)));
     }
 
     @Override
@@ -26,7 +26,9 @@ public class RandomHolderFactory extends HolderFactory {
         name = name == null ? rand.yieldRandomString(10) : name;
         var initialStockValue = rand.yieldRandomInteger(15) + 5;
         var initialStockSize = (Constants.COMPANY_GENERATION_CONSTANT/initialStockValue) + rand.yieldRandomInteger(20);
-        return new Company(id++, initialStockSize, name, date, address, initialStockValue, 0 ,0, 0,0);
+        var profit = rand.yieldRandomInteger(Constants.COMPANY_MAXIMAL_ADDITIONAL_PROFIT) - Constants.COMPANY_MINIMAL_PROFIT;
+        var revenue = rand.yieldRandomInteger(Constants.COMPANY_MAXIMAL_ADDITIONAL_REVENUE) + Constants.COMPANY_MINIMAL_REVENUE;
+        return new Company(id++, initialStockSize, name, date, address, initialStockValue, profit, revenue);
     }
 
     @Override

@@ -8,11 +8,12 @@ import simulation.market.*;
 import simulation.util.Constants;
 import simulation.util.GlobalMarketLock;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 
 public class Simulation {
-    private ArrayList<Market> markets;
+    private final ArrayList<Market> markets;
     private HashSet<Investor> investors;
     public ArrayList<Company> companies;
 
@@ -23,6 +24,7 @@ public class Simulation {
         this.setupCurrenciesMarket();
         this.setupCommoditiesMarket();
         this.setupInvestors();
+        this.start();
     }
 
     public void runSimulationDay() {
@@ -41,14 +43,20 @@ public class Simulation {
         GlobalMarketLock.writeUnlock();
     }
 
-    public void stopSimulation() {
+    public void stop() {
         for (var investor : this.investors) {
             investor.stopRunning();
         }
     }
 
+    private void start() {
+        for (var investor : this.investors) {
+            investor.start();
+        }
+    }
+
     private void setupStockMarket() {
-        var market = new StockMarket("Test" + this.markets.size(), 0.01, 0.02, "US Dollar");
+        var market = new StockMarket("StockTest" + this.markets.size(), 0.01, 0.02, "US Dollar");
         var stockIndex = new StockMarketIndex();
 
         for (int i = 0; i < 3; i++) {
@@ -60,13 +68,23 @@ public class Simulation {
     }
 
     private void setupCurrenciesMarket() {
-        var market = new CurrenciesMarket("Test", 0.01, 0.02);
+        var market = new CurrenciesMarket("CurrencyTest", 0.01, 0.02);
         this.markets.add(market);
     }
 
     private void setupCommoditiesMarket() {
-        var market = new CommoditiesMarket("Test", 0.01, 0.2);
+        var market = new CommoditiesMarket("CommodityTest", 0.01, 0.2);
         this.markets.add(market);
+    }
+
+    public void pause() {
+        GlobalMarketLock.writeLock();
+        try {
+            System.in.read();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        GlobalMarketLock.writeUnlock();
     }
 
     private void setupInvestors() {
@@ -75,9 +93,6 @@ public class Simulation {
             var newInvestor = new RandomHolderFactory().createInvestor();
             newInvestor.giveAccessToMarkets(new HashSet<>(this.markets));
             this.investors.add(newInvestor);
-        }
-        for (var investor : this.investors) {
-            investor.start();
         }
     }
 }
