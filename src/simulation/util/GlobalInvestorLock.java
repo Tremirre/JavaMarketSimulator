@@ -2,7 +2,7 @@ package simulation.util;
 
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
-public class GlobalMarketLock {
+public class GlobalInvestorLock {
     private static final ReentrantReadWriteLock lock = new ReentrantReadWriteLock();
 
     public static void readLock() {

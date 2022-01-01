@@ -4,15 +4,19 @@ import simulation.asset.AssetManager;
 import simulation.holders.strategies.PassiveCompanyStrategy;
 import simulation.market.StockMarket;
 
+import java.util.ArrayList;
+
 public class Company extends AssetHolder {
     private String name;
     private final String IPODate;
     private Address address;
-    private double profit;
+    private double profit; //Optimal strategy: stock price / company profit = 10
     private double revenue;
     private final String associatedAsset;
-    private int dailyTradingVolume;
-    private double dailyTotalSales;
+    private final ArrayList<Integer> dailyTradingVolumes = new ArrayList<>();
+    private final ArrayList<Double> dailyTotalSales = new ArrayList<>();
+    private int currentTradingVolume = 0; //number of transactions of stocks of that company
+    private double currentTotalSales = 0;
     private int numberOfStocks;
 
     public Company(int id,
@@ -28,15 +32,13 @@ public class Company extends AssetHolder {
         this.IPODate = IPODate;
         this.address = address;
         this.profit = profit;
-        this.revenue = revenue; //Optimal strategy: stock price / company profit = 10
-        this.dailyTradingVolume = 0; //number of transactions of stocks of that company
-        this.numberOfStocks = numberOfStocks; // Capital = stock price * number of stock
-        this.dailyTotalSales = 0; // total value of transactions of stocks of that company
+        this.revenue = revenue;
+        this.numberOfStocks = numberOfStocks;
         StringBuilder stockName = new StringBuilder();
         for (int i = 0; i < name.length(); i++) {
             if (Character.isLetter(name.charAt(i))) stockName.append(name.charAt(i));
         }
-        var stock = AssetManager.getInstance().addStockAsset(stockName.toString().toUpperCase(), IPOShareValue, id);
+        var stock = AssetManager.getInstance().addStockAsset(stockName.toString().toUpperCase(), IPOShareValue, this);
         this.associatedAsset = stock.getUniqueIdentifyingName();
         this.storedAssets.put(this.associatedAsset, (double) numberOfStocks);
         this.freezeWithdrawal = true;
@@ -94,12 +96,16 @@ public class Company extends AssetHolder {
         return this.numberOfStocks * AssetManager.getInstance().getAssetData(this.associatedAsset).getLatestAverageSellingPrice();
     }
 
-    public synchronized void addToVolume(double amount) {
-        this.dailyTradingVolume += amount;
+    public void recordTransactionData(double price, double amount) {
+        this.currentTradingVolume += amount;
+        this.currentTotalSales += price * amount;
     }
 
-    public synchronized void addToSales(double price) {
-        this.dailyTotalSales += price;
+    public void saveAndResetStockTransactionsData() {
+        this.dailyTotalSales.add(this.currentTotalSales);
+        this.dailyTradingVolumes.add(this.currentTradingVolume);
+        this.currentTotalSales = 0;
+        this.currentTradingVolume = 0;
     }
 
     public Address getAddress() {

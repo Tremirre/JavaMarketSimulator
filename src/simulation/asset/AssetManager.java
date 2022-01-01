@@ -1,14 +1,14 @@
 package simulation.asset;
 
+import simulation.holders.Company;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class AssetManager {
     private static AssetManager instance;
     private HashMap<String,AssetData> allAssets;
-    private static int commodityID = 0;
-    private static int currencyID = 0;
-    private static int stockID = 0;
+    private static int assetID = 0;
 
 
     private AssetManager() {
@@ -23,19 +23,19 @@ public class AssetManager {
     }
 
     public CommodityData addCommodityAsset(String name, double openingPrice, String tradingUnit, String currency) {
-        var com = new CommodityData(commodityID++, name, openingPrice, tradingUnit, currency);
+        var com = new CommodityData(assetID++, name, openingPrice, tradingUnit, currency);
         this.allAssets.put(com.getUniqueIdentifyingName(), com);
         return com;
     }
 
-    public StockData addStockAsset(String name, double openingPrice, int companyID) {
-        var stock = new StockData(stockID++, name, openingPrice, companyID);
+    public StockData addStockAsset(String name, double openingPrice, Company company) {
+        var stock = new StockData(assetID++, name, openingPrice, company);
         this.allAssets.put(stock.getUniqueIdentifyingName(), stock);
         return stock;
     }
 
     public CurrencyData addCurrencyAsset(String name, double openingPrice, String[] countriesOfUse) {
-        var cur = new CurrencyData(currencyID++, name, openingPrice, countriesOfUse);
+        var cur = new CurrencyData(assetID++, name, openingPrice, countriesOfUse);
         this.allAssets.put(cur.getUniqueIdentifyingName(), cur);
         return cur;
     }

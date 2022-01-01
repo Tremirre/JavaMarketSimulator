@@ -26,9 +26,15 @@ public class CompaniesManager {
         return instance;
     }
 
+    public void processEndDay() {
+        for (var company : companies) {
+            company.saveAndResetStockTransactionsData();
+        }
+    }
+
     public Company createNewCompany() {
         var newCompany = new RandomHolderFactory().createCompany();
-        this.companies.add(new RandomHolderFactory().createCompany());
+        this.companies.add(newCompany);
         return newCompany;
     }
 }

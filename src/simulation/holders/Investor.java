@@ -2,7 +2,7 @@ package simulation.holders;
 
 import simulation.holders.strategies.InvestmentStrategy;
 import simulation.util.Constants;
-import simulation.util.GlobalMarketLock;
+import simulation.util.GlobalInvestorLock;
 import simulation.util.RandomService;
 
 public class Investor extends AssetHolder {
@@ -31,9 +31,9 @@ public class Investor extends AssetHolder {
     public void run() {
         while (this.running) {
             this.increaseFunds(0.05);
-            GlobalMarketLock.readLock();
+            GlobalInvestorLock.readLock();
             this.generateOrders();
-            GlobalMarketLock.readUnlock();
+            GlobalInvestorLock.readUnlock();
             try {
                 Thread.sleep(RandomService.getInstance().yieldRandomInteger(Constants.INVESTOR_SLEEP_TIME_DEVIATION) +
                         Constants.BASE_INVESTOR_SLEEP_TIME);

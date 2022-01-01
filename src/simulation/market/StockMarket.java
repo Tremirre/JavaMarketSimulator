@@ -1,9 +1,12 @@
 package simulation.market;
 
+import simulation.asset.AssetManager;
+import simulation.asset.StockData;
 import simulation.holders.CompaniesManager;
+import simulation.offer.BuyOffer;
+import simulation.offer.SellOffer;
 import simulation.util.RandomService;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 
 public class StockMarket extends Market{
@@ -19,6 +22,24 @@ public class StockMarket extends Market{
         this.stockMarketIndexes.add(idx);
         for (var company : idx.getCompanies())
             company.sendInitialOffer(this);
+    }
+
+    @Override
+    protected boolean processTransaction(BuyOffer buyOffer, SellOffer sellOffer) {
+        var buyer = buyOffer.getSender();
+        var seller = sellOffer.getSender();
+        var commonPrice = sellOffer.getPrice();
+        var assetType = sellOffer.getAssetType();
+        var amount = Math.min(sellOffer.getSize(), buyOffer.getSize());
+        var priceDiff = buyOffer.getPrice() * buyOffer.getSize() - commonPrice * amount;
+        buyer.processBuyOffer(assetType, priceDiff, amount);
+        seller.processSellOffer(assetType, commonPrice, amount);
+        var stockData = (StockData) AssetManager.getInstance().getAssetData(assetType);
+        stockData.addLatestSellingPrice(commonPrice);
+        var associatedCompany = stockData.getCompany();
+        associatedCompany.recordTransactionData(commonPrice, amount);
+        sellOffer.setSize(sellOffer.getSize() - amount);
+        return (sellOffer.getSize() > 0);
     }
 
     @Override

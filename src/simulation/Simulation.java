@@ -1,12 +1,12 @@
 package simulation;
 
 import simulation.asset.AssetManager;
-import simulation.holders.Company;
+import simulation.holders.CompaniesManager;
 import simulation.holders.Investor;
 import simulation.holders.RandomHolderFactory;
 import simulation.market.*;
 import simulation.util.Constants;
-import simulation.util.GlobalMarketLock;
+import simulation.util.GlobalInvestorLock;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -15,7 +15,6 @@ import java.util.HashSet;
 public class Simulation {
     private final ArrayList<Market> markets;
     private HashSet<Investor> investors;
-    public ArrayList<Company> companies;
 
     public Simulation() {
         this.markets = new ArrayList<>();
@@ -32,14 +31,15 @@ public class Simulation {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        GlobalMarketLock.writeLock();
+        GlobalInvestorLock.writeLock();
         for (var market : this.markets) {
             market.processAllOffers();
             market.updateOffers();
             market.removeOutdatedOffers();
         }
         AssetManager.getInstance().processEndDay();
-        GlobalMarketLock.writeUnlock();
+        CompaniesManager.getInstance().processEndDay();
+        GlobalInvestorLock.writeUnlock();
     }
 
     public void stop() {
@@ -70,13 +70,13 @@ public class Simulation {
     }
 
     public void pause() {
-        GlobalMarketLock.writeLock();
+        GlobalInvestorLock.writeLock();
         try {
             System.in.read();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        GlobalMarketLock.writeUnlock();
+        GlobalInvestorLock.writeUnlock();
     }
 
     private void setupInvestors() {

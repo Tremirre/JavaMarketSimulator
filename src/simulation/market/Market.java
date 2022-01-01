@@ -38,7 +38,7 @@ abstract public class Market {
         this.sellOffers.add(offer);
     }
 
-    private boolean processOffer(BuyOffer buyOffer, SellOffer sellOffer) {
+    protected boolean processTransaction(BuyOffer buyOffer, SellOffer sellOffer) {
         var buyer = buyOffer.getSender();
         var seller = sellOffer.getSender();
         var commonPrice = sellOffer.getPrice();
@@ -58,7 +58,7 @@ abstract public class Market {
             for (var buyOffer : this.buyOffers) {
                 if (!sellOffer.getAssetType().equals(buyOffer.getAssetType()) ||
                         sellOffer.getPrice() > buyOffer.getPrice()) continue;
-                if (!this.processOffer(buyOffer, sellOffer))
+                if (!this.processTransaction(buyOffer, sellOffer))
                     processedSellOrders.add(sellOffer.getID());
                 this.removeBuyOffer(buyOffer.getID());
                 break;

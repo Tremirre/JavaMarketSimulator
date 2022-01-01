@@ -1,11 +1,17 @@
 package simulation.asset;
 
-public class StockData extends AssetData{
-    final private int companyID;
+import simulation.holders.Company;
 
-    protected StockData(int id, String name, double openingPrice, int companyID) {
+public class StockData extends AssetData{
+    final private Company company;
+
+    protected StockData(int id, String name, double openingPrice, Company company) {
         super(id, name, openingPrice);
-        this.companyID = companyID;
+        this.company = company;
         this.splittable = false;
+    }
+
+    public Company getCompany() {
+        return this.company;
     }
 }
