@@ -1,5 +1,6 @@
 package simulation.holders;
 
+import simulation.SimulationConfig;
 import simulation.holders.strategies.InvestmentStrategy;
 import simulation.market.Market;
 import simulation.offer.BuyingEntity;
@@ -85,9 +86,9 @@ public abstract class AssetHolder extends Thread implements SellingEntity, Buyin
     protected void generateOrders() {
         var rand = RandomService.getInstance();
         var market = (Market) rand.sampleElement(this.availableMarkets.toArray());
-        if (rand.yieldRandomNumber(1.0) < 0.5)
+        if (rand.yieldRandomNumber(1) < SimulationConfig.getInstance().getBullProportion())
             this.sendBuyOffer(market);
-        if (rand.yieldRandomNumber(1.0) < 0.5)
+        if (rand.yieldRandomNumber(1) < SimulationConfig.getInstance().getBearProportion())
             this.sendSellOffer(market);
     }
 

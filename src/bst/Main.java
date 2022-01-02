@@ -11,7 +11,7 @@ public class Main {
         var start = System.nanoTime();
         for (int i = 0; i < 2 * Constants.YEAR; i++) {
             System.out.println("Processing day no. " + i);
-            simulation.runSimulationDay();
+            simulation.runSimulationDay(i);
         }
         simulation.stop();
         System.out.println("Simulation took " + (System.nanoTime() - start)/1_000_000 + "ms");

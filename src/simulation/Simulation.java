@@ -25,7 +25,7 @@ public class Simulation {
         this.start();
     }
 
-    public void runSimulationDay() {
+    public void runSimulationDay(int day) {
         try {
             Thread.sleep(Constants.BASE_TRADING_TIME);
         } catch (InterruptedException e) {
@@ -36,6 +36,12 @@ public class Simulation {
             market.processAllOffers();
             market.updateOffers();
             market.removeOutdatedOffers();
+        }
+        if (day == Constants.YEAR) {
+            SimulationConfig.getInstance().setBullProportion(0.35);
+        }
+        if (day == Constants.YEAR + 100) {
+            SimulationConfig.getInstance().setBullProportion(0.65);
         }
         AssetManager.getInstance().processEndDay();
         CompaniesManager.getInstance().processEndDay();

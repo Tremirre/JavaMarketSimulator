@@ -6,6 +6,7 @@ public class SimulationConfig {
     private static SimulationConfig instance;
     private AtomicInteger maxTransactionsPerDayPerMarket = new AtomicInteger(100);
     private AtomicInteger maxOfferAge = new AtomicInteger(20);
+    private double bullProportion = 0.5;
 
     public int getMaxOfferAge() {
         return maxOfferAge.get();
@@ -21,6 +22,18 @@ public class SimulationConfig {
 
     public void setMaxTransactionsPerDayPerMarket(int maxTransactionsPerDayPerMarket) {
         this.maxTransactionsPerDayPerMarket.getAndSet(maxTransactionsPerDayPerMarket);
+    }
+
+    public synchronized double getBullProportion() {
+        return this.bullProportion;
+    }
+
+    public synchronized double getBearProportion() {
+        return 1 - this.bullProportion;
+    }
+
+    public synchronized void setBullProportion(double proportion) {
+        this.bullProportion = proportion;
     }
 
     public static SimulationConfig getInstance() {
