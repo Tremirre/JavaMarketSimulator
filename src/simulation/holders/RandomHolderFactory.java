@@ -1,6 +1,7 @@
 package simulation.holders;
 
 import simulation.holders.strategies.InvestmentStrategy;
+import simulation.holders.strategies.MomentumInvestmentStrategy;
 import simulation.holders.strategies.NaiveInvestmentStrategy;
 import simulation.holders.strategies.QualitativeAssessmentStrategy;
 import simulation.util.Constants;
@@ -14,9 +15,10 @@ public class RandomHolderFactory extends HolderFactory {
         var rand = RandomService.getInstance();
         var funds = RandomService.getInstance().yieldRandomGaussianNumber(20, 100);
         InvestmentStrategy strategy;
-        switch(rand.yieldRandomInteger(2)) {
+        switch(rand.yieldRandomInteger(3)) {
             case 0 -> strategy = new NaiveInvestmentStrategy(rand.yieldRandomGaussianNumber(0.03, 0.9));
             case 1 -> strategy = new QualitativeAssessmentStrategy(rand.yieldRandomGaussianNumber(0.05, 1));
+            case 2 -> strategy = new MomentumInvestmentStrategy(rand.yieldRandomInteger(5) + 1);
             default -> throw new IllegalStateException("Impossible value returned from random generator");
         }
         return new Investor(id++, funds, rand.yieldName(), rand.yieldSurname(), strategy);

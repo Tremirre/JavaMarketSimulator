@@ -31,6 +31,9 @@ public abstract class AssetHolder extends Thread implements SellingEntity, Buyin
         if (this.investmentBudget < 1)
             return;
         String chosenAsset = this.strategy.chooseAssetToBuy(market.getAvailableAssetTypes());
+        if (chosenAsset == null) {
+            return;
+        }
         double price = this.strategy.determineOptimalBuyingPrice(chosenAsset);
         double amount = this.strategy.determineOptimalBuyingSize(chosenAsset, price, this.investmentBudget);
         if (amount <= 0)
@@ -61,6 +64,9 @@ public abstract class AssetHolder extends Thread implements SellingEntity, Buyin
         if (availableAssets.isEmpty())
             return;
         String chosenAsset = this.strategy.chooseAssetToSell(this.storedAssets.keySet());
+        if (chosenAsset == null) {
+            return;
+        }
         double amount = this.strategy.determineOptimalSellingSize(chosenAsset, this.storedAssets.get(chosenAsset));
         double price = this.strategy.determineOptimalSellingPrice(chosenAsset);
         double left = (this.storedAssets.get(chosenAsset) - amount);
