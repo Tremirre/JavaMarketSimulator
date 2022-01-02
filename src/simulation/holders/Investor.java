@@ -17,7 +17,7 @@ public class Investor extends AssetHolder {
 
     public void increaseFunds(double probability){
         if (RandomService.getInstance().yieldRandomNumber(1) < probability) {
-            this.investmentBudget += 50;
+            this.investmentBudget += Constants.INVESTOR_FUNDS_INCREASE_AMOUNT;
         }
     }
 
@@ -30,7 +30,7 @@ public class Investor extends AssetHolder {
     @Override
     public void run() {
         while (this.running) {
-            this.increaseFunds(0.05);
+            this.increaseFunds(Constants.INVESTOR_FUNDS_INCREASE_PROBABILITY);
             GlobalHoldersLock.readLock();
             this.generateOrders();
             GlobalHoldersLock.readUnlock();

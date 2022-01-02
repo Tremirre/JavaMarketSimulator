@@ -3,6 +3,7 @@ package simulation.holders;
 import simulation.asset.AssetManager;
 import simulation.holders.strategies.PassiveCompanyStrategy;
 import simulation.market.StockMarket;
+import simulation.util.Constants;
 import simulation.util.GlobalHoldersLock;
 import simulation.util.RandomService;
 
@@ -131,7 +132,7 @@ public class Company extends AssetHolder {
     public void run() {
         while(this.running) {
             try {
-                Thread.sleep(50);
+                Thread.sleep(Constants.COMPANY_SLEEP_TIME);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

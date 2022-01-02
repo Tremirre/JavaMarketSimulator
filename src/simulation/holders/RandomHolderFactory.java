@@ -13,7 +13,8 @@ public class RandomHolderFactory extends HolderFactory {
         if (newThreadExceedsLimit())
             return null;
         var rand = RandomService.getInstance();
-        var funds = RandomService.getInstance().yieldRandomGaussianNumber(20, 100);
+        var funds = RandomService.getInstance()
+                .yieldRandomGaussianNumber(Constants.INVESTOR_INITIAL_FUNDS_DEVIATION, Constants.INVESTOR_MEAN_INITIAL_FUNDS);
         InvestmentStrategy strategy;
         switch(rand.yieldRandomInteger(3)) {
             case 0 -> strategy = new NaiveInvestmentStrategy(rand.yieldRandomGaussianNumber(0.03, 0.9));
@@ -33,8 +34,10 @@ public class RandomHolderFactory extends HolderFactory {
         var address = Address.getRandomAddress();
         var name = rand.useCompanyName();
         name = name == null ? rand.yieldRandomString(10) : name;
-        var initialStockValue = rand.yieldRandomInteger(15) + 5;
-        var initialStockSize = (Constants.COMPANY_GENERATION_CONSTANT/initialStockValue) + rand.yieldRandomInteger(20);
+        var initialStockValue = rand.yieldRandomInteger(Constants.COMPANY_MAXIMAL_ADDITIONAL_INITIAL_STOCK_VALUE)
+                + Constants.COMPANY_MINIMAL_INITIAL_STOCK_VALUE;
+        var initialStockSize = (Constants.COMPANY_GENERATION_CONSTANT/initialStockValue)
+                + rand.yieldRandomInteger(Constants.COMPANY_MAXIMAL_ADDITIONAL_STOCK_NUMBER);
         var profit = rand.yieldRandomInteger(Constants.COMPANY_MAXIMAL_ADDITIONAL_PROFIT) - Constants.COMPANY_MINIMAL_PROFIT;
         var revenue = rand.yieldRandomInteger(Constants.COMPANY_MAXIMAL_ADDITIONAL_REVENUE) + Constants.COMPANY_MINIMAL_REVENUE;
         return new Company(id++, initialStockSize, name, date, address, initialStockValue, profit, revenue);
