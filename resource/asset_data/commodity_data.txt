@@ -25,7 +25,7 @@ Platinum;ounce;969.49
 Lumber;board feet;1.156
 Sugar;pound;19.1
 Tea;kilogram;2.92
-Cocoa;metric ton;2515
+Cocoa;kilogram;2.515
 Nickel;kilogram;20.138
 Lead;kilogram;2.308
 Molybdenum;kilogram;44.75

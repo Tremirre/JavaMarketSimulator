@@ -1,6 +1,6 @@
 package simulation.offer;
 
-public interface BuyingEntity extends Entity {
+public interface BuyingEntity extends OfferingEntity {
     default void processBuyOffer(String assetType, double overPay, double amount) {
     }
 

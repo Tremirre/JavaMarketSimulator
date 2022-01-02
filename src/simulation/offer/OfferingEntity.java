@@ -1,6 +1,6 @@
 package simulation.offer;
 
-public interface Entity {
+public interface OfferingEntity {
     int getID();
     boolean canWithdraw();
 }

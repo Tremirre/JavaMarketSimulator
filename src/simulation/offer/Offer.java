@@ -3,7 +3,7 @@ package simulation.offer;
 public abstract class Offer {
     protected int id;
     protected String assetType;
-    protected Entity sender;
+    protected OfferingEntity sender;
     protected double price;
     protected double size;
     protected int daysSinceGiven = 0;
@@ -35,7 +35,7 @@ public abstract class Offer {
         return this.size;
     }
 
-    public Entity getSender() {return this.sender;}
+    public OfferingEntity getSender() {return this.sender;}
 
     public int getDaysSinceGiven() {
         return this.daysSinceGiven;
