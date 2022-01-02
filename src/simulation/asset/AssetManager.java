@@ -34,8 +34,8 @@ public class AssetManager {
         return stock;
     }
 
-    public CurrencyData addCurrencyAsset(String name, double openingPrice, String[] countriesOfUse) {
-        var cur = new CurrencyData(assetID++, name, openingPrice, countriesOfUse);
+    public CurrencyData addCurrencyAsset(String name, double openingPrice, String[] countriesOfUse, double stability) {
+        var cur = new CurrencyData(assetID++, name, openingPrice, countriesOfUse, stability);
         this.allAssets.put(cur.getUniqueIdentifyingName(), cur);
         return cur;
     }

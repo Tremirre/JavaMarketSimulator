@@ -31,6 +31,8 @@ abstract public class AssetData {
         return this.sellingPrices.get(this.sellingPrices.size() - 1);
     }
 
+    public abstract double getQualityMeasure();
+
     public boolean isSplittable() { return this.splittable; }
 
     public void addLatestSellingPrice(double price) {

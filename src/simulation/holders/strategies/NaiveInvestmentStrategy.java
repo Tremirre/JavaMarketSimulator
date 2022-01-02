@@ -27,7 +27,7 @@ public class NaiveInvestmentStrategy implements InvestmentStrategy {
     }
 
     @Override
-    public double updateBuyPrice(double oldPrice, double amount, double availableFunds) {
+    public double updateBuyPrice(double oldPrice, double amount, double availableFunds, String assetType) {
         double newPrice = oldPrice * (2 - this.riskFactor);
         if (availableFunds < (newPrice - oldPrice) * amount) {
             newPrice = oldPrice + availableFunds/amount;
@@ -46,7 +46,7 @@ public class NaiveInvestmentStrategy implements InvestmentStrategy {
     }
 
     @Override
-    public double updateSellPrice(double oldPrice) {
+    public double updateSellPrice(double oldPrice, String assetType) {
         return oldPrice * this.riskFactor;
     }
 }

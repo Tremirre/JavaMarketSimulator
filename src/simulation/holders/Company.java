@@ -3,6 +3,8 @@ package simulation.holders;
 import simulation.asset.AssetManager;
 import simulation.holders.strategies.PassiveCompanyStrategy;
 import simulation.market.StockMarket;
+import simulation.util.GlobalHoldersLock;
+import simulation.util.RandomService;
 
 import java.util.ArrayList;
 
@@ -10,7 +12,7 @@ public class Company extends AssetHolder {
     private String name;
     private final String IPODate;
     private Address address;
-    private double profit; //Optimal strategy: stock price / company profit = 10
+    private double profit;
     private double revenue;
     private final String associatedAsset;
     private final ArrayList<Integer> dailyTradingVolumes = new ArrayList<>();
@@ -93,7 +95,9 @@ public class Company extends AssetHolder {
     }
 
     public double getCapital() {
-        return this.numberOfStocks * AssetManager.getInstance().getAssetData(this.associatedAsset).getLatestAverageSellingPrice();
+        return this.numberOfStocks * AssetManager.getInstance()
+                .getAssetData(this.associatedAsset)
+                .getLatestAverageSellingPrice();
     }
 
     public void recordTransactionData(double price, double amount) {
@@ -116,9 +120,25 @@ public class Company extends AssetHolder {
         this.address = address;
     }
 
+    private void updateCompanyData() {
+        var rand = RandomService.getInstance();
+        this.revenue += rand.yieldRandomGaussianNumber(1000, 0);
+        this.profit += rand.yieldRandomGaussianNumber(500, 0);
+        this.profit = Math.min(this.revenue, this.profit);
+    }
+
     @Override
     public void run() {
-
+        while(this.running) {
+            try {
+                Thread.sleep(50);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            GlobalHoldersLock.readLock();
+            this.updateCompanyData();
+            GlobalHoldersLock.readUnlock();
+        }
     }
 
     public String getAssociatedAsset() {

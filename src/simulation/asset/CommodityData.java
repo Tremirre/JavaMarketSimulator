@@ -10,4 +10,9 @@ public class CommodityData extends AssetData{
         this.traidingCurrency = tC;
         this.splittable = true;
     }
+
+    @Override
+    public double getQualityMeasure() {
+        return 0.5;
+    }
 }

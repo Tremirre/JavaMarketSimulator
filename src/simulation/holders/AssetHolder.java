@@ -49,8 +49,8 @@ public abstract class AssetHolder extends Thread implements SellingEntity, Buyin
         this.investmentBudget += price * amount;
     }
 
-    public double processBuyOfferAlteration(double price, double amount) {
-        double newPrice = this.strategy.updateBuyPrice(price, amount, this.investmentBudget);
+    public double processBuyOfferAlteration(double price, double amount, String assetType) {
+        double newPrice = this.strategy.updateBuyPrice(price, amount, this.investmentBudget, assetType);
         this.investmentBudget -= (newPrice - price) * amount;
         return newPrice;
     }
@@ -79,8 +79,8 @@ public abstract class AssetHolder extends Thread implements SellingEntity, Buyin
         this.storedAssets.put(assetType, this.storedAssets.getOrDefault(assetType, 0.0) + amount);
     }
 
-    public double processSellOfferAlteration(double price) {
-        return this.strategy.updateSellPrice(price);
+    public double processSellOfferAlteration(double price, String assetType) {
+        return this.strategy.updateSellPrice(price, assetType);
     }
 
     protected void generateOrders() {

@@ -6,7 +6,7 @@ import simulation.holders.Investor;
 import simulation.holders.RandomHolderFactory;
 import simulation.market.*;
 import simulation.util.Constants;
-import simulation.util.GlobalInvestorLock;
+import simulation.util.GlobalHoldersLock;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -31,27 +31,29 @@ public class Simulation {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        GlobalInvestorLock.writeLock();
+        GlobalHoldersLock.writeLock();
         for (var market : this.markets) {
             market.processAllOffers();
             market.updateOffers();
             market.removeOutdatedOffers();
         }
-        if (day == Constants.YEAR) {
+        if (day == 1) {
+            SimulationConfig.getInstance().setBullProportion(0.65);
+        } else if (day == Constants.YEAR) {
             SimulationConfig.getInstance().setBullProportion(0.35);
-        }
-        if (day == Constants.YEAR + 100) {
+        } else if (day == Constants.YEAR + 100) {
             SimulationConfig.getInstance().setBullProportion(0.65);
         }
         AssetManager.getInstance().processEndDay();
         CompaniesManager.getInstance().processEndDay();
-        GlobalInvestorLock.writeUnlock();
+        GlobalHoldersLock.writeUnlock();
     }
 
     public void stop() {
         for (var investor : this.investors) {
             investor.stopRunning();
         }
+        CompaniesManager.getInstance().stopCompanies();
     }
 
     private void start() {
@@ -76,13 +78,13 @@ public class Simulation {
     }
 
     public void pause() {
-        GlobalInvestorLock.writeLock();
+        GlobalHoldersLock.writeLock();
         try {
             System.in.read();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        GlobalInvestorLock.writeUnlock();
+        GlobalHoldersLock.writeUnlock();
     }
 
     private void setupInvestors() {

@@ -10,7 +10,7 @@ public class RandomNonDiscreteAssetFactory extends NonDiscreteAssetFactory {
         var rate = rand.yieldChosenCurrencyExchangeRate(currencyName);
         var countriesOfUse = rand.yieldChosenCurrencyCountriesOfUse(currencyName);
         return AssetManager.getInstance()
-                .addCurrencyAsset(currencyName, rate, countriesOfUse.toArray(new String[0]))
+                .addCurrencyAsset(currencyName, rate, countriesOfUse.toArray(new String[0]), rand.yieldRandomNumber(1))
                 .getUniqueIdentifyingName();
     }
 

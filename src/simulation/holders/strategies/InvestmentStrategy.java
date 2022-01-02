@@ -24,12 +24,12 @@ public interface InvestmentStrategy {
         }
         return amount < 0.25 ? 0 : amount;
     }
-    default double updateBuyPrice(double oldPrice, double amount, double availableFunds) {return oldPrice;}
+    default double updateBuyPrice(double oldPrice, double amount, double availableFunds, String assetType) {return oldPrice;}
 
     String chooseAssetToSell(Set<String> ownedAssets);
     double determineOptimalSellingPrice(String chosenAsset);
     default double determineOptimalSellingSize(String chosenAsset, double availableAmount) {
         return availableAmount > 2 ? (double) Math.round(0.5 * availableAmount) : availableAmount;
     }
-    default double updateSellPrice(double oldPrice) {return oldPrice;}
+    default double updateSellPrice(double oldPrice, String assetType) {return oldPrice;}
 }

@@ -35,6 +35,13 @@ public class CompaniesManager {
     public Company createNewCompany() {
         var newCompany = new RandomHolderFactory().createCompany();
         this.companies.add(newCompany);
+        newCompany.start();
         return newCompany;
+    }
+
+    public void stopCompanies() {
+        for (var company : companies) {
+            company.stopRunning();
+        }
     }
 }
