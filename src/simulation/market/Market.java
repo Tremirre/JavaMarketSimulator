@@ -17,7 +17,7 @@ abstract public class Market {
     private ArrayList<SellOffer> sellOffers;
 
     Market(String name, double buyFee, double sellFee) {
-        this.address = Address.getRandomAddress();
+        this.address = new Address("TestCountry", "TestCity", "0", "TestStreet", 420);
         this.name = name + " Market of " + this.address.getCity();
         this.buyFee = buyFee;
         this.sellFee = sellFee;

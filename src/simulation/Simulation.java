@@ -1,12 +1,14 @@
 package simulation;
 
 import simulation.asset.AssetManager;
+import simulation.asset.RandomNonDiscreteAssetFactory;
 import simulation.holders.CompaniesManager;
 import simulation.holders.Investor;
 import simulation.holders.RandomHolderFactory;
 import simulation.market.*;
 import simulation.util.Constants;
 import simulation.util.GlobalHoldersLock;
+import simulation.util.ResourceHolder;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -18,6 +20,7 @@ public class Simulation {
 
     public Simulation() {
         this.markets = new ArrayList<>();
+        this.setupDataResourceForRandomFactories();
         this.setupStockMarket();
         this.setupCurrenciesMarket();
         this.setupCommoditiesMarket();
@@ -95,5 +98,11 @@ public class Simulation {
             newInvestor.giveAccessToMarkets(new HashSet<>(this.markets));
             this.investors.add(newInvestor);
         }
+    }
+
+    private void setupDataResourceForRandomFactories() {
+        var resourceHolder = new ResourceHolder();
+        RandomHolderFactory.setFactoryResource(resourceHolder);
+        RandomNonDiscreteAssetFactory.setFactoryResource(resourceHolder);
     }
 }

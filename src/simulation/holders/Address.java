@@ -1,7 +1,5 @@
 package simulation.holders;
 
-import simulation.util.RandomService;
-
 public class Address {
     private String country;
     private String city;
@@ -15,16 +13,6 @@ public class Address {
         this.postalCode = postalCode;
         this.streetName = streetName;
         this.buildingNumber = buildingNumber;
-    }
-
-    public static Address getRandomAddress() {
-        var rand = RandomService.getInstance();
-        String country = rand.yieldCountry();
-        return new Address(country,
-                rand.yieldCityForCountry(country),
-                rand.yieldPostCode(),
-                rand.yieldStreetName(),
-                rand.yieldRandomInteger(1000));
     }
 
     public void print() {
