@@ -1,5 +1,7 @@
 package simulation.asset;
 
+import simulation.util.RandomService;
+
 import java.util.HashSet;
 import java.util.Arrays;
 
@@ -34,5 +36,9 @@ public class CurrencyData extends AssetData {
     @Override
     public double getQualityMeasure() {
         return this.stability;
+    }
+
+    public void processRandomEvent() {
+        this.setStability(this.stability + RandomService.getInstance().yieldRandomGaussianNumber(0.01, 0));
     }
 }

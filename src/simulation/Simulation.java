@@ -21,6 +21,7 @@ public class Simulation {
         this.setupStockMarket();
         this.setupCurrenciesMarket();
         this.setupCommoditiesMarket();
+        this.setupStockMarket();
         this.setupInvestors();
         this.start();
     }
@@ -37,13 +38,13 @@ public class Simulation {
             market.updateOffers();
             market.removeOutdatedOffers();
         }
-        if (day == 1) {
+        /*if (day == 1) {
             SimulationConfig.getInstance().setBullProportion(0.65);
         } else if (day == Constants.YEAR) {
             SimulationConfig.getInstance().setBullProportion(0.35);
         } else if (day == Constants.YEAR + 100) {
             SimulationConfig.getInstance().setBullProportion(0.65);
-        }
+        }*/
         AssetManager.getInstance().processEndDay();
         CompaniesManager.getInstance().processEndDay();
         GlobalHoldersLock.writeUnlock();
@@ -89,7 +90,7 @@ public class Simulation {
 
     private void setupInvestors() {
         this.investors = new HashSet<>();
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 200; i++) {
             var newInvestor = new RandomHolderFactory().createInvestor();
             newInvestor.giveAccessToMarkets(new HashSet<>(this.markets));
             this.investors.add(newInvestor);

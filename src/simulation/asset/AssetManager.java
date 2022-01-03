@@ -10,7 +10,6 @@ public final class AssetManager {
     private HashMap<String,AssetData> allAssets;
     private static int assetID = 0;
 
-
     private AssetManager() {
         this.allAssets = new HashMap<>();
     }
@@ -73,6 +72,7 @@ public final class AssetManager {
     public void processEndDay() {
         for (var asset : this.allAssets.values()) {
             asset.processDayPrices();
+            asset.processRandomEvent();
         }
     }
 
