@@ -36,7 +36,7 @@ public class SimulationConfig {
         this.bullProportion = proportion;
     }
 
-    public static SimulationConfig getInstance() {
+    public synchronized static SimulationConfig getInstance() {
         if (instance == null) {
             instance = new SimulationConfig();
         }

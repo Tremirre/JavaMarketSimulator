@@ -19,7 +19,7 @@ public class CompaniesManager {
         throw new RuntimeException("INVALID COMPANY ID PROVIDED!");
     }
 
-    public static CompaniesManager getInstance() {
+    public synchronized static CompaniesManager getInstance() {
         if (instance == null) {
             instance = new CompaniesManager();
         }

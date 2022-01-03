@@ -206,7 +206,7 @@ public class RandomService {
         return String.valueOf(year) + '-' + monthD + '-' + dayD;
     }
 
-    public static RandomService getInstance() {
+    public synchronized static RandomService getInstance() {
         if (instance == null) {
             instance = new RandomService();
         }

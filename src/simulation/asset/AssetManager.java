@@ -15,7 +15,7 @@ public class AssetManager {
         this.allAssets = new HashMap<>();
     }
 
-    public static AssetManager getInstance() {
+    public synchronized static AssetManager getInstance() {
         if (instance == null) {
             instance = new AssetManager();
         }
