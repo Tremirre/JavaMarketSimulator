@@ -5,7 +5,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
 
-public class RandomService {
+public final class RandomService {
     private static RandomService instance;
     private final static String addressPath = "resource\\address_data\\";
     private final static String holdersPath = "resource\\holders_data\\";

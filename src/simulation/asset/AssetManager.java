@@ -5,7 +5,7 @@ import simulation.holders.Company;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class AssetManager {
+public final class AssetManager {
     private static AssetManager instance;
     private HashMap<String,AssetData> allAssets;
     private static int assetID = 0;

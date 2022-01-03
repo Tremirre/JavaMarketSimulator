@@ -2,7 +2,7 @@ package simulation.holders;
 
 import java.util.ArrayList;
 
-public class CompaniesManager {
+public final class CompaniesManager {
     private static CompaniesManager instance;
     ArrayList<Company> companies;
 

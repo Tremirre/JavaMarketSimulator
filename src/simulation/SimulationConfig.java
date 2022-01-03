@@ -2,7 +2,7 @@ package simulation;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class SimulationConfig {
+public final class SimulationConfig {
     private static SimulationConfig instance;
     private AtomicInteger maxTransactionsPerDayPerMarket = new AtomicInteger(100);
     private AtomicInteger maxOfferAge = new AtomicInteger(20);
