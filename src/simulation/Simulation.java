@@ -1,7 +1,7 @@
 package simulation;
 
 import simulation.asset.AssetManager;
-import simulation.asset.RandomNonDiscreteAssetFactory;
+import simulation.asset.RandomSupplementaryAssetFactory;
 import simulation.holders.CompaniesManager;
 import simulation.holders.Investor;
 import simulation.holders.RandomHolderFactory;
@@ -103,6 +103,6 @@ public class Simulation {
     private void setupDataResourceForRandomFactories() {
         var resourceHolder = new ResourceHolder();
         RandomHolderFactory.setFactoryResource(resourceHolder);
-        RandomNonDiscreteAssetFactory.setFactoryResource(resourceHolder);
+        RandomSupplementaryAssetFactory.setFactoryResource(resourceHolder);
     }
 }

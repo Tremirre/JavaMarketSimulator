@@ -3,16 +3,15 @@ package simulation.asset;
 import simulation.util.RandomService;
 
 import java.util.HashSet;
-import java.util.Arrays;
 
 public class CurrencyData extends AssetData {
     private HashSet<String> countriesOfUse;
     private double stability;
 
 
-    protected CurrencyData(int id, String name, double openingPrice, String[] countries, double stability) {
+    protected CurrencyData(int id, String name, double openingPrice, HashSet<String> countries, double stability) {
         super(id, name, openingPrice);
-        this.countriesOfUse = new HashSet<>(Arrays.asList(countries));
+        this.countriesOfUse = countries;
         this.splittable = true;
         this.setStability(stability);
     }
@@ -28,6 +27,8 @@ public class CurrencyData extends AssetData {
     public HashSet<String> getCountriesOfUse() {
         return this.countriesOfUse;
     }
+
+    public void addCountriesOfUse(HashSet<String> countries) {this.countriesOfUse.addAll(countries);}
 
     public void setStability(double stability) {
         this.stability = Math.max(Math.min(stability, 1), 0);

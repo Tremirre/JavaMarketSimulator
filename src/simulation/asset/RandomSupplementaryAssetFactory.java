@@ -5,7 +5,7 @@ import simulation.util.ResourceHolder;
 import simulation.util.records.CommodityRecord;
 import simulation.util.records.CurrencyRecord;
 
-public class RandomNonDiscreteAssetFactory extends NonDiscreteAssetFactory {
+public class RandomSupplementaryAssetFactory extends SupplementaryAssetFactory {
     private static ResourceHolder resourceHolder;
 
     public static void setFactoryResource(ResourceHolder resource) {
@@ -24,7 +24,7 @@ public class RandomNonDiscreteAssetFactory extends NonDiscreteAssetFactory {
         var countriesOfUse = currency.getCountriesOfUse();
         var stability = rand.yieldRandomGaussianNumber(0.25, 0.5);
         return AssetManager.getInstance()
-                .addCurrencyAsset(currency.getName(), rate, countriesOfUse.toArray(new String[0]), stability)
+                .addCurrencyAsset(currency.getName(), rate, countriesOfUse, stability)
                 .getUniqueIdentifyingName();
     }
 
@@ -35,8 +35,23 @@ public class RandomNonDiscreteAssetFactory extends NonDiscreteAssetFactory {
         commodity.use();
         var rate = commodity.getInitialRate();
         var unit = commodity.getUnit();
+        var currency = (CurrencyRecord) rand.sampleElement(resourceHolder.getCurrencies().toArray());
+        if (currency == null) {
+            throw new RuntimeException("Run out of free random currencies");
+        }
+        currency.use();
+        String currencyID;
+        var currencyData = AssetManager.getInstance().findCurrencyByName(currency.getName());
+        if (currencyData == null) {
+            currencyID = new InformedSupplementaryAssetFactory(currency.getName(), currency.getInitialRate()).createCurrencyAsset();
+            currencyData = (CurrencyData) AssetManager.getInstance().getAssetData(currencyID);
+            currencyData.addCountriesOfUse(currency.getCountriesOfUse());
+            currencyData.setStability(rand.yieldRandomGaussianNumber(0.01, 0.5));
+        } else {
+            currencyID = currencyData.getUniqueIdentifyingName();
+        }
         return AssetManager.getInstance()
-                .addCommodityAsset(commodity.getName(), rate, unit, "US Dollar")
+                .addCommodityAsset(commodity.getName(), rate, unit, currencyID)
                 .getUniqueIdentifyingName();
     }
 }

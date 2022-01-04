@@ -1,6 +1,6 @@
 package simulation.market;
 
-import simulation.asset.RandomNonDiscreteAssetFactory;
+import simulation.asset.RandomSupplementaryAssetFactory;
 import simulation.util.RandomService;
 
 import java.util.HashSet;
@@ -19,7 +19,7 @@ public class CurrenciesMarket extends Market {
         this.ivs = new InitialVoidSeller();
         var initialNumberOfCurrencies = RandomService.getInstance().yieldRandomNumber(5) + 1;
         for (int i = 0; i < initialNumberOfCurrencies; i++) {
-            var newCurrency = new RandomNonDiscreteAssetFactory().createCurrencyAsset();
+            var newCurrency = new RandomSupplementaryAssetFactory().createCurrencyAsset();
             this.addNewCurrency(newCurrency);
         }
     }

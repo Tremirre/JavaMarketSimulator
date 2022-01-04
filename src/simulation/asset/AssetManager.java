@@ -4,6 +4,7 @@ import simulation.holders.Company;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 
 public final class AssetManager {
     private static AssetManager instance;
@@ -27,14 +28,26 @@ public final class AssetManager {
         return com;
     }
 
+    public CommodityData addCommodityAsset(String name, double openingPrice) {
+        var com = new CommodityData(assetID++, name, openingPrice, null, null);
+        this.allAssets.put(com.getUniqueIdentifyingName(), com);
+        return com;
+    }
+
     public StockData addStockAsset(String name, double openingPrice, Company company) {
         var stock = new StockData(assetID++, name, openingPrice, company);
         this.allAssets.put(stock.getUniqueIdentifyingName(), stock);
         return stock;
     }
 
-    public CurrencyData addCurrencyAsset(String name, double openingPrice, String[] countriesOfUse, double stability) {
-        var cur = new CurrencyData(assetID++, name, openingPrice, countriesOfUse, stability);
+    public CurrencyData addCurrencyAsset(String name, double openingPrice, HashSet<String> countriesOfUse, double stability) {
+        var cur = new CurrencyData(assetID++, name, openingPrice, new HashSet<>(countriesOfUse), stability);
+        this.allAssets.put(cur.getUniqueIdentifyingName(), cur);
+        return cur;
+    }
+
+    public CurrencyData addCurrencyAsset(String name, double openingPrice) {
+        var cur = new CurrencyData(assetID++, name, openingPrice, new HashSet<>(), 0);
         this.allAssets.put(cur.getUniqueIdentifyingName(), cur);
         return cur;
     }
@@ -90,5 +103,14 @@ public final class AssetManager {
             prices.put(entry.getKey(), entry.getValue().getPriceHistory());
         }
         return prices;
+    }
+
+    public CurrencyData findCurrencyByName(String currencyName) {
+        for (var data : this.allAssets.values()) {
+            if (data instanceof CurrencyData && data.getName().equals(currencyName)) {
+                return (CurrencyData) data;
+            }
+        }
+        return null;
     }
 }

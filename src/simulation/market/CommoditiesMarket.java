@@ -1,6 +1,6 @@
 package simulation.market;
 
-import simulation.asset.RandomNonDiscreteAssetFactory;
+import simulation.asset.RandomSupplementaryAssetFactory;
 import simulation.util.RandomService;
 
 import java.util.HashSet;
@@ -19,7 +19,7 @@ public class CommoditiesMarket extends Market{
         this.ivs = new InitialVoidSeller();
         var initialNumberOfCommodities = RandomService.getInstance().yieldRandomInteger(5) + 1;
         for (int i = 0; i< initialNumberOfCommodities; i++) {
-            var newCommodity = new RandomNonDiscreteAssetFactory().createCommodityAsset();
+            var newCommodity = new RandomSupplementaryAssetFactory().createCommodityAsset();
             this.addNewCommodity(newCommodity);
         }
     }
