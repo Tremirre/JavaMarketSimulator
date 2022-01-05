@@ -4,6 +4,7 @@ import simulation.SimulationConfig;
 import simulation.asset.AssetManager;
 import simulation.holders.Address;
 import simulation.offer.*;
+import simulation.util.Constants;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -152,5 +153,9 @@ abstract public class Market {
 
     public void setSellFee(double sellFee) {
         this.sellFee = sellFee;
+    }
+
+    public String getAssetTradingCurrency(String assetType) {
+        return Constants.DEFAULT_CURRENCY;
     }
 }

@@ -5,17 +5,18 @@ import simulation.asset.StockData;
 import simulation.holders.CompaniesManager;
 import simulation.offer.BuyOffer;
 import simulation.offer.SellOffer;
+import simulation.util.Constants;
 import simulation.util.RandomService;
 
 import java.util.HashSet;
 
 public class StockMarket extends Market{
-    private String traidingCurrency;
+    private String tradingCurrency;
     private HashSet<StockMarketIndex> stockMarketIndexes;
 
     public StockMarket(String name, double buyFee, double sellFee, String currency) {
         super(name + " Stock", buyFee, sellFee);
-        this.traidingCurrency = currency;
+        this.tradingCurrency = currency;
     }
 
     public void addStockMarketIndex(StockMarketIndex idx) {
@@ -62,5 +63,9 @@ public class StockMarket extends Market{
             }
         }
         return assets;
+    }
+
+    public String getAssetTradingCurrency(String assetType) {
+        return Constants.DEFAULT_CURRENCY; //return this.tradingCurrency
     }
 }

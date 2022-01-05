@@ -19,4 +19,5 @@ public final class Constants {
     public static final int INVESTOR_INITIAL_FUNDS_DEVIATION = 20;
     public static final double INVESTOR_FUNDS_INCREASE_PROBABILITY = 0.01;
     public static final int INVESTOR_FUNDS_INCREASE_AMOUNT = 25;
+    public static final String DEFAULT_CURRENCY = "DEFAULT_STANDARD_CURRENCY";
 }
