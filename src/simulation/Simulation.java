@@ -22,9 +22,9 @@ public class Simulation {
         this.markets = new ArrayList<>();
         this.setupDataResourceForRandomFactories();
         this.setupStockMarket();
-        //this.setupCurrenciesMarket();
-        //this.setupCommoditiesMarket();
-        //this.setupStockMarket();
+        this.setupCurrenciesMarket();
+        this.setupCommoditiesMarket();
+        this.setupStockMarket();
         this.setupInvestors();
         this.start();
     }

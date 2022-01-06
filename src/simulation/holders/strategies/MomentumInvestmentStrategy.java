@@ -18,7 +18,7 @@ public class MomentumInvestmentStrategy implements InvestmentStrategy {
     private double predictNextPrice(String assetType) {
         var history = AssetManager.getInstance().getAssetData(assetType).getPriceHistory();
         var lastPrice = history.get(history.size() - 1);
-        var changeInValue = lastPrice - history.get(history.size() - 2);
+        var changeInValue = history.size() == 1 ? 0 : lastPrice - history.get(history.size() - 2);
         return Math.max(lastPrice + changeInValue, 0.001);
     }
 
@@ -28,13 +28,12 @@ public class MomentumInvestmentStrategy implements InvestmentStrategy {
         double highestIncreaseOverThePeriod = 0;
         for (var asset : availableAssets) {
             var history = AssetManager.getInstance().getAssetData(asset).getPriceHistory();
-            if (history.isEmpty()) {
+            if (history.size() < this.periodOfInterest) {
                 continue;
             }
             double current = history.get(history.size() - 1);
-            double previous = history.size() - 1 < this.periodOfInterest ? history.get(0)
-                    : history.get(history.size() - 1 - this.periodOfInterest);
-            if (current - previous > highestIncreaseOverThePeriod) {
+            double previous = history.get(history.size() - this.periodOfInterest);
+            if (current - previous >= highestIncreaseOverThePeriod) {
                 highestIncreaseOverThePeriod = current - previous;
                 bestAsset = asset;
             }
@@ -62,13 +61,12 @@ public class MomentumInvestmentStrategy implements InvestmentStrategy {
         double highestDecreaseOverThePeriod = 0;
         for (var asset : ownedAssets) {
             var history = AssetManager.getInstance().getAssetData(asset).getPriceHistory();
-            if (history.isEmpty()) {
+            if (history.size() < this.periodOfInterest) {
                 continue;
             }
             double current = history.get(history.size() - 1);
-            double previous = history.size() - 1 < this.periodOfInterest ? history.get(0)
-                    : history.get(history.size() - 1 - this.periodOfInterest);
-            if (current - previous < highestDecreaseOverThePeriod) {
+            double previous = history.get(history.size() - this.periodOfInterest);
+            if (current - previous <= highestDecreaseOverThePeriod) {
                 highestDecreaseOverThePeriod = current - previous;
                 bestAsset = asset;
             }

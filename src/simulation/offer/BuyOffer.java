@@ -12,9 +12,9 @@ public class BuyOffer extends Offer {
 
     @Override
     public void updatePrice() {
-        double latestOfferCurrencyRate = 1.0;//AssetManager.getInstance().findPrice(this.offerCurrency);
+        double latestOfferCurrencyRate = AssetManager.getInstance().findPrice(this.offerCurrency);
         this.price = this.sender.processBuyOfferAlteration(this.price*latestOfferCurrencyRate, this.size, this.assetType);
-        //this.price/=latestOfferCurrencyRate;
+        this.price/=latestOfferCurrencyRate;
     }
 
     @Override
