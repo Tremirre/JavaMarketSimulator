@@ -13,7 +13,7 @@ public class PassiveCompanyStrategy implements InvestmentStrategy{
 
     @Override
     public double determineOptimalBuyingPrice(String chosenAsset) {
-        return 1.2 * AssetManager.getInstance().getAssetData(chosenAsset).getLatestAverageSellingPrice();
+        return 1.2 * AssetManager.getInstance().getAssetData(chosenAsset).getOpeningPrice();
     }
 
     @Override
@@ -26,7 +26,7 @@ public class PassiveCompanyStrategy implements InvestmentStrategy{
 
     @Override
     public double determineOptimalSellingPrice(String chosenAsset) {
-        return 0.8 * AssetManager.getInstance().getAssetData(chosenAsset).getLatestAverageSellingPrice();
+        return 0.8 * AssetManager.getInstance().getAssetData(chosenAsset).getOpeningPrice();
     }
 
     @Override

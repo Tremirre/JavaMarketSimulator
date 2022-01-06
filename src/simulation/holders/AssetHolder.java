@@ -1,6 +1,7 @@
 package simulation.holders;
 
 import simulation.SimulationConfig;
+import simulation.asset.AssetManager;
 import simulation.holders.strategies.InvestmentStrategy;
 import simulation.market.Market;
 import simulation.offer.BuyingEntity;
@@ -35,11 +36,16 @@ public abstract class AssetHolder extends Thread implements SellingEntity, Buyin
             return;
         }
         double price = this.strategy.determineOptimalBuyingPrice(chosenAsset);
-        double amount = this.strategy.determineOptimalBuyingSize(chosenAsset, price, this.investmentBudget);
+
+        // Buying the currency in necessary amount according to the latest price
+        String assetCurrency = market.getAssetTradingCurrency(chosenAsset);
+        double truePrice = price * AssetManager.getInstance().findPrice(assetCurrency);
+
+        double amount = this.strategy.determineOptimalBuyingSize(chosenAsset, truePrice, this.investmentBudget);
         if (amount <= 0)
             return;
-        this.investmentBudget -= price * amount;
-        market.addBuyOffer(chosenAsset, this, price, amount);
+        this.investmentBudget -= truePrice * amount;
+        market.addBuyOffer(chosenAsset, this, price, amount, assetCurrency);
     }
 
     public void processBuyOffer(String assetType, double overPay, double amount) {
@@ -63,7 +69,7 @@ public abstract class AssetHolder extends Thread implements SellingEntity, Buyin
         availableAssets.retainAll(market.getAvailableAssetTypes());
         if (availableAssets.isEmpty())
             return;
-        String chosenAsset = this.strategy.chooseAssetToSell(this.storedAssets.keySet());
+        String chosenAsset = this.strategy.chooseAssetToSell(availableAssets);
         if (chosenAsset == null) {
             return;
         }
@@ -92,6 +98,8 @@ public abstract class AssetHolder extends Thread implements SellingEntity, Buyin
     protected void generateOrders() {
         var rand = RandomService.getInstance();
         var market = (Market) rand.sampleElement(this.availableMarkets.toArray());
+        if (market == null)
+            return;
         if (rand.yieldRandomNumber(1) < SimulationConfig.getInstance().getBullProportion())
             this.sendBuyOffer(market);
         if (rand.yieldRandomNumber(1) < SimulationConfig.getInstance().getBearProportion())

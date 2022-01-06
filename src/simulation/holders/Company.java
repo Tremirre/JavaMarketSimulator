@@ -98,7 +98,7 @@ public class Company extends AssetHolder {
     public double getCapital() {
         return this.numberOfStocks * AssetManager.getInstance()
                 .getAssetData(this.associatedAsset)
-                .getLatestAverageSellingPrice();
+                .getOpeningPrice();
     }
 
     public void recordTransactionData(double price, double amount) {

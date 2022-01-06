@@ -40,7 +40,7 @@ public class CommoditiesMarket extends Market{
     public String getAssetTradingCurrency(String commodity) {
         var assetManager = AssetManager.getInstance();
         if (!assetManager.doesAssetExist(commodity, AssetCategory.COMMODITY)) {
-             throw new RuntimeException("INVALID COMMODITY SENT TO THE MARKET");
+             throw new RuntimeException("INVALID COMMODITY SENT TO THE MARKET: " + commodity);
         }
         return ((CommodityData) assetManager.getAssetData(commodity)).getTradingCurrency();
     }

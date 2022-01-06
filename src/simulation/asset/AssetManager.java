@@ -1,6 +1,7 @@
 package simulation.asset;
 
 import simulation.holders.Company;
+import simulation.util.Constants;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -92,7 +93,7 @@ public final class AssetManager {
     public HashMap<String, Double> getLatestAverageAssetPrices() {
         var prices = new HashMap<String, Double>();
         for (var entry : this.allAssets.entrySet()) {
-            prices.put(entry.getKey(), entry.getValue().getLatestAverageSellingPrice());
+            prices.put(entry.getKey(), entry.getValue().getOpeningPrice());
         }
         return prices;
     }
@@ -112,5 +113,10 @@ public final class AssetManager {
             }
         }
         return null;
+    }
+
+    public double findPrice(String currencyName) {
+        return currencyName.equals(Constants.DEFAULT_CURRENCY) ? 1.0
+                : this.getAssetData(currencyName).getOpeningPrice();
     }
 }

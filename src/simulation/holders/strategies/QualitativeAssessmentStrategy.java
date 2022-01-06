@@ -32,7 +32,7 @@ public class QualitativeAssessmentStrategy implements InvestmentStrategy {
     @Override
     public double determineOptimalBuyingPrice(String chosenAsset) {
         var assetData = AssetManager.getInstance().getAssetData(chosenAsset);
-        var latestPrice = assetData.getLatestAverageSellingPrice();
+        var latestPrice = assetData.getOpeningPrice();
         var quality = assetData.getQualityMeasure();
         return (latestPrice * (quality/4 + 0.75)) * this.individualAssessmentFactor;
     }
@@ -63,7 +63,7 @@ public class QualitativeAssessmentStrategy implements InvestmentStrategy {
     @Override
     public double determineOptimalSellingPrice(String chosenAsset) {
         var assetData = AssetManager.getInstance().getAssetData(chosenAsset);
-        var latestPrice = assetData.getLatestAverageSellingPrice();
+        var latestPrice = assetData.getOpeningPrice();
         var quality = assetData.getQualityMeasure();
         return latestPrice * (1 + quality/4) * this.individualAssessmentFactor;
     }

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 abstract public class AssetData {
     final private int id;
     private String name;
-    final private double openingPrice;
+    private double openingPrice;
     private double maximalPrice;
     private double minimalPrice;
     private ArrayList<Double> sellingPrices;
@@ -27,7 +27,7 @@ abstract public class AssetData {
         return this.sellingPrices;
     }
 
-    public double getLatestAverageSellingPrice() {
+    public double getOpeningPrice() {
         return this.sellingPrices.get(this.sellingPrices.size() - 1);
     }
 
@@ -44,19 +44,16 @@ abstract public class AssetData {
     }
 
     public void processDayPrices() {
-        double averagePrice = this.salesBuffer.isEmpty() ? this.getLatestAverageSellingPrice() : 0;
+        double averagePrice = this.salesBuffer.isEmpty() ? this.getOpeningPrice() : 0;
         for (var price : this.salesBuffer)
             averagePrice += price/this.salesBuffer.size();
         this.sellingPrices.add(averagePrice);
+        this.openingPrice = averagePrice;
         this.salesBuffer.clear();
     }
 
     public String getUniqueIdentifyingName() {
         return this.name + this.id;
-    }
-
-    public double getOpeningPrice() {
-        return openingPrice;
     }
 
     public String getName() {

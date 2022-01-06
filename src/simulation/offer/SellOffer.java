@@ -3,8 +3,8 @@ package simulation.offer;
 public class SellOffer extends Offer {
     protected SellingEntity sender;
 
-    SellOffer(int id, String assetType, SellingEntity sender, double price, double size) {
-        super(id, assetType, price, size);
+    SellOffer(int id, String assetType, SellingEntity sender, double price, double size, String currency) {
+        super(id, assetType, price, size, currency);
         this.sender = sender;
     }
 
@@ -17,5 +17,6 @@ public class SellOffer extends Offer {
     public void withdraw() {
         this.sender.processSellWithdrawal(this.assetType, this.size);
     }
+
     public SellingEntity getSender() {return this.sender;}
 }

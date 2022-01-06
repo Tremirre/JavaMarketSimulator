@@ -6,13 +6,23 @@ public abstract class Offer {
     protected OfferingEntity sender;
     protected double price;
     protected double size;
+    protected String offerCurrency;
     protected int daysSinceGiven = 0;
 
-    Offer(int id, String assetType, double price, double size) {
+    Offer(int id, String assetType, double price, double size, String currency) {
         this.id = id;
         this.assetType = assetType;
         this.price = price;
         this.size = size;
+        this.offerCurrency = currency;
+    }
+
+    public String getOfferCurrency() {
+        return offerCurrency;
+    }
+
+    public void setOfferCurrency(String offerCurrency) {
+        this.offerCurrency = offerCurrency;
     }
 
     abstract public void updatePrice();

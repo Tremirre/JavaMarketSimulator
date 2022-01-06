@@ -23,7 +23,7 @@ public class NaiveInvestmentStrategy implements InvestmentStrategy {
 
     @Override
     public double determineOptimalBuyingPrice(String chosenAsset) {
-        return AssetManager.getInstance().getAssetData(chosenAsset).getLatestAverageSellingPrice() * this.riskFactor;
+        return AssetManager.getInstance().getAssetData(chosenAsset).getOpeningPrice() * this.riskFactor;
     }
 
     @Override
@@ -42,7 +42,7 @@ public class NaiveInvestmentStrategy implements InvestmentStrategy {
 
     @Override
     public double determineOptimalSellingPrice(String chosenAsset) {
-        return AssetManager.getInstance().getAssetData(chosenAsset).getLatestAverageSellingPrice() * (2 - this.riskFactor);
+        return AssetManager.getInstance().getAssetData(chosenAsset).getOpeningPrice() * (2 - this.riskFactor);
     }
 
     @Override

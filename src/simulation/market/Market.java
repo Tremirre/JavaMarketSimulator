@@ -29,13 +29,14 @@ abstract public class Market {
 
     abstract public void initializeMarket();
 
-    public synchronized void addBuyOffer(String assetType, BuyingEntity sender, double price, double size) {
-        BuyOffer offer = new StandardOfferFactory().createBuyOffer(assetType, sender, price, size);
+    public synchronized void addBuyOffer(String assetType, BuyingEntity sender, double price, double size, String offerCurrency) {
+        BuyOffer offer = new StandardOfferFactory().createBuyOffer(assetType, sender, price, size, offerCurrency);
         this.buyOffers.add(offer);
     }
 
     public synchronized void addSellOffer(String assetType, SellingEntity sender, double price, double size) {
-        SellOffer offer = new StandardOfferFactory().createSellOffer(assetType, sender, price, size);
+        var offerCurrency = this.getAssetTradingCurrency(assetType);
+        SellOffer offer = new StandardOfferFactory().createSellOffer(assetType, sender, price, size, offerCurrency);
         this.sellOffers.add(offer);
     }
 
@@ -46,9 +47,11 @@ abstract public class Market {
         var assetType = sellOffer.getAssetType();
         var amount = Math.min(sellOffer.getSize(), buyOffer.getSize());
         var priceDiff = buyOffer.getPrice() * buyOffer.getSize() - commonPrice * amount;
-        buyer.processBuyOffer(assetType, priceDiff, amount);
-        seller.processSellOffer(assetType, commonPrice, amount);
-        AssetManager.getInstance().getAssetData(assetType).addLatestSellingPrice(commonPrice);
+        var assetManager = AssetManager.getInstance();
+        var latestOfferCurrencyRate = assetManager.findPrice(buyOffer.getOfferCurrency());
+        buyer.processBuyOffer(assetType, priceDiff*latestOfferCurrencyRate, amount);
+        seller.processSellOffer(assetType, commonPrice*latestOfferCurrencyRate, amount);
+        assetManager.getAssetData(assetType).addLatestSellingPrice(commonPrice);
         sellOffer.setSize(sellOffer.getSize() - amount);
         return (sellOffer.getSize() > 0);
     }
