@@ -50,11 +50,16 @@ abstract public class Market {
         var priceDiff = buyOffer.getPrice() * buyOffer.getSize() - commonPrice * amount;
         var assetManager = AssetManager.getInstance();
         var latestOfferCurrencyRate = assetManager.findPrice(buyOffer.getOfferCurrency());
-        buyer.processBuyOffer(assetType, priceDiff*latestOfferCurrencyRate, amount);
-        seller.processSellOffer(assetType, commonPrice*latestOfferCurrencyRate, amount);
-        assetManager.getAssetData(assetType).addLatestSellingPrice(commonPrice);
+        var convertedCommonPrice = commonPrice/latestOfferCurrencyRate;
+        buyer.processBuyOffer(assetType, priceDiff/latestOfferCurrencyRate, amount);
+        seller.processSellOffer(assetType, convertedCommonPrice, amount);
+        this.useTransactionData(assetType, convertedCommonPrice, amount);
         sellOffer.setSize(sellOffer.getSize() - amount);
         return (sellOffer.getSize() > 0);
+    }
+
+    protected void useTransactionData(String assetType, double price, double amount) {
+        AssetManager.getInstance().getAssetData(assetType).addLatestSellingPrice(price);
     }
 
     public void processAllOffers() {

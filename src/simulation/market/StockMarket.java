@@ -3,15 +3,12 @@ package simulation.market;
 import simulation.asset.AssetCategory;
 import simulation.asset.AssetManager;
 import simulation.asset.StockData;
-import simulation.offer.BuyOffer;
-import simulation.offer.SellOffer;
-import simulation.util.Constants;
 
 import java.util.HashSet;
 
 public class StockMarket extends Market{
     private String tradingCurrency;
-    private HashSet<StockMarketIndex> stockMarketIndexes = new HashSet<>();
+    final private HashSet<StockMarketIndex> stockMarketIndexes = new HashSet<>();
 
     public StockMarket(String name, double buyFee, double sellFee, String currency) {
         super(name + " Stock", buyFee, sellFee);
@@ -33,24 +30,14 @@ public class StockMarket extends Market{
     }
 
     @Override
-    protected boolean processTransaction(BuyOffer buyOffer, SellOffer sellOffer) {
-        var buyer = buyOffer.getSender();
-        var seller = sellOffer.getSender();
-        var commonPrice = sellOffer.getPrice();
-        var assetType = sellOffer.getAssetType();
-        var amount = Math.min(sellOffer.getSize(), buyOffer.getSize());
-        var priceDiff = buyOffer.getPrice() * buyOffer.getSize() - commonPrice * amount;
-        buyer.processBuyOffer(assetType, priceDiff, amount);
-        seller.processSellOffer(assetType, commonPrice, amount);
+    protected void useTransactionData(String assetType, double price, double amount) {
+        super.useTransactionData(assetType, price, amount);
         var stockData = (StockData) AssetManager.getInstance().getAssetData(assetType);
-        stockData.addLatestSellingPrice(commonPrice);
         var associatedCompany = stockData.getCompany();
-        associatedCompany.recordTransactionData(commonPrice, amount);
-        sellOffer.setSize(sellOffer.getSize() - amount);
-        return (sellOffer.getSize() > 0);
+        associatedCompany.recordTransactionData(price, amount);
     }
 
     public String getAssetTradingCurrency(String assetType) {
-        return Constants.DEFAULT_CURRENCY; //return this.tradingCurrency
+        return this.tradingCurrency;
     }
 }

@@ -22,7 +22,7 @@ public class RandomMarketFactory implements MarketFactory {
         var name = (String) rand.sampleElement(resourceHolder.getMarketNames());
         var buyFee = 0.01 * rand.yieldRandomInteger(10) + 0.01;
         var sellFee = 0.01 * rand.yieldRandomInteger(10) + 0.01;
-        var initialNumberOfAssets = rand.yieldRandomInteger(6) + 1;
+        var initialNumberOfAssets = rand.yieldRandomInteger(8) + 3;
         switch (type) {
             case STOCK_MARKET -> {
                 var currency = (CurrencyRecord) rand.sampleElement(resourceHolder.getCurrencies().toArray());

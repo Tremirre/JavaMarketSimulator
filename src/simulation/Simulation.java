@@ -49,6 +49,11 @@ public class Simulation {
         }*/
         AssetManager.getInstance().processEndDay();
         CompaniesManager.getInstance().processEndDay();
+        double total = 0;
+        for (var investor : this.investors) {
+            total += investor.getInvestmentBudget();
+        }
+        System.out.println("Total investor's funds: " + total);
         GlobalHoldersLock.writeUnlock();
     }
 

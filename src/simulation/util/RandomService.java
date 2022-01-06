@@ -5,7 +5,7 @@ import java.util.*;
 public final class RandomService {
     private static RandomService instance;
     private final Random generator;
-    private static final int SEED = 0;
+    private static final int SEED = 1;
 
     private RandomService() {
         this.generator = SEED >= 0 ? new Random(SEED) : new Random();

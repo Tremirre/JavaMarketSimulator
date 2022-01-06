@@ -39,13 +39,13 @@ public abstract class AssetHolder extends Thread implements SellingEntity, Buyin
 
         // Buying the currency in necessary amount according to the latest price
         String assetCurrency = market.getAssetTradingCurrency(chosenAsset);
-        double truePrice = price * AssetManager.getInstance().findPrice(assetCurrency);
+        double convertedPrice = price * AssetManager.getInstance().findPrice(assetCurrency);
 
-        double amount = this.strategy.determineOptimalBuyingSize(chosenAsset, truePrice, this.investmentBudget);
+        double amount = this.strategy.determineOptimalBuyingSize(chosenAsset, price, this.investmentBudget);
         if (amount <= 0)
             return;
-        this.investmentBudget -= truePrice * amount;
-        market.addBuyOffer(chosenAsset, this, price, amount, assetCurrency);
+        this.investmentBudget -= price * amount;
+        market.addBuyOffer(chosenAsset, this, convertedPrice, amount, assetCurrency);
     }
 
     public void processBuyOffer(String assetType, double overPay, double amount) {
@@ -75,12 +75,15 @@ public abstract class AssetHolder extends Thread implements SellingEntity, Buyin
         }
         double amount = this.strategy.determineOptimalSellingSize(chosenAsset, this.storedAssets.get(chosenAsset));
         double price = this.strategy.determineOptimalSellingPrice(chosenAsset);
+        String assetCurrency = market.getAssetTradingCurrency(chosenAsset);
+        double convertedPrice = price * AssetManager.getInstance().findPrice(assetCurrency);
+
         double left = (this.storedAssets.get(chosenAsset) - amount);
         if (left > 0)
             this.storedAssets.put(chosenAsset, left);
         else
             this.storedAssets.remove(chosenAsset);
-        market.addSellOffer(chosenAsset, this, price, amount);
+        market.addSellOffer(chosenAsset, this, convertedPrice, amount);
     }
 
     public void processSellOffer(String assetType, double price, double amount) {
@@ -108,6 +111,10 @@ public abstract class AssetHolder extends Thread implements SellingEntity, Buyin
 
     public void giveAccessToMarkets(HashSet<Market> markets) {
         this.availableMarkets = markets;
+    }
+
+    public double getInvestmentBudget() {
+        return this.investmentBudget;
     }
 
     public int getID() {
