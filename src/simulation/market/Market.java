@@ -16,6 +16,7 @@ abstract public class Market {
     private double sellFee;
     private ArrayList<BuyOffer> buyOffers;
     private ArrayList<SellOffer> sellOffers;
+    protected HashSet<String> assetTypesOnMarket;
 
     Market(String name, double buyFee, double sellFee) {
         this.address = new Address("TestCountry", "TestCity", "0", "TestStreet", 420);
@@ -24,10 +25,10 @@ abstract public class Market {
         this.sellFee = sellFee;
         this.buyOffers = new ArrayList<>();
         this.sellOffers = new ArrayList<>();
-        this.initializeMarket();
+        this.assetTypesOnMarket = new HashSet<>();
     }
 
-    abstract public void initializeMarket();
+    abstract public void addNewAsset(String assetType);
 
     public synchronized void addBuyOffer(String assetType, BuyingEntity sender, double price, double size, String offerCurrency) {
         BuyOffer offer = new StandardOfferFactory().createBuyOffer(assetType, sender, price, size, offerCurrency);
@@ -128,7 +129,7 @@ abstract public class Market {
         return total;
     }
 
-    abstract public HashSet<String> getAvailableAssetTypes();
+    public HashSet<String> getAvailableAssetTypes() {return this.assetTypesOnMarket;}
 
     public Address getAddress() {
         return this.address;

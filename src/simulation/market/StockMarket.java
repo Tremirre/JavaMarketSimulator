@@ -1,18 +1,17 @@
 package simulation.market;
 
+import simulation.asset.AssetCategory;
 import simulation.asset.AssetManager;
 import simulation.asset.StockData;
-import simulation.holders.CompaniesManager;
 import simulation.offer.BuyOffer;
 import simulation.offer.SellOffer;
 import simulation.util.Constants;
-import simulation.util.RandomService;
 
 import java.util.HashSet;
 
 public class StockMarket extends Market{
     private String tradingCurrency;
-    private HashSet<StockMarketIndex> stockMarketIndexes;
+    private HashSet<StockMarketIndex> stockMarketIndexes = new HashSet<>();
 
     public StockMarket(String name, double buyFee, double sellFee, String currency) {
         super(name + " Stock", buyFee, sellFee);
@@ -21,8 +20,16 @@ public class StockMarket extends Market{
 
     public void addStockMarketIndex(StockMarketIndex idx) {
         this.stockMarketIndexes.add(idx);
-        for (var company : idx.getCompanies())
+        for (var company : idx.getCompanies()) {
+            this.addNewAsset(company.getAssociatedAsset());
             company.sendInitialOffer(this);
+        }
+    }
+
+    public void addNewAsset(String stock) {
+        if (!AssetManager.getInstance().doesAssetExist(stock, AssetCategory.STOCK))
+            throw new IllegalArgumentException("Invalid asset type passed to a stock market: " + stock);
+        this.assetTypesOnMarket.add(stock);
     }
 
     @Override
@@ -41,28 +48,6 @@ public class StockMarket extends Market{
         associatedCompany.recordTransactionData(commonPrice, amount);
         sellOffer.setSize(sellOffer.getSize() - amount);
         return (sellOffer.getSize() > 0);
-    }
-
-    @Override
-    public void initializeMarket() {
-        this.stockMarketIndexes = new HashSet<>();
-        var idx = new StockMarketIndex();
-        var initialNumberOfCompanies = RandomService.getInstance().yieldRandomNumber(5) + 1;
-        for (int i = 0; i < initialNumberOfCompanies; i++) {
-            idx.addCompany(CompaniesManager.getInstance().createNewCompany());
-        }
-        this.addStockMarketIndex(idx);
-    }
-
-    @Override
-    public synchronized HashSet<String> getAvailableAssetTypes() {
-        HashSet<String> assets = new HashSet<>();
-        for (var idx : this.stockMarketIndexes) {
-            for (var company : idx.getCompanies()) {
-                assets.add(company.getAssociatedAsset());
-            }
-        }
-        return assets;
     }
 
     public String getAssetTradingCurrency(String assetType) {

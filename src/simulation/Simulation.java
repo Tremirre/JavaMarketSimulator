@@ -21,10 +21,9 @@ public class Simulation {
     public Simulation() {
         this.markets = new ArrayList<>();
         this.setupDataResourceForRandomFactories();
-        this.setupStockMarket();
-        this.setupCurrenciesMarket();
-        this.setupCommoditiesMarket();
-        this.setupStockMarket();
+        this.setupMarket(MarketType.STOCK_MARKET);
+        this.setupMarket(MarketType.COMMODITIES_MARKET);
+        this.setupMarket(MarketType.CURRENCIES_MARKET);
         this.setupInvestors();
         this.start();
     }
@@ -66,19 +65,8 @@ public class Simulation {
         }
     }
 
-    private void setupStockMarket() {
-        var market = new StockMarket("StockTest" + this.markets.size(), 0.01, 0.02, "US Dollar");
-        this.markets.add(market);
-    }
-
-    private void setupCurrenciesMarket() {
-        var market = new CurrenciesMarket("CurrencyTest", 0.01, 0.02);
-        this.markets.add(market);
-    }
-
-    private void setupCommoditiesMarket() {
-        var market = new CommoditiesMarket("CommodityTest", 0.01, 0.2);
-        this.markets.add(market);
+    private void setupMarket(MarketType type) {
+        this.markets.add(new RandomMarketFactory().createMarket(type));
     }
 
     public void pause() {
@@ -104,5 +92,6 @@ public class Simulation {
         var resourceHolder = new ResourceHolder();
         RandomHolderFactory.setFactoryResource(resourceHolder);
         RandomSupplementaryAssetFactory.setFactoryResource(resourceHolder);
+        RandomMarketFactory.setFactoryResource(resourceHolder);
     }
 }

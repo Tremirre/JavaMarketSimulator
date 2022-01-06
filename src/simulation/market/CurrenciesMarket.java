@@ -1,36 +1,19 @@
 package simulation.market;
 
-import simulation.asset.RandomSupplementaryAssetFactory;
-import simulation.util.RandomService;
-
-import java.util.HashSet;
+import simulation.asset.AssetCategory;
+import simulation.asset.AssetManager;
 
 public class CurrenciesMarket extends Market {
-    private HashSet<String> currencies;
-    private InitialVoidSeller ivs;
+    private InitialVoidSeller ivs = new InitialVoidSeller();
 
     public CurrenciesMarket(String name, double buyFee, double sellFee) {
         super(name + " Currency", buyFee, sellFee);
     }
 
-    @Override
-    public void initializeMarket() {
-        this.currencies = new HashSet<>();
-        this.ivs = new InitialVoidSeller();
-        var initialNumberOfCurrencies = RandomService.getInstance().yieldRandomNumber(5) + 1;
-        for (int i = 0; i < initialNumberOfCurrencies; i++) {
-            var newCurrency = new RandomSupplementaryAssetFactory().createCurrencyAsset();
-            this.addNewCurrency(newCurrency);
-        }
-    }
-
-    @Override
-    public synchronized HashSet<String> getAvailableAssetTypes() {
-        return this.currencies;
-    }
-
-    public void addNewCurrency(String currency) {
-        this.currencies.add(currency);
+    public void addNewAsset(String currency) {
+        if (!AssetManager.getInstance().doesAssetExist(currency, AssetCategory.CURRENCY))
+            throw new IllegalArgumentException("Invalid asset type passed to a currency market: " + currency);
+        this.assetTypesOnMarket.add(currency);
         this.ivs.sendInitialOffer(this, currency);
     }
 }

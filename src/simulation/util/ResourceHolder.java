@@ -12,7 +12,7 @@ import java.util.HashMap;
 
 public class ResourceHolder {
     private final static String addressPath = "resource\\address_data\\";
-    private final static String holdersPath = "resource\\holders_data\\";
+    private final static String customNamesPath = "resource\\custom_names\\";
     private final static String assetPath = "resource\\asset_data\\";
 
     private final HashMap<String, String[]> citiesCountryMapping;
@@ -22,6 +22,7 @@ public class ResourceHolder {
     private String[] streets;
     private String[] names;
     private String[] surnames;
+    private String[] marketNames;
     private ArrayList<String> companyNames;
 
     private void loadCurrenciesAndCountries() throws IOException {
@@ -49,12 +50,14 @@ public class ResourceHolder {
         }
     }
 
-    private void loadCities() throws IOException {
+    private void loadAddressData() throws IOException {
         for (String country : this.citiesCountryMapping.keySet()) {
             String cities = Files.readString(Path.of(addressPath + country.toLowerCase() + ".txt"));
             String[] citiesList = cities.split(";");
             citiesCountryMapping.put(country, citiesList);
         }
+        String allStreets = Files.readString(Path.of(addressPath + "street_names.txt"));
+        this.streets = allStreets.split(";");
     }
 
     private void loadCommodities() throws IOException {
@@ -69,15 +72,15 @@ public class ResourceHolder {
         }
     }
 
-    private void loadAddressData() throws IOException {
-        String allStreets = Files.readString(Path.of(addressPath + "street_names.txt"));
-        this.streets = allStreets.split(";");
-        String allNames = Files.readString(Path.of(holdersPath + "names.txt"));
+    private void loadCustomNamesData() throws IOException {
+        String allNames = Files.readString(Path.of(customNamesPath + "names.txt"));
         this.names = allNames.split(";");
-        String allSurnames = Files.readString(Path.of(holdersPath + "surnames.txt"));
+        String allSurnames = Files.readString(Path.of(customNamesPath + "surnames.txt"));
         this.surnames = allSurnames.split(";");
-        String allCompanyNames = Files.readString(Path.of(holdersPath + "companies.txt"));
+        String allCompanyNames = Files.readString(Path.of(customNamesPath + "company_names.txt"));
         this.companyNames = new ArrayList<>(Arrays.asList(allCompanyNames.split(";")));
+        String allMarketNames = Files.readString(Path.of(customNamesPath + "market_names.txt"));
+        this.marketNames = allMarketNames.split(";");
     }
 
     public ResourceHolder() {
@@ -87,9 +90,9 @@ public class ResourceHolder {
         this.commodities = new ArrayList<>();
         try {
             this.loadCurrenciesAndCountries();
-            this.loadCities();
-            this.loadCommodities();
             this.loadAddressData();
+            this.loadCommodities();
+            this.loadCustomNamesData();
         } catch (IOException e) {
             System.out.println("Failed to load a resource!");
             System.out.println(e.getMessage());
@@ -148,6 +151,8 @@ public class ResourceHolder {
     public String[] getSurnames() {
         return surnames;
     }
+
+    public String[] getMarketNames() {return this.marketNames;}
 
     public ArrayList<String> getCompanyNames() {
         return companyNames;
