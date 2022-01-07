@@ -13,14 +13,14 @@ public class BuyOffer extends Offer {
     @Override
     public void updatePrice() {
         double latestOfferCurrencyRate = AssetManager.getInstance().findPrice(this.offerCurrency);
-        this.price = this.sender.processBuyOfferAlteration(this.price/latestOfferCurrencyRate, this.size, this.assetType);
-        this.price*=latestOfferCurrencyRate;
+        this.price = this.sender.processBuyOfferAlteration(this.price*latestOfferCurrencyRate, this.size, this.assetType);
+        this.price/=latestOfferCurrencyRate;
     }
 
     @Override
     public void withdraw() {
         double latestOfferCurrencyRate = AssetManager.getInstance().findPrice(this.offerCurrency);
-        this.sender.processBuyWithdrawal(this.price / latestOfferCurrencyRate, this.size);
+        this.sender.processBuyWithdrawal(this.price*latestOfferCurrencyRate, this.size);
     }
 
     public BuyingEntity getSender() {return this.sender;}

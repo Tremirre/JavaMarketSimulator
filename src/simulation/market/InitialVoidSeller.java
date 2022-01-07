@@ -8,7 +8,7 @@ public class InitialVoidSeller implements SellingEntity {
     public void sendInitialOffer(Market market, String assetType) {
         var assetManager = AssetManager.getInstance();
         var assetCurrencyRate = assetManager.findPrice(market.getAssetTradingCurrency(assetType));
-        var price = assetManager.getAssetData(assetType).getOpeningPrice()*assetCurrencyRate;
+        var price = assetManager.getAssetData(assetType).getOpeningPrice()/assetCurrencyRate;
         var size = RandomService.getInstance().yieldRandomGaussianNumber(25, 100);
         market.addSellOffer(assetType, this, price, size);
     }

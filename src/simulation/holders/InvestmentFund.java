@@ -1,7 +1,9 @@
 package simulation.holders;
 
 import simulation.holders.strategies.InvestmentStrategy;
+import simulation.holders.strategies.PassiveCompanyStrategy;
 import simulation.market.Market;
+import simulation.market.StockMarket;
 import simulation.util.Constants;
 import simulation.util.GlobalHoldersLock;
 import simulation.util.RandomService;
@@ -30,6 +32,7 @@ public class InvestmentFund extends Company {
         this.setInvestmentBudget(investmentBudget);
         this.currentCycleProfit = 0;
         this.currentCycleRevenue = 0;
+        this.freezeWithdrawal = false;
     }
 
     private void pulloutFunds() {
@@ -43,6 +46,13 @@ public class InvestmentFund extends Company {
         this.currentCycleProfit = 0;
     }
 
+    public void sendInitialOffer(StockMarket stockMarket) {
+        var savedStrategy = this.strategy;
+        this.strategy = new PassiveCompanyStrategy();
+        this.sendSellOffer(stockMarket);
+        this.strategy = savedStrategy;
+    }
+    
     public void sendBuyOffer(Market market) {
         var diff = -this.investmentBudget;
         super.sendBuyOffer(market);
