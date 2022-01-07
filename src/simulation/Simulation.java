@@ -22,10 +22,18 @@ public class Simulation {
         this.markets = new ArrayList<>();
         this.setupDataResourceForRandomFactories();
         this.setupMarket(MarketType.STOCK_MARKET);
+        var market = (StockMarket) this.markets.get(0);
+        var fundsIdx = new StockMarketIndex();
+        for (int i = 0; i < 10; i++) {
+            fundsIdx.addCompany(CompaniesManager.getInstance().createNewFund());
+        }
+        market.addStockMarketIndex(fundsIdx);
         this.setupMarket(MarketType.COMMODITIES_MARKET);
         this.setupMarket(MarketType.CURRENCIES_MARKET);
         this.setupInvestors();
+        CompaniesManager.getInstance().giveAccessToMarkets(new HashSet<>(this.markets));
         this.start();
+
     }
 
     public void runSimulationDay(int day) {

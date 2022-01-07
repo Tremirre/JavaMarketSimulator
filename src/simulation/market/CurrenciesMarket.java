@@ -2,12 +2,13 @@ package simulation.market;
 
 import simulation.asset.AssetCategory;
 import simulation.asset.AssetManager;
+import simulation.holders.Address;
 
 public class CurrenciesMarket extends Market {
     private InitialVoidSeller ivs = new InitialVoidSeller();
 
-    public CurrenciesMarket(String name, double buyFee, double sellFee) {
-        super(name + " Currency", buyFee, sellFee);
+    public CurrenciesMarket(String name, double buyFee, double sellFee, Address address) {
+        super(name + " Currency", buyFee, sellFee, address);
     }
 
     public void addNewAsset(String currency) {

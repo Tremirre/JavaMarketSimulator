@@ -23,6 +23,7 @@ public class RandomMarketFactory implements MarketFactory {
         var buyFee = 0.01 * rand.yieldRandomInteger(10) + 0.01;
         var sellFee = 0.01 * rand.yieldRandomInteger(10) + 0.01;
         var initialNumberOfAssets = rand.yieldRandomInteger(8) + 3;
+        var address = rand.yieldRandomAddress(resourceHolder);
         switch (type) {
             case STOCK_MARKET -> {
                 var currency = (CurrencyRecord) rand.sampleElement(resourceHolder.getCurrencies().toArray());
@@ -40,7 +41,7 @@ public class RandomMarketFactory implements MarketFactory {
                 } else {
                     currencyID = currencyData.getUniqueIdentifyingName();
                 }
-                var newMarket = new StockMarket(name, buyFee, sellFee, currencyID);
+                var newMarket = new StockMarket(name, buyFee, sellFee, currencyID, address);
                 var companiesManager = CompaniesManager.getInstance();
                 var idx = new StockMarketIndex();
                 for (int i = 0; i < initialNumberOfAssets; i++) {
@@ -50,14 +51,14 @@ public class RandomMarketFactory implements MarketFactory {
                 return newMarket;
             }
             case CURRENCIES_MARKET -> {
-                var newMarket = new CurrenciesMarket(name,buyFee,sellFee);
+                var newMarket = new CurrenciesMarket(name, buyFee, sellFee, address);
                 for (int i = 0; i < initialNumberOfAssets; i++) {
                     newMarket.addNewAsset(new RandomSupplementaryAssetFactory().createCurrencyAsset());
                 }
                 return newMarket;
             }
             case COMMODITIES_MARKET -> {
-                var newMarket = new CommoditiesMarket(name,buyFee,sellFee);
+                var newMarket = new CommoditiesMarket(name, buyFee, sellFee, address);
                 for (int i = 0; i < initialNumberOfAssets; i++) {
                     newMarket.addNewAsset(new RandomSupplementaryAssetFactory().createCommodityAsset());
                 }

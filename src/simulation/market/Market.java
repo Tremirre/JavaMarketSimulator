@@ -18,8 +18,8 @@ abstract public class Market {
     private ArrayList<SellOffer> sellOffers;
     protected HashSet<String> assetTypesOnMarket;
 
-    Market(String name, double buyFee, double sellFee) {
-        this.address = new Address("TestCountry", "TestCity", "0", "TestStreet", 420);
+    Market(String name, double buyFee, double sellFee, Address address) {
+        this.address = address;
         this.name = name + " Market of " + this.address.getCity();
         this.buyFee = buyFee;
         this.sellFee = sellFee;

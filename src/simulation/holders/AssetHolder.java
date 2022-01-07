@@ -17,7 +17,7 @@ public abstract class AssetHolder extends Thread implements SellingEntity, Buyin
     protected double investmentBudget;
     protected boolean running = false;
     protected boolean freezeWithdrawal = false;
-    private final InvestmentStrategy strategy;
+    protected InvestmentStrategy strategy;
     final private int id;
 
     public AssetHolder(int id, double investmentBudget, InvestmentStrategy strategy) {
@@ -133,10 +133,12 @@ public abstract class AssetHolder extends Thread implements SellingEntity, Buyin
         return this.running;
     }
 
+    public void setInvestmentBudget(double budget) {
+        this.investmentBudget = budget;
+    }
+
     public void start() {
         this.running = true;
         super.start();
     }
-
-    abstract public void print();
 }

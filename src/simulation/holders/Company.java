@@ -13,14 +13,14 @@ public class Company extends AssetHolder {
     private String name;
     private final String IPODate;
     private Address address;
-    private double profit;
-    private double revenue;
-    private final String associatedAsset;
-    private final ArrayList<Integer> dailyTradingVolumes = new ArrayList<>();
-    private final ArrayList<Double> dailyTotalSales = new ArrayList<>();
-    private int currentTradingVolume = 0; //number of transactions of stocks of that company
-    private double currentTotalSales = 0;
-    private int numberOfStocks;
+    protected double profit;
+    protected double revenue;
+    protected final String associatedAsset;
+    protected final ArrayList<Integer> dailyTradingVolumes = new ArrayList<>();
+    protected final ArrayList<Double> dailyTotalSales = new ArrayList<>();
+    protected int currentTradingVolume = 0; //number of transactions of stocks of that company
+    protected double currentTotalSales = 0;
+    protected int numberOfStocks;
 
     public Company(int id,
                    int numberOfStocks,
@@ -53,14 +53,6 @@ public class Company extends AssetHolder {
 
     public void sendInitialOffer(StockMarket stockMarket) {
         this.sendSellOffer(stockMarket);
-    }
-
-    public void print() {
-        System.out.println(this.name);
-        this.address.print();
-        System.out.println("IPO date: " + this.IPODate);
-        System.out.println("Revenue: " + this.revenue + "Profit: " + this.profit);
-        System.out.println("Stock name: " + this.associatedAsset);
     }
 
     public synchronized void processSellOffer(String assetType, double price, double amount) {
@@ -121,7 +113,7 @@ public class Company extends AssetHolder {
         this.address = address;
     }
 
-    private void updateCompanyData() {
+    protected void updateCompanyData() {
         var rand = RandomService.getInstance();
         this.revenue += rand.yieldRandomGaussianNumber(1000, 0);
         this.profit += rand.yieldRandomGaussianNumber(500, 0);

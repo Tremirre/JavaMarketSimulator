@@ -1,6 +1,9 @@
 package simulation.holders;
 
+import simulation.market.Market;
+
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public final class CompaniesManager {
     private static CompaniesManager instance;
@@ -37,6 +40,19 @@ public final class CompaniesManager {
         this.companies.add(newCompany);
         newCompany.start();
         return newCompany;
+    }
+
+    public InvestmentFund createNewFund() {
+        var newFund = new RandomHolderFactory().createInvestmentFund();
+        this.companies.add(newFund);
+        newFund.start();
+        return newFund;
+    }
+
+    public void giveAccessToMarkets(HashSet<Market> markets) {
+        for (var company : companies) {
+            company.giveAccessToMarkets(markets);
+        }
     }
 
     public void stopCompanies() {
