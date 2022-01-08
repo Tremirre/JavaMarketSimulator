@@ -54,14 +54,17 @@ public abstract class AssetHolder extends Thread implements SellingEntity, Buyin
         this.storedAssets.put(assetType, newAmount);
     }
 
-    public void processBuyWithdrawal(double price, double amount) {
-        this.investmentBudget += price * amount;
+    public void processBuyWithdrawal(double price, double amount, String assetCurrency) {
+        var rate = AssetManager.getInstance().findPrice(assetCurrency);
+        this.investmentBudget += price * rate * amount;
     }
 
-    public double processBuyOfferAlteration(double price, double amount, String assetType) {
-        double newPrice = this.strategy.updateBuyPrice(price, amount, this.investmentBudget, assetType);
-        this.investmentBudget -= (newPrice - price) * amount;
-        return newPrice;
+    public double processBuyOfferAlteration(double price, double amount, String assetType, String assetCurrency) {
+        var rate = AssetManager.getInstance().findPrice(assetCurrency);
+        var convertedPrice = rate * price;
+        double newPrice = this.strategy.updateBuyPrice(convertedPrice, amount, this.investmentBudget, assetType);
+        this.investmentBudget -= (newPrice - convertedPrice) * amount;
+        return newPrice/rate;
     }
 
     protected void sendSellOffer(Market market) {
@@ -94,8 +97,10 @@ public abstract class AssetHolder extends Thread implements SellingEntity, Buyin
         this.storedAssets.put(assetType, this.storedAssets.getOrDefault(assetType, 0.0) + amount);
     }
 
-    public double processSellOfferAlteration(double price, String assetType) {
-        return this.strategy.updateSellPrice(price, assetType);
+    public double processSellOfferAlteration(double price, String assetType, String assetCurrency) {
+        var rate = AssetManager.getInstance().findPrice(assetCurrency);
+        return this.strategy.updateSellPrice(price * rate, assetType)/rate;
+
     }
 
     protected void generateOrders() {

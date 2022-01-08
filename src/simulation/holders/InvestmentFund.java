@@ -68,17 +68,17 @@ public class InvestmentFund extends Company {
         this.currentCycleRevenue += diff;
     }
 
-    public void processBuyWithdrawal(double price, double amount) {
+    public void processBuyWithdrawal(double price, double amount, String currency) {
         var diff = -this.investmentBudget;
-        super.processBuyWithdrawal(price, amount);
+        super.processBuyWithdrawal(price, amount, currency);
         diff += this.investmentBudget;
         this.currentCycleProfit += diff;
         this.currentCycleRevenue += diff;
     }
 
-    public double processBuyOfferAlteration(double price, double amount, String assetType) {
+    public double processBuyOfferAlteration(double price, double amount, String assetType, String currency) {
         var diff = -this.investmentBudget;
-        var newPrice = super.processBuyOfferAlteration(price, amount, assetType);
+        var newPrice = super.processBuyOfferAlteration(price, amount, assetType, currency);
         diff += this.investmentBudget;
         this.currentCycleProfit -= diff;
         return newPrice;

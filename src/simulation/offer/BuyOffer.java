@@ -1,7 +1,5 @@
 package simulation.offer;
 
-import simulation.asset.AssetManager;
-
 public class BuyOffer extends Offer {
     protected BuyingEntity sender;
 
@@ -12,15 +10,12 @@ public class BuyOffer extends Offer {
 
     @Override
     public void updatePrice() {
-        double latestOfferCurrencyRate = AssetManager.getInstance().findPrice(this.offerCurrency);
-        this.price = this.sender.processBuyOfferAlteration(this.price*latestOfferCurrencyRate, this.size, this.assetType);
-        this.price/=latestOfferCurrencyRate;
+        this.price = this.sender.processBuyOfferAlteration(this.price, this.size, this.assetType, this.getOfferCurrency());
     }
 
     @Override
     public void withdraw() {
-        double latestOfferCurrencyRate = AssetManager.getInstance().findPrice(this.offerCurrency);
-        this.sender.processBuyWithdrawal(this.price*latestOfferCurrencyRate, this.size);
+        this.sender.processBuyWithdrawal(this.price, this.size, this.getOfferCurrency());
     }
 
     public BuyingEntity getSender() {return this.sender;}

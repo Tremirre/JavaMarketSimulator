@@ -11,7 +11,7 @@ import simulation.util.records.CurrencyRecord;
 
 public class RandomMarketFactory implements MarketFactory {
     private static ResourceHolder resourceHolder;
-    private TradingEntitiesManager manager;
+    private final TradingEntitiesManager manager;
 
     public RandomMarketFactory(TradingEntitiesManager manager) {
         this.manager = manager;
@@ -50,6 +50,9 @@ public class RandomMarketFactory implements MarketFactory {
                 var idx = new StockMarketIndex();
                 for (int i = 0; i < initialNumberOfAssets; i++) {
                     idx.addCompany(this.manager.createNewCompany());
+                }
+                for (int i = 0; i < initialNumberOfAssets/2; i++) {
+                    idx.addCompany(this.manager.createNewFund());
                 }
                 newMarket.addStockMarketIndex(idx);
                 return newMarket;
