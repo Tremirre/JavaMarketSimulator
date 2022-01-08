@@ -121,8 +121,6 @@ public class InvestmentFund extends Company {
                 this.pulloutFunds();
                 this.updateCompanyData();
             }
-            if (RandomService.getInstance().yieldRandomNumber(1) < Constants.COMPANY_SHARES_INCREASE_PROBABILITY)
-                this.increaseNumberOfShares();
             GlobalHoldersLock.readUnlock();
             try {
                 Thread.sleep(RandomService.getInstance().yieldRandomInteger(
