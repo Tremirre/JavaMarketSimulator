@@ -98,6 +98,10 @@ public class InvestmentFund extends Company {
         while (this.running) {
             GlobalHoldersLock.readLock();
             this.generateOrders();
+            if (cycleNumber++ == pulloutCycle) {
+                this.pulloutFunds();
+                this.updateCompanyData();
+            }
             GlobalHoldersLock.readUnlock();
             try {
                 Thread.sleep(RandomService.getInstance().yieldRandomInteger(
@@ -105,10 +109,6 @@ public class InvestmentFund extends Company {
                         Constants.BASE_INVESTMENT_FUND_SLEEP_TIME);
             } catch (InterruptedException e) {
                 e.printStackTrace();
-            }
-            if (cycleNumber++ == pulloutCycle) {
-                this.pulloutFunds();
-                this.updateCompanyData();
             }
         }
     }

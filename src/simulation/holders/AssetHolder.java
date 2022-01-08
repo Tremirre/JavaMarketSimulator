@@ -137,6 +137,8 @@ public abstract class AssetHolder extends Thread implements SellingEntity, Buyin
         this.investmentBudget = budget;
     }
 
+    public void endDayEvent() {}
+
     public void start() {
         this.running = true;
         super.start();

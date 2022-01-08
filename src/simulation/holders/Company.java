@@ -105,6 +105,8 @@ public class Company extends AssetHolder {
         this.currentTradingVolume = 0;
     }
 
+    public void endDayEvent() { this.saveAndResetStockTransactionsData(); }
+
     public Address getAddress() {
         return address;
     }

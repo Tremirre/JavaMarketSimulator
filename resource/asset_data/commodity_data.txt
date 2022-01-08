@@ -21,7 +21,7 @@ Naphtha;kilogram;0.69
 Copper;pound;4.4
 Iron Ore;metric ton;115
 Lithium;kilogram;42.08
-Platinum;gram;34,2
+Platinum;gram;34.2
 Lumber;board feet;1.156
 Sugar;pound;19.1
 Tea;kilogram;2.92

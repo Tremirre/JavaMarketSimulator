@@ -4,13 +4,18 @@ import simulation.asset.AssetManager;
 import simulation.asset.CurrencyData;
 import simulation.asset.InformedSupplementaryAssetFactory;
 import simulation.asset.RandomSupplementaryAssetFactory;
-import simulation.holders.CompaniesManager;
+import simulation.holders.TradingEntitiesManager;
 import simulation.util.RandomService;
 import simulation.util.ResourceHolder;
 import simulation.util.records.CurrencyRecord;
 
 public class RandomMarketFactory implements MarketFactory {
     private static ResourceHolder resourceHolder;
+    private TradingEntitiesManager manager;
+
+    public RandomMarketFactory(TradingEntitiesManager manager) {
+        this.manager = manager;
+    }
 
     public static void setFactoryResource(ResourceHolder resource) {
         resourceHolder = resource;
@@ -42,10 +47,9 @@ public class RandomMarketFactory implements MarketFactory {
                     currencyID = currencyData.getUniqueIdentifyingName();
                 }
                 var newMarket = new StockMarket(name, buyFee, sellFee, currencyID, address);
-                var companiesManager = CompaniesManager.getInstance();
                 var idx = new StockMarketIndex();
                 for (int i = 0; i < initialNumberOfAssets; i++) {
-                    idx.addCompany(companiesManager.createNewCompany());
+                    idx.addCompany(this.manager.createNewCompany());
                 }
                 newMarket.addStockMarketIndex(idx);
                 return newMarket;
