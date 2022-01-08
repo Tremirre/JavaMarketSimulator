@@ -17,7 +17,7 @@ public class InitialVoidSeller implements SellingEntity {
     }
 
     @Override
-    public boolean canWithdraw() {
+    public boolean canWithdraw(String assetType) {
         return false;
     }
 }

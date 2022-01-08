@@ -113,7 +113,7 @@ abstract public class Market {
         allOffers.addAll(this.sellOffers);
         for (var offer : allOffers) {
             if (offer.getDaysSinceGiven() > SimulationConfig.getInstance().getMaxOfferAge()
-                    && offer.getSender().canWithdraw()) {
+                    && offer.getSender().canWithdraw(offer.getAssetType())) {
                 offer.withdraw();
                 offersForRemoval.add(offer.getID());
             }

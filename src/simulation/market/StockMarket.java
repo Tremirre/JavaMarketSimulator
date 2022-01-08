@@ -20,7 +20,7 @@ public class StockMarket extends Market{
         this.stockMarketIndexes.add(idx);
         for (var company : idx.getCompanies()) {
             this.addNewAsset(company.getAssociatedAsset());
-            company.sendInitialOffer(this);
+            company.sellAllStocks(this);
         }
     }
 

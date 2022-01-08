@@ -3,7 +3,6 @@ package simulation.holders;
 import simulation.holders.strategies.InvestmentStrategy;
 import simulation.holders.strategies.PassiveCompanyStrategy;
 import simulation.market.Market;
-import simulation.market.StockMarket;
 import simulation.util.Constants;
 import simulation.util.GlobalHoldersLock;
 import simulation.util.RandomService;
@@ -38,6 +37,7 @@ public class InvestmentFund extends Company {
         this.investmentBudget *= 0.99;
     }
 
+    @Override
     protected void updateCompanyData() {
         this.profit = this.currentCycleProfit;
         this.revenue = this.currentCycleRevenue;
@@ -45,13 +45,15 @@ public class InvestmentFund extends Company {
         this.currentCycleProfit = 0;
     }
 
-    public void sendInitialOffer(StockMarket stockMarket) {
+    @Override
+    public void sellAllStocks(Market market) {
         var savedStrategy = this.strategy;
         this.strategy = new PassiveCompanyStrategy(this.strategy.getAssetManager());
-        this.sendSellOffer(stockMarket);
+        this.sendSellOffer(market);
         this.strategy = savedStrategy;
     }
-    
+
+    @Override
     public void sendBuyOffer(Market market) {
         var diff = -this.investmentBudget;
         super.sendBuyOffer(market);
@@ -59,6 +61,7 @@ public class InvestmentFund extends Company {
         this.currentCycleProfit -= diff;
     }
 
+    @Override
     public void processBuyOffer(String assetType, double overPay, double amount) {
         var diff = -this.investmentBudget;
         super.processBuyOffer(assetType, overPay, amount);
@@ -67,6 +70,7 @@ public class InvestmentFund extends Company {
         this.currentCycleRevenue += diff;
     }
 
+    @Override
     public void processBuyWithdrawal(double price, double amount, String currency) {
         var diff = -this.investmentBudget;
         super.processBuyWithdrawal(price, amount, currency);
@@ -75,6 +79,7 @@ public class InvestmentFund extends Company {
         this.currentCycleRevenue += diff;
     }
 
+    @Override
     public double processBuyOfferAlteration(double price, double amount, String assetType, String currency) {
         var diff = -this.investmentBudget;
         var newPrice = super.processBuyOfferAlteration(price, amount, assetType, currency);
@@ -83,12 +88,27 @@ public class InvestmentFund extends Company {
         return newPrice;
     }
 
+    @Override
     public void processSellOffer(String assetType, double price, double amount) {
         var diff = -this.investmentBudget;
         super.processSellOffer(assetType, price, amount);
         diff += this.investmentBudget;
         this.currentCycleProfit += diff;
         this.currentCycleRevenue += diff;
+    }
+
+    @Override
+    public double processSellOfferAlteration(double price, String assetType, String assetCurrency) {
+        if (this.associatedAsset.equals(assetType))
+            return price;
+        return super.processSellOfferAlteration(price, assetType, assetCurrency);
+    }
+
+    @Override
+    public boolean canWithdraw(String assetType) {
+        if (this.associatedAsset.equals(assetType))
+            return false;
+        return !this.freezeWithdrawal;
     }
 
     @Override
@@ -101,6 +121,8 @@ public class InvestmentFund extends Company {
                 this.pulloutFunds();
                 this.updateCompanyData();
             }
+            if (RandomService.getInstance().yieldRandomNumber(1) < Constants.COMPANY_SHARES_INCREASE_PROBABILITY)
+                this.increaseNumberOfShares();
             GlobalHoldersLock.readUnlock();
             try {
                 Thread.sleep(RandomService.getInstance().yieldRandomInteger(

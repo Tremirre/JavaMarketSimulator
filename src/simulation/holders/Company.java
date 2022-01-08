@@ -1,7 +1,7 @@
 package simulation.holders;
 
 import simulation.holders.strategies.InvestmentStrategy;
-import simulation.market.StockMarket;
+import simulation.market.Market;
 import simulation.util.Constants;
 import simulation.util.GlobalHoldersLock;
 import simulation.util.RandomService;
@@ -47,12 +47,12 @@ public class Company extends AssetHolder {
         this.freezeWithdrawal = true;
     }
 
-    public void buyout(StockMarket stockMarket) {
+    public void buyout(Market market) {
 
     }
 
-    public void sendInitialOffer(StockMarket stockMarket) {
-        this.sendSellOffer(stockMarket);
+    public void sellAllStocks(Market market) {
+        this.sendSellOffer(market);
     }
 
     public synchronized void processSellOffer(String assetType, double price, double amount) {
@@ -128,8 +128,8 @@ public class Company extends AssetHolder {
         this.storedAssets.put(this.associatedAsset, (double) newStocks);
         for (var market : this.availableMarkets) {
             if (market.getAvailableAssetTypes().contains(this.associatedAsset)) {
-                this.sendSellOffer(market);
-                break;
+                this.sellAllStocks(market);
+                return;
             }
         }
     }

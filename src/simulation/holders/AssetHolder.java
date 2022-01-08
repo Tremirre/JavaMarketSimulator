@@ -36,7 +36,6 @@ public abstract class AssetHolder extends Thread implements SellingEntity, Buyin
         }
         double price = this.strategy.determineOptimalBuyingPrice(chosenAsset);
 
-        // Buying the currency in necessary amount according to the latest price
         String assetCurrency = market.getAssetTradingCurrency(chosenAsset);
         double convertedPrice = price / this.strategy.getAssetManager().findPrice(assetCurrency);
 
@@ -99,7 +98,6 @@ public abstract class AssetHolder extends Thread implements SellingEntity, Buyin
     public double processSellOfferAlteration(double price, String assetType, String assetCurrency) {
         var rate = this.strategy.getAssetManager().findPrice(assetCurrency);
         return this.strategy.updateSellPrice(price * rate, assetType)/rate;
-
     }
 
     protected void generateOrders() {
@@ -129,7 +127,7 @@ public abstract class AssetHolder extends Thread implements SellingEntity, Buyin
         this.running = false;
     }
 
-    public boolean canWithdraw() {
+    public boolean canWithdraw(String assetType) {
         return !this.freezeWithdrawal;
     }
 
