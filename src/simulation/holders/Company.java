@@ -1,6 +1,5 @@
 package simulation.holders;
 
-import simulation.asset.AssetManager;
 import simulation.holders.strategies.InvestmentStrategy;
 import simulation.market.StockMarket;
 import simulation.util.Constants;

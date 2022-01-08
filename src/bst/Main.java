@@ -15,6 +15,7 @@ public class Main {
         simulation.stop();
         System.out.println("Simulation took " + (System.nanoTime() - start)/1_000_000 + "ms");
         DataExporter dataEx = new DataExporter();
-        dataEx.exportPrices(simulation.getAssetManager().getAllAssetsPriceHistory());
+        var prices = simulation.getAssetManager().getAllAssetsPriceHistory();
+        dataEx.exportLabeledData(prices, "price_history.csv");
     }
 }
