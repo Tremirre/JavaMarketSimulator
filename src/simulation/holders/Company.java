@@ -122,6 +122,18 @@ public class Company extends AssetHolder {
         this.profit = Math.min(this.revenue, this.profit);
     }
 
+    protected void increaseNumberOfShares() {
+        int newStocks = this.numberOfStocks/2;
+        this.numberOfStocks += newStocks;
+        this.storedAssets.put(this.associatedAsset, (double) newStocks);
+        for (var market : this.availableMarkets) {
+            if (market.getAvailableAssetTypes().contains(this.associatedAsset)) {
+                this.sendSellOffer(market);
+                break;
+            }
+        }
+    }
+
     @Override
     public void run() {
         while(this.running) {
@@ -132,6 +144,8 @@ public class Company extends AssetHolder {
             }
             GlobalHoldersLock.readLock();
             this.updateCompanyData();
+            if (RandomService.getInstance().yieldRandomNumber(1) < Constants.COMPANY_SHARES_INCREASE_PROBABILITY)
+                this.increaseNumberOfShares();
             GlobalHoldersLock.readUnlock();
         }
     }

@@ -1,7 +1,6 @@
 package simulation.holders;
 
 import simulation.SimulationConfig;
-import simulation.asset.AssetManager;
 import simulation.holders.strategies.InvestmentStrategy;
 import simulation.market.Market;
 import simulation.offer.BuyingEntity;
@@ -13,7 +12,7 @@ import java.util.HashSet;
 
 public abstract class AssetHolder extends Thread implements SellingEntity, BuyingEntity {
     protected HashMap<String, Double> storedAssets;
-    private  HashSet<Market> availableMarkets;
+    protected HashSet<Market> availableMarkets;
     protected double investmentBudget;
     protected boolean running = false;
     protected boolean freezeWithdrawal = false;
