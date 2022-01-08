@@ -39,7 +39,7 @@ public abstract class AssetHolder extends Thread implements SellingEntity, Buyin
 
         // Buying the currency in necessary amount according to the latest price
         String assetCurrency = market.getAssetTradingCurrency(chosenAsset);
-        double convertedPrice = price / AssetManager.getInstance().findPrice(assetCurrency);
+        double convertedPrice = price / this.strategy.getAssetManager().findPrice(assetCurrency);
 
         double amount = this.strategy.determineOptimalBuyingSize(chosenAsset, price, this.investmentBudget);
         if (amount <= 0)
@@ -55,12 +55,12 @@ public abstract class AssetHolder extends Thread implements SellingEntity, Buyin
     }
 
     public void processBuyWithdrawal(double price, double amount, String assetCurrency) {
-        var rate = AssetManager.getInstance().findPrice(assetCurrency);
+        var rate = this.strategy.getAssetManager().findPrice(assetCurrency);
         this.investmentBudget += price * rate * amount;
     }
 
     public double processBuyOfferAlteration(double price, double amount, String assetType, String assetCurrency) {
-        var rate = AssetManager.getInstance().findPrice(assetCurrency);
+        var rate = this.strategy.getAssetManager().findPrice(assetCurrency);
         var convertedPrice = rate * price;
         double newPrice = this.strategy.updateBuyPrice(convertedPrice, amount, this.investmentBudget, assetType);
         this.investmentBudget -= (newPrice - convertedPrice) * amount;
@@ -79,7 +79,7 @@ public abstract class AssetHolder extends Thread implements SellingEntity, Buyin
         double amount = this.strategy.determineOptimalSellingSize(chosenAsset, this.storedAssets.get(chosenAsset));
         double price = this.strategy.determineOptimalSellingPrice(chosenAsset);
         String assetCurrency = market.getAssetTradingCurrency(chosenAsset);
-        double convertedPrice = price / AssetManager.getInstance().findPrice(assetCurrency);
+        double convertedPrice = price / this.strategy.getAssetManager().findPrice(assetCurrency);
 
         double left = (this.storedAssets.get(chosenAsset) - amount);
         if (left > 0)
@@ -98,7 +98,7 @@ public abstract class AssetHolder extends Thread implements SellingEntity, Buyin
     }
 
     public double processSellOfferAlteration(double price, String assetType, String assetCurrency) {
-        var rate = AssetManager.getInstance().findPrice(assetCurrency);
+        var rate = this.strategy.getAssetManager().findPrice(assetCurrency);
         return this.strategy.updateSellPrice(price * rate, assetType)/rate;
 
     }

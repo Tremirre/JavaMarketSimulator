@@ -16,9 +16,11 @@ abstract public class Market {
     private double sellFee;
     private ArrayList<BuyOffer> buyOffers;
     private ArrayList<SellOffer> sellOffers;
+    protected final AssetManager assetManager;
     protected HashSet<String> assetTypesOnMarket;
 
-    Market(String name, double buyFee, double sellFee, Address address) {
+    Market(AssetManager assetManager, String name, double buyFee, double sellFee, Address address) {
+        this.assetManager = assetManager;
         this.address = address;
         this.name = name + " Market of " + this.address.getCity();
         this.buyFee = buyFee;
@@ -48,8 +50,7 @@ abstract public class Market {
         var assetType = sellOffer.getAssetType();
         var amount = Math.min(sellOffer.getSize(), buyOffer.getSize());
         var priceDiff = buyOffer.getPrice() * buyOffer.getSize() - commonPrice * amount;
-        var assetManager = AssetManager.getInstance();
-        var latestOfferCurrencyRate = assetManager.findPrice(buyOffer.getOfferCurrency());
+        var latestOfferCurrencyRate = this.assetManager.findPrice(buyOffer.getOfferCurrency());
         var convertedCommonPrice = commonPrice*latestOfferCurrencyRate;
         buyer.processBuyOffer(assetType, priceDiff*latestOfferCurrencyRate, amount);
         seller.processSellOffer(assetType, convertedCommonPrice, amount);
@@ -59,7 +60,7 @@ abstract public class Market {
     }
 
     protected void useTransactionData(String assetType, double price, double amount) {
-        AssetManager.getInstance().getAssetData(assetType).addLatestSellingPrice(price);
+        this.assetManager.getAssetData(assetType).addLatestSellingPrice(price);
     }
 
     public void processAllOffers() {
@@ -163,6 +164,8 @@ abstract public class Market {
     public void setSellFee(double sellFee) {
         this.sellFee = sellFee;
     }
+
+    public AssetManager getAssetManager() { return this.assetManager; }
 
     public String getAssetTradingCurrency(String assetType) {
         return Constants.DEFAULT_CURRENCY;

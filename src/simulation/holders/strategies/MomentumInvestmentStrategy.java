@@ -4,19 +4,16 @@ import simulation.asset.AssetManager;
 
 import java.util.Set;
 
-public class MomentumInvestmentStrategy implements InvestmentStrategy {
+public class MomentumInvestmentStrategy extends InvestmentStrategy {
     private int periodOfInterest;
 
-    public MomentumInvestmentStrategy(int period) {
+    public MomentumInvestmentStrategy(AssetManager assetManager, int period) {
+        super(assetManager);
         this.periodOfInterest = period;
     }
 
-    public MomentumInvestmentStrategy() {
-        this(3);
-    }
-
     private double predictNextPrice(String assetType) {
-        var history = AssetManager.getInstance().getAssetData(assetType).getPriceHistory();
+        var history = this.assetManager.getAssetData(assetType).getPriceHistory();
         var lastPrice = history.get(history.size() - 1);
         var changeInValue = history.size() == 1 ? 0 : lastPrice - history.get(history.size() - 2);
         return Math.max(lastPrice + changeInValue, 0.001);
@@ -27,7 +24,7 @@ public class MomentumInvestmentStrategy implements InvestmentStrategy {
         String bestAsset = null;
         double highestIncreaseOverThePeriod = 0;
         for (var asset : availableAssets) {
-            var history = AssetManager.getInstance().getAssetData(asset).getPriceHistory();
+            var history = this.assetManager.getAssetData(asset).getPriceHistory();
             if (history.size() < this.periodOfInterest) {
                 continue;
             }
@@ -60,7 +57,7 @@ public class MomentumInvestmentStrategy implements InvestmentStrategy {
         String bestAsset = null;
         double highestDecreaseOverThePeriod = 0;
         for (var asset : ownedAssets) {
-            var history = AssetManager.getInstance().getAssetData(asset).getPriceHistory();
+            var history = this.assetManager.getAssetData(asset).getPriceHistory();
             if (history.size() < this.periodOfInterest) {
                 continue;
             }

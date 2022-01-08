@@ -25,10 +25,9 @@ public class InvestmentFund extends Company {
                           String ownerName,
                           String ownerSurname) {
         super(id, numberOfStocks, ownerName + ' ' + ownerSurname + "'s Investment Fund",
-                IPODate, address, IPOShareValue, 0, 0);
+                IPODate, address, IPOShareValue, 0, 0, strategy);
         this.ownerName = ownerName;
         this.ownerSurname = ownerSurname;
-        this.strategy = strategy;
         this.setInvestmentBudget(investmentBudget);
         this.currentCycleProfit = 0;
         this.currentCycleRevenue = 0;
@@ -48,7 +47,7 @@ public class InvestmentFund extends Company {
 
     public void sendInitialOffer(StockMarket stockMarket) {
         var savedStrategy = this.strategy;
-        this.strategy = new PassiveCompanyStrategy();
+        this.strategy = new PassiveCompanyStrategy(this.strategy.getAssetManager());
         this.sendSellOffer(stockMarket);
         this.strategy = savedStrategy;
     }

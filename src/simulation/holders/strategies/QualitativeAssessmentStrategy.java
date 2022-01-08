@@ -4,15 +4,12 @@ import simulation.asset.AssetManager;
 
 import java.util.Set;
 
-public class QualitativeAssessmentStrategy implements InvestmentStrategy {
+public class QualitativeAssessmentStrategy extends InvestmentStrategy {
     private double individualAssessmentFactor;
 
-    public QualitativeAssessmentStrategy(double factor) {
+    public QualitativeAssessmentStrategy(AssetManager assetManager, double factor) {
+        super(assetManager);
         this.individualAssessmentFactor = factor;
-    }
-
-    public QualitativeAssessmentStrategy() {
-        this(1);
     }
 
     @Override
@@ -20,7 +17,7 @@ public class QualitativeAssessmentStrategy implements InvestmentStrategy {
         double bestQuality = 0;
         String bestAsset = null;
         for (var asset : availableAssets) {
-            double currentQuality = AssetManager.getInstance().getAssetData(asset).getQualityMeasure();
+            double currentQuality = this.assetManager.getAssetData(asset).getQualityMeasure();
             if (currentQuality >= bestQuality) {
                 bestQuality = currentQuality;
                 bestAsset = asset;
@@ -31,7 +28,7 @@ public class QualitativeAssessmentStrategy implements InvestmentStrategy {
 
     @Override
     public double determineOptimalBuyingPrice(String chosenAsset) {
-        var assetData = AssetManager.getInstance().getAssetData(chosenAsset);
+        var assetData = this.assetManager.getAssetData(chosenAsset);
         var latestPrice = assetData.getOpeningPrice();
         var quality = assetData.getQualityMeasure();
         return (latestPrice * (quality/4 + 0.75)) * this.individualAssessmentFactor;
@@ -39,7 +36,7 @@ public class QualitativeAssessmentStrategy implements InvestmentStrategy {
 
     @Override
     public double updateBuyPrice(double oldPrice, double amount, double availableFunds, String assetType) {
-        double newPrice = oldPrice * (1 + AssetManager.getInstance().getAssetData(assetType).getQualityMeasure()/4);
+        double newPrice = oldPrice * (1 + this.assetManager.getAssetData(assetType).getQualityMeasure()/4);
         if (availableFunds < (newPrice - oldPrice) * amount) {
             newPrice = oldPrice + availableFunds/amount;
         }
@@ -51,7 +48,7 @@ public class QualitativeAssessmentStrategy implements InvestmentStrategy {
         double worstQuality = 1;
         String worstAsset = null;
         for (var asset : ownedAssets) {
-            double currentQuality = AssetManager.getInstance().getAssetData(asset).getQualityMeasure();
+            double currentQuality = this.assetManager.getAssetData(asset).getQualityMeasure();
             if (currentQuality <= worstQuality) {
                 worstQuality = currentQuality;
                 worstAsset = asset;
@@ -62,7 +59,7 @@ public class QualitativeAssessmentStrategy implements InvestmentStrategy {
 
     @Override
     public double determineOptimalSellingPrice(String chosenAsset) {
-        var assetData = AssetManager.getInstance().getAssetData(chosenAsset);
+        var assetData = this.assetManager.getAssetData(chosenAsset);
         var latestPrice = assetData.getOpeningPrice();
         var quality = assetData.getQualityMeasure();
         return latestPrice * (1 + quality/4) * this.individualAssessmentFactor;
@@ -70,6 +67,6 @@ public class QualitativeAssessmentStrategy implements InvestmentStrategy {
 
     @Override
     public double updateSellPrice(double oldPrice, String assetType) {
-        return oldPrice * (AssetManager.getInstance().getAssetData(assetType).getQualityMeasure()/4 + 0.75);
+        return oldPrice * (this.assetManager.getAssetData(assetType).getQualityMeasure()/4 + 0.75);
     }
 }

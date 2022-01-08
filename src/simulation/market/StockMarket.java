@@ -11,8 +11,8 @@ public class StockMarket extends Market{
     private String tradingCurrency;
     final private HashSet<StockMarketIndex> stockMarketIndexes = new HashSet<>();
 
-    public StockMarket(String name, double buyFee, double sellFee, String currency, Address address) {
-        super(name + " Stock", buyFee, sellFee, address);
+    public StockMarket(AssetManager assetManager, String name, double buyFee, double sellFee, String currency, Address address) {
+        super(assetManager, name + " Stock", buyFee, sellFee, address);
         this.tradingCurrency = currency;
     }
 
@@ -25,7 +25,7 @@ public class StockMarket extends Market{
     }
 
     public void addNewAsset(String stock) {
-        if (!AssetManager.getInstance().doesAssetExist(stock, AssetCategory.STOCK))
+        if (!this.assetManager.doesAssetExist(stock, AssetCategory.STOCK))
             throw new IllegalArgumentException("Invalid asset type passed to a stock market: " + stock);
         this.assetTypesOnMarket.add(stock);
     }
@@ -33,7 +33,7 @@ public class StockMarket extends Market{
     @Override
     protected void useTransactionData(String assetType, double price, double amount) {
         super.useTransactionData(assetType, price, amount);
-        var stockData = (StockData) AssetManager.getInstance().getAssetData(assetType);
+        var stockData = (StockData) this.assetManager.getAssetData(assetType);
         var associatedCompany = stockData.getCompany();
         associatedCompany.recordTransactionData(price, amount);
     }

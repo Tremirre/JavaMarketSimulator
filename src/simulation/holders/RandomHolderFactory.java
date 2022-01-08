@@ -1,15 +1,18 @@
 package simulation.holders;
 
-import simulation.holders.strategies.InvestmentStrategy;
-import simulation.holders.strategies.MomentumInvestmentStrategy;
-import simulation.holders.strategies.NaiveInvestmentStrategy;
-import simulation.holders.strategies.QualitativeAssessmentStrategy;
+import simulation.asset.AssetManager;
+import simulation.holders.strategies.*;
 import simulation.util.Constants;
 import simulation.util.RandomService;
 import simulation.util.ResourceHolder;
 
 public class RandomHolderFactory extends HolderFactory {
     private static ResourceHolder resourceHolder;
+    private final AssetManager assetManager;
+
+    public RandomHolderFactory(AssetManager assetManager) {
+        this.assetManager = assetManager;
+    }
 
     public static void setFactoryResource(ResourceHolder resource) {
         resourceHolder = resource;
@@ -18,13 +21,16 @@ public class RandomHolderFactory extends HolderFactory {
     private InvestmentStrategy pickRandomStrategy(RandomService rand) {
         switch(rand.yieldRandomInteger(3)) {
             case 0 -> {
-                return new NaiveInvestmentStrategy(rand.yieldRandomGaussianNumber(0.03, 0.9));
+                return new NaiveInvestmentStrategy(this.assetManager,
+                        rand.yieldRandomGaussianNumber(0.03, 0.9));
             }
             case 1 -> {
-                return new QualitativeAssessmentStrategy(rand.yieldRandomGaussianNumber(0.05, 1));
+                return new QualitativeAssessmentStrategy(this.assetManager,
+                        rand.yieldRandomGaussianNumber(0.05, 1));
             }
             case 2 -> {
-                return new MomentumInvestmentStrategy(rand.yieldRandomInteger(5) + 1);
+                return new MomentumInvestmentStrategy(this.assetManager,
+                        rand.yieldRandomInteger(5) + 1);
             }
             default -> throw new IllegalStateException("Impossible value returned from random generator");
         }
@@ -63,7 +69,8 @@ public class RandomHolderFactory extends HolderFactory {
                 + rand.yieldRandomInteger(Constants.COMPANY_MAXIMAL_ADDITIONAL_STOCK_NUMBER);
         var profit = rand.yieldRandomInteger(Constants.COMPANY_MAXIMAL_ADDITIONAL_PROFIT) - Constants.COMPANY_MINIMAL_PROFIT;
         var revenue = rand.yieldRandomInteger(Constants.COMPANY_MAXIMAL_ADDITIONAL_REVENUE) + Constants.COMPANY_MINIMAL_REVENUE;
-        return new Company(id++, initialStockSize, name, date, address, initialStockValue, profit, revenue);
+        InvestmentStrategy strategy = new PassiveCompanyStrategy(this.assetManager);
+        return new Company(id++, initialStockSize, name, date, address, initialStockValue, profit, revenue, strategy);
     }
 
     @Override
