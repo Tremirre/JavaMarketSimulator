@@ -5,13 +5,21 @@ import simulation.util.RandomService;
 
 import java.util.Set;
 
-public interface InvestmentStrategy {
-    String chooseAssetToBuy(Set<String> availableAssets);
-    double determineOptimalBuyingPrice(String chosenAsset);
-    default double determineOptimalBuyingSize(String chosenAsset, double price, double availableFunds) {
+public abstract class InvestmentStrategy {
+    protected AssetManager assetManager;
+
+    InvestmentStrategy(AssetManager assetManager) {
+        this.assetManager = assetManager;
+    }
+
+    public abstract String chooseAssetToBuy(Set<String> availableAssets);
+
+    public abstract double determineOptimalBuyingPrice(String chosenAsset);
+
+    public double determineOptimalBuyingSize(String chosenAsset, double price, double availableFunds) {
         var rand = RandomService.getInstance();
         double amount;
-        if (!AssetManager.getInstance().getAssetData(chosenAsset).isSplittable()) {
+        if (!this.assetManager.getAssetData(chosenAsset).isSplittable()) {
             amount = rand.yieldRandomInteger(5);
             while (availableFunds < price * amount && amount > 0) {
                 amount--;
@@ -24,12 +32,18 @@ public interface InvestmentStrategy {
         }
         return amount < 0.25 ? 0 : amount;
     }
-    default double updateBuyPrice(double oldPrice, double amount, double availableFunds, String assetType) {return oldPrice;}
 
-    String chooseAssetToSell(Set<String> ownedAssets);
-    double determineOptimalSellingPrice(String chosenAsset);
-    default double determineOptimalSellingSize(String chosenAsset, double availableAmount) {
+    public double updateBuyPrice(double oldPrice, double amount, double availableFunds, String assetType) {return oldPrice;}
+
+    public abstract String chooseAssetToSell(Set<String> ownedAssets);
+
+    public abstract double determineOptimalSellingPrice(String chosenAsset);
+
+    public double determineOptimalSellingSize(String chosenAsset, double availableAmount) {
         return availableAmount > 2 ? (double) Math.round(0.5 * availableAmount) : availableAmount;
     }
-    default double updateSellPrice(double oldPrice, String assetType) {return oldPrice;}
+
+    public double updateSellPrice(double oldPrice, String assetType) {return oldPrice;}
+
+    public AssetManager getAssetManager() { return this.assetManager; }
 }

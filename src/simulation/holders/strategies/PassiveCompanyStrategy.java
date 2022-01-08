@@ -4,7 +4,11 @@ import simulation.asset.AssetManager;
 
 import java.util.Set;
 
-public class PassiveCompanyStrategy implements InvestmentStrategy{
+public class PassiveCompanyStrategy extends InvestmentStrategy{
+
+    public PassiveCompanyStrategy(AssetManager assetManager) {
+        super(assetManager);
+    }
 
     @Override
     public String chooseAssetToBuy(Set<String> availableAssets) {
@@ -13,7 +17,7 @@ public class PassiveCompanyStrategy implements InvestmentStrategy{
 
     @Override
     public double determineOptimalBuyingPrice(String chosenAsset) {
-        return 1.2 * AssetManager.getInstance().getAssetData(chosenAsset).getOpeningPrice();
+        return 1.2 * this.assetManager.getAssetData(chosenAsset).getOpeningPrice();
     }
 
     @Override
@@ -26,7 +30,7 @@ public class PassiveCompanyStrategy implements InvestmentStrategy{
 
     @Override
     public double determineOptimalSellingPrice(String chosenAsset) {
-        return 0.8 * AssetManager.getInstance().getAssetData(chosenAsset).getOpeningPrice();
+        return 0.8 * this.assetManager.getAssetData(chosenAsset).getOpeningPrice();
     }
 
     @Override

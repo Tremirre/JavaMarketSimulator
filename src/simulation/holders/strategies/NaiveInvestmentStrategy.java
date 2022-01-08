@@ -5,15 +5,12 @@ import simulation.util.RandomService;
 
 import java.util.Set;
 
-public class NaiveInvestmentStrategy implements InvestmentStrategy {
+public class NaiveInvestmentStrategy extends InvestmentStrategy {
     private double riskFactor;
 
-    public NaiveInvestmentStrategy(double riskFactor) {
+    public NaiveInvestmentStrategy(AssetManager assetManager, double riskFactor) {
+        super(assetManager);
         this.riskFactor = riskFactor;
-    }
-
-    public NaiveInvestmentStrategy() {
-        this(0.95);
     }
 
     @Override
@@ -23,7 +20,7 @@ public class NaiveInvestmentStrategy implements InvestmentStrategy {
 
     @Override
     public double determineOptimalBuyingPrice(String chosenAsset) {
-        return AssetManager.getInstance().getAssetData(chosenAsset).getOpeningPrice() * this.riskFactor;
+        return this.assetManager.getAssetData(chosenAsset).getOpeningPrice() * this.riskFactor;
     }
 
     @Override
@@ -42,7 +39,7 @@ public class NaiveInvestmentStrategy implements InvestmentStrategy {
 
     @Override
     public double determineOptimalSellingPrice(String chosenAsset) {
-        return AssetManager.getInstance().getAssetData(chosenAsset).getOpeningPrice() * (2 - this.riskFactor);
+        return this.assetManager.getAssetData(chosenAsset).getOpeningPrice() * (2 - this.riskFactor);
     }
 
     @Override

@@ -11,10 +11,12 @@ import simulation.util.records.CurrencyRecord;
 
 public class RandomMarketFactory implements MarketFactory {
     private static ResourceHolder resourceHolder;
-    private final TradingEntitiesManager manager;
+    private final TradingEntitiesManager tradingEntitiesManager;
+    private final AssetManager assetManager;
 
-    public RandomMarketFactory(TradingEntitiesManager manager) {
-        this.manager = manager;
+    public RandomMarketFactory(AssetManager assetManager, TradingEntitiesManager tradingEntitiesManager) {
+        this.assetManager = assetManager;
+        this.tradingEntitiesManager = tradingEntitiesManager;
     }
 
     public static void setFactoryResource(ResourceHolder resource) {
@@ -37,37 +39,37 @@ public class RandomMarketFactory implements MarketFactory {
                 }
                 currency.use();
                 String currencyID;
-                var currencyData = AssetManager.getInstance().findCurrencyByName(currency.getName());
+                var currencyData = this.assetManager.findCurrencyByName(currency.getName());
                 if (currencyData == null) {
-                    currencyID = new InformedSupplementaryAssetFactory(currency.getName(), currency.getInitialRate()).createCurrencyAsset();
-                    currencyData = (CurrencyData) AssetManager.getInstance().getAssetData(currencyID);
+                    currencyID = new InformedSupplementaryAssetFactory(this.assetManager, currency.getName(), currency.getInitialRate()).createCurrencyAsset();
+                    currencyData = (CurrencyData) this.assetManager.getAssetData(currencyID);
                     currencyData.addCountriesOfUse(currency.getCountriesOfUse());
                     currencyData.setStability(rand.yieldRandomGaussianNumber(0.01, 0.5));
                 } else {
                     currencyID = currencyData.getUniqueIdentifyingName();
                 }
-                var newMarket = new StockMarket(name, buyFee, sellFee, currencyID, address);
+                var newMarket = new StockMarket(this.assetManager, name, buyFee, sellFee, currencyID, address);
                 var idx = new StockMarketIndex();
                 for (int i = 0; i < initialNumberOfAssets; i++) {
-                    idx.addCompany(this.manager.createNewCompany());
+                    idx.addCompany(this.tradingEntitiesManager.createNewCompany());
                 }
                 for (int i = 0; i < initialNumberOfAssets/2; i++) {
-                    idx.addCompany(this.manager.createNewFund());
+                    idx.addCompany(this.tradingEntitiesManager.createNewFund());
                 }
                 newMarket.addStockMarketIndex(idx);
                 return newMarket;
             }
             case CURRENCIES_MARKET -> {
-                var newMarket = new CurrenciesMarket(name, buyFee, sellFee, address);
+                var newMarket = new CurrenciesMarket(this.assetManager, name, buyFee, sellFee, address);
                 for (int i = 0; i < initialNumberOfAssets; i++) {
-                    newMarket.addNewAsset(new RandomSupplementaryAssetFactory().createCurrencyAsset());
+                    newMarket.addNewAsset(new RandomSupplementaryAssetFactory(this.assetManager).createCurrencyAsset());
                 }
                 return newMarket;
             }
             case COMMODITIES_MARKET -> {
-                var newMarket = new CommoditiesMarket(name, buyFee, sellFee, address);
+                var newMarket = new CommoditiesMarket(this.assetManager, name, buyFee, sellFee, address);
                 for (int i = 0; i < initialNumberOfAssets; i++) {
-                    newMarket.addNewAsset(new RandomSupplementaryAssetFactory().createCommodityAsset());
+                    newMarket.addNewAsset(new RandomSupplementaryAssetFactory(this.assetManager).createCommodityAsset());
                 }
                 return newMarket;
             }

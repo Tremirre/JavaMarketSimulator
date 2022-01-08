@@ -14,18 +14,19 @@ import java.util.HashSet;
 
 public class Simulation {
     private final HashSet<Market> markets;
-    private TradingEntitiesManager tradingEntitiesManager;
+    private final AssetManager assetManager;
+    private final TradingEntitiesManager tradingEntitiesManager;
 
     public Simulation() {
         this.markets = new HashSet<>();
-        this.tradingEntitiesManager = new TradingEntitiesManager(this.markets);
+        this.assetManager = new AssetManager();
+        this.tradingEntitiesManager = new TradingEntitiesManager(this.assetManager, this.markets);
         this.setupDataResourceForRandomFactories();
         this.setupMarket(MarketType.STOCK_MARKET);
         this.setupMarket(MarketType.COMMODITIES_MARKET);
         this.setupMarket(MarketType.CURRENCIES_MARKET);
         this.setupInvestors();
         this.start();
-
     }
 
     public void runSimulationDay(int day) {
@@ -47,7 +48,7 @@ public class Simulation {
         } else if (day == Constants.YEAR + 100) {
             SimulationConfig.getInstance().setBullProportion(0.65);
         }*/
-        AssetManager.getInstance().processEndDay();
+        this.assetManager.processEndDay();
         this.tradingEntitiesManager.processEndDay();
         GlobalHoldersLock.writeUnlock();
     }
@@ -61,7 +62,7 @@ public class Simulation {
     }
 
     private void setupMarket(MarketType type) {
-        this.markets.add(new RandomMarketFactory(this.tradingEntitiesManager).createMarket(type));
+        this.markets.add(new RandomMarketFactory(this.assetManager, this.tradingEntitiesManager).createMarket(type));
     }
 
     public void pause() {
@@ -86,4 +87,6 @@ public class Simulation {
         RandomSupplementaryAssetFactory.setFactoryResource(resourceHolder);
         RandomMarketFactory.setFactoryResource(resourceHolder);
     }
+
+    public AssetManager getAssetManager() { return this.assetManager; }
 }

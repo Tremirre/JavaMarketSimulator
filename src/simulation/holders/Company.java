@@ -1,7 +1,7 @@
 package simulation.holders;
 
 import simulation.asset.AssetManager;
-import simulation.holders.strategies.PassiveCompanyStrategy;
+import simulation.holders.strategies.InvestmentStrategy;
 import simulation.market.StockMarket;
 import simulation.util.Constants;
 import simulation.util.GlobalHoldersLock;
@@ -29,8 +29,9 @@ public class Company extends AssetHolder {
                    Address address,
                    double IPOShareValue,
                    double profit,
-                   double revenue) {
-        super(id, 0, new PassiveCompanyStrategy());
+                   double revenue,
+                   InvestmentStrategy strategy) {
+        super(id, 0, strategy);
         this.name = name;
         this.IPODate = IPODate;
         this.address = address;
@@ -41,7 +42,7 @@ public class Company extends AssetHolder {
         for (int i = 0; i < name.length(); i++) {
             if (Character.isLetter(name.charAt(i))) stockName.append(name.charAt(i));
         }
-        var stock = AssetManager.getInstance().addStockAsset(stockName.toString().toUpperCase(), IPOShareValue, this);
+        var stock = this.strategy.getAssetManager().addStockAsset(stockName.toString().toUpperCase(), IPOShareValue, this);
         this.associatedAsset = stock.getUniqueIdentifyingName();
         this.storedAssets.put(this.associatedAsset, (double) numberOfStocks);
         this.freezeWithdrawal = true;
@@ -88,7 +89,7 @@ public class Company extends AssetHolder {
     }
 
     public double getCapital() {
-        return this.numberOfStocks * AssetManager.getInstance()
+        return this.numberOfStocks * this.strategy.getAssetManager()
                 .getAssetData(this.associatedAsset)
                 .getOpeningPrice();
     }

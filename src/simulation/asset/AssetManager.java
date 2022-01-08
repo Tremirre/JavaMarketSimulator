@@ -8,20 +8,8 @@ import java.util.HashMap;
 import java.util.HashSet;
 
 public final class AssetManager {
-    private static AssetManager instance;
-    private HashMap<String,AssetData> allAssets;
+    private final HashMap<String, AssetData> allAssets = new HashMap<>();
     private static int assetID = 0;
-
-    private AssetManager() {
-        this.allAssets = new HashMap<>();
-    }
-
-    public synchronized static AssetManager getInstance() {
-        if (instance == null) {
-            instance = new AssetManager();
-        }
-        return instance;
-    }
 
     public CommodityData addCommodityAsset(String name, double openingPrice, String tradingUnit, String currency) {
         var com = new CommodityData(assetID++, name, openingPrice, tradingUnit, currency);

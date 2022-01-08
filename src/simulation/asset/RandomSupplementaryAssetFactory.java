@@ -8,6 +8,10 @@ import simulation.util.records.CurrencyRecord;
 public class RandomSupplementaryAssetFactory extends SupplementaryAssetFactory {
     private static ResourceHolder resourceHolder;
 
+    public RandomSupplementaryAssetFactory(AssetManager assetManager) {
+        super(assetManager);
+    }
+
     public static void setFactoryResource(ResourceHolder resource) {
         resourceHolder = resource;
     }
@@ -23,7 +27,7 @@ public class RandomSupplementaryAssetFactory extends SupplementaryAssetFactory {
         var rate = currency.getInitialRate();
         var countriesOfUse = currency.getCountriesOfUse();
         var stability = rand.yieldRandomGaussianNumber(0.25, 0.5);
-        return AssetManager.getInstance()
+        return this.assetManager
                 .addCurrencyAsset(currency.getName(), rate, countriesOfUse, stability)
                 .getUniqueIdentifyingName();
     }
@@ -41,16 +45,19 @@ public class RandomSupplementaryAssetFactory extends SupplementaryAssetFactory {
         }
         currency.use();
         String currencyID;
-        var currencyData = AssetManager.getInstance().findCurrencyByName(currency.getName());
+        var currencyData = this.assetManager.findCurrencyByName(currency.getName());
         if (currencyData == null) {
-            currencyID = new InformedSupplementaryAssetFactory(currency.getName(), currency.getInitialRate()).createCurrencyAsset();
-            currencyData = (CurrencyData) AssetManager.getInstance().getAssetData(currencyID);
+            currencyID = new InformedSupplementaryAssetFactory(this.assetManager,
+                    currency.getName(),
+                    currency.getInitialRate())
+                    .createCurrencyAsset();
+            currencyData = (CurrencyData) this.assetManager.getAssetData(currencyID);
             currencyData.addCountriesOfUse(currency.getCountriesOfUse());
             currencyData.setStability(rand.yieldRandomGaussianNumber(0.01, 0.5));
         } else {
             currencyID = currencyData.getUniqueIdentifyingName();
         }
-        return AssetManager.getInstance()
+        return this.assetManager
                 .addCommodityAsset(commodity.getName(), rate, unit, currencyID)
                 .getUniqueIdentifyingName();
     }

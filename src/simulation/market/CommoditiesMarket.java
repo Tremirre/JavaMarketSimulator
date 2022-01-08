@@ -8,22 +8,21 @@ import simulation.holders.Address;
 public class CommoditiesMarket extends Market{
     private InitialVoidSeller ivs = new InitialVoidSeller();
 
-    public CommoditiesMarket(String name, double buyFee, double sellFee, Address address) {
-        super(name + " Commodity", buyFee, sellFee, address);
+    public CommoditiesMarket(AssetManager assetManager, String name, double buyFee, double sellFee, Address address) {
+        super(assetManager, name + " Commodity", buyFee, sellFee, address);
     }
 
     public void addNewAsset(String commodity) {
-        if (!AssetManager.getInstance().doesAssetExist(commodity, AssetCategory.COMMODITY))
+        if (!this.assetManager.doesAssetExist(commodity, AssetCategory.COMMODITY))
             throw new IllegalArgumentException("Invalid asset type passed to a commodity market: " + commodity);
         this.assetTypesOnMarket.add(commodity);
         this.ivs.sendInitialOffer(this, commodity);
     }
 
     public String getAssetTradingCurrency(String commodity) {
-        var assetManager = AssetManager.getInstance();
-        if (!assetManager.doesAssetExist(commodity, AssetCategory.COMMODITY)) {
+        if (!this.assetManager.doesAssetExist(commodity, AssetCategory.COMMODITY)) {
              throw new IllegalArgumentException("Invalid asset type passed to a currency market: " + commodity);
         }
-        return ((CommodityData) assetManager.getAssetData(commodity)).getTradingCurrency();
+        return ((CommodityData) this.assetManager.getAssetData(commodity)).getTradingCurrency();
     }
 }

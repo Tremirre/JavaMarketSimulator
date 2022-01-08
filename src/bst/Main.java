@@ -1,7 +1,6 @@
 package bst;
 
 import simulation.Simulation;
-import simulation.asset.AssetManager;
 import simulation.util.Constants;
 import simulation.util.DataExporter;
 
@@ -16,6 +15,6 @@ public class Main {
         simulation.stop();
         System.out.println("Simulation took " + (System.nanoTime() - start)/1_000_000 + "ms");
         DataExporter dataEx = new DataExporter();
-        dataEx.exportPrices(AssetManager.getInstance().getAllAssetsPriceHistory());
+        dataEx.exportPrices(simulation.getAssetManager().getAllAssetsPriceHistory());
     }
 }
