@@ -1,4 +1,4 @@
-package main.java.simulation.util.records;
+package simulation.util.records;
 
 import java.util.HashSet;
 

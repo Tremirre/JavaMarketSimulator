@@ -1,6 +1,6 @@
-package main.java.simulation.asset;
+package simulation.asset;
 
-import main.java.simulation.holders.Company;
+import simulation.holders.Company;
 
 public class StockData extends AssetData {
     final private Company company;

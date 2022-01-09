@@ -1,4 +1,4 @@
-package main.java.simulation.asset;
+package simulation.asset;
 
 import java.util.ArrayList;
 
@@ -33,7 +33,9 @@ abstract public class AssetData {
 
     public abstract double getQualityMeasure();
 
-    public boolean isSplittable() { return this.splittable; }
+    public boolean isSplittable() {
+        return this.splittable;
+    }
 
     public void addLatestSellingPrice(double price) {
         this.salesBuffer.add(price);
@@ -46,7 +48,7 @@ abstract public class AssetData {
     public void processDayPrices() {
         double averagePrice = this.salesBuffer.isEmpty() ? this.getOpeningPrice() : 0;
         for (var price : this.salesBuffer)
-            averagePrice += price/this.salesBuffer.size();
+            averagePrice += price / this.salesBuffer.size();
         this.sellingPrices.add(averagePrice);
         this.openingPrice = averagePrice;
         this.salesBuffer.clear();
@@ -72,5 +74,6 @@ abstract public class AssetData {
         return minimalPrice;
     }
 
-    public void processRandomEvent() {}
+    public void processRandomEvent() {
+    }
 }

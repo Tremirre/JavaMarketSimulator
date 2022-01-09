@@ -1,6 +1,6 @@
-package main.java.simulation.holders.strategies;
+package simulation.holders.strategies;
 
-import main.java.simulation.asset.AssetManager;
+import simulation.asset.AssetManager;
 
 import java.util.Set;
 
@@ -31,14 +31,14 @@ public class QualitativeAssessmentStrategy extends InvestmentStrategy {
         var assetData = this.assetManager.getAssetData(chosenAsset);
         var latestPrice = assetData.getOpeningPrice();
         var quality = assetData.getQualityMeasure();
-        return (latestPrice * (quality/4 + 0.75)) * this.individualAssessmentFactor;
+        return (latestPrice * (quality / 4 + 0.75)) * this.individualAssessmentFactor;
     }
 
     @Override
     public double updateBuyPrice(double oldPrice, double amount, double availableFunds, String assetType) {
-        double newPrice = oldPrice * (1 + this.assetManager.getAssetData(assetType).getQualityMeasure()/4);
+        double newPrice = oldPrice * (1 + this.assetManager.getAssetData(assetType).getQualityMeasure() / 4);
         if (availableFunds < (newPrice - oldPrice) * amount) {
-            newPrice = oldPrice + availableFunds/amount;
+            newPrice = oldPrice + availableFunds / amount;
         }
         return newPrice;
     }
@@ -62,11 +62,11 @@ public class QualitativeAssessmentStrategy extends InvestmentStrategy {
         var assetData = this.assetManager.getAssetData(chosenAsset);
         var latestPrice = assetData.getOpeningPrice();
         var quality = assetData.getQualityMeasure();
-        return latestPrice * (1 + quality/4) * this.individualAssessmentFactor;
+        return latestPrice * (1 + quality / 4) * this.individualAssessmentFactor;
     }
 
     @Override
     public double updateSellPrice(double oldPrice, String assetType) {
-        return oldPrice * (this.assetManager.getAssetData(assetType).getQualityMeasure()/4 + 0.75);
+        return oldPrice * (this.assetManager.getAssetData(assetType).getQualityMeasure() / 4 + 0.75);
     }
 }

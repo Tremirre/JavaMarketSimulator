@@ -1,4 +1,4 @@
-package main.java.simulation.util;
+package simulation.util;
 
 import java.io.FileWriter;
 import java.io.IOException;

@@ -1,8 +1,8 @@
-package main.java.simulation.holders;
+package simulation.holders;
 
 
-import main.java.simulation.asset.AssetManager;
-import main.java.simulation.market.Market;
+import simulation.asset.AssetManager;
+import simulation.market.Market;
 
 import java.util.ArrayList;
 import java.util.HashSet;

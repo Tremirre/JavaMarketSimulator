@@ -1,7 +1,7 @@
-package main.java.simulation.holders.strategies;
+package simulation.holders.strategies;
 
-import main.java.simulation.asset.AssetManager;
-import main.java.simulation.util.RandomService;
+import simulation.asset.AssetManager;
+import simulation.util.RandomService;
 
 import java.util.Set;
 
@@ -27,7 +27,7 @@ public class NaiveInvestmentStrategy extends InvestmentStrategy {
     public double updateBuyPrice(double oldPrice, double amount, double availableFunds, String assetType) {
         double newPrice = oldPrice * (2 - this.riskFactor);
         if (availableFunds < (newPrice - oldPrice) * amount) {
-            newPrice = oldPrice + availableFunds/amount;
+            newPrice = oldPrice + availableFunds / amount;
         }
         return newPrice;
     }

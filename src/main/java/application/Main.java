@@ -1,8 +1,8 @@
-package main.java.bst;
+package application;
 
-import main.java.simulation.core.Simulation;
-import main.java.simulation.util.Constants;
-import main.java.simulation.util.DataExporter;
+import simulation.core.Simulation;
+import simulation.util.Constants;
+import simulation.util.DataExporter;
 
 public class Main {
     public static void main(String[] args) {
@@ -13,7 +13,7 @@ public class Main {
             simulation.runSimulationDay(i);
         }
         simulation.stop();
-        System.out.println("Simulation took " + (System.nanoTime() - start)/1_000_000 + "ms");
+        System.out.println("Simulation took " + (System.nanoTime() - start) / 1_000_000 + "ms");
         DataExporter dataEx = new DataExporter();
         var prices = simulation.getAssetManager().getAllAssetsPriceHistory();
         dataEx.exportLabeledData(prices, "price_history.csv");

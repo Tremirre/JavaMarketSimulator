@@ -1,4 +1,4 @@
-package main.java.simulation.market;
+package simulation.market;
 
 public interface MarketFactory {
     Market createMarket(MarketType type);

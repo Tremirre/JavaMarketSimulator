@@ -1,6 +1,6 @@
-package main.java.simulation.asset;
+package simulation.asset;
 
-public class CommodityData extends AssetData{
+public class CommodityData extends AssetData {
     private String tradingUnit;
     private String tradingCurrency;
 

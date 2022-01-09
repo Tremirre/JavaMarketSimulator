@@ -1,4 +1,4 @@
-package main.java.simulation.market;
+package simulation.market;
 
 public enum MarketType {
     STOCK_MARKET,

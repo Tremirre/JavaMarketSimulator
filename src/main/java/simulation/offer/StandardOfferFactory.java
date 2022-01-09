@@ -1,4 +1,4 @@
-package main.java.simulation.offer;
+package simulation.offer;
 
 public class StandardOfferFactory implements OfferFactory {
     private static int id = 0;

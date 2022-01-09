@@ -1,6 +1,6 @@
-package main.java.simulation.util;
+package simulation.util;
 
-import main.java.simulation.holders.Address;
+import simulation.holders.Address;
 
 import java.util.Random;
 
@@ -25,11 +25,11 @@ public final class RandomService {
     }
 
     public double yieldRandomNumber(double upperBound) {
-        return this.generator.nextDouble()*upperBound;
+        return this.generator.nextDouble() * upperBound;
     }
 
     public double yieldRandomGaussianNumber(double standardDeviation, double mean) {
-        return this.generator.nextGaussian()*standardDeviation + mean;
+        return this.generator.nextGaussian() * standardDeviation + mean;
     }
 
     public String yieldRandomString(int length) {

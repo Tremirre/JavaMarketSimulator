@@ -1,4 +1,4 @@
-package main.java.simulation.util.records;
+package simulation.util.records;
 
 public abstract class Record {
     private boolean isUsed = false;
@@ -10,7 +10,9 @@ public abstract class Record {
         this.initialRate = initialRate;
     }
 
-    public boolean isUsed() { return isUsed;}
+    public boolean isUsed() {
+        return isUsed;
+    }
 
     public void use() {
         this.isUsed = true;

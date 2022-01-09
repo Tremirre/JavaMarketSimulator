@@ -1,13 +1,13 @@
-package main.java.simulation.market;
+package simulation.market;
 
-import main.java.simulation.asset.AssetCategory;
-import main.java.simulation.asset.AssetManager;
-import main.java.simulation.asset.StockData;
-import main.java.simulation.holders.Address;
+import simulation.asset.AssetCategory;
+import simulation.asset.AssetManager;
+import simulation.asset.StockData;
+import simulation.holders.Address;
 
 import java.util.HashSet;
 
-public class StockMarket extends Market{
+public class StockMarket extends Market {
     private String tradingCurrency;
     final private HashSet<StockMarketIndex> stockMarketIndexes = new HashSet<>();
 

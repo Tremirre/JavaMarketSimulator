@@ -1,4 +1,4 @@
-package main.java.simulation.offer;
+package simulation.offer;
 
 public class SellOffer extends Offer {
     protected SellingEntity sender;
@@ -18,5 +18,7 @@ public class SellOffer extends Offer {
         this.sender.processSellWithdrawal(this.assetType, this.size);
     }
 
-    public SellingEntity getSender() {return this.sender;}
+    public SellingEntity getSender() {
+        return this.sender;
+    }
 }

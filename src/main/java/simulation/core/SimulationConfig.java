@@ -1,4 +1,4 @@
-package main.java.simulation.core;
+package simulation.core;
 
 import java.util.concurrent.atomic.AtomicInteger;
 

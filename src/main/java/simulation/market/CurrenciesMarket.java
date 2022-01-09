@@ -1,8 +1,8 @@
-package main.java.simulation.market;
+package simulation.market;
 
-import main.java.simulation.asset.AssetCategory;
-import main.java.simulation.asset.AssetManager;
-import main.java.simulation.holders.Address;
+import simulation.asset.AssetCategory;
+import simulation.asset.AssetManager;
+import simulation.holders.Address;
 
 public class CurrenciesMarket extends Market {
     private InitialVoidSeller ivs = new InitialVoidSeller();

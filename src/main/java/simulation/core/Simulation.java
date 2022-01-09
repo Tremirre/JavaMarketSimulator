@@ -1,15 +1,15 @@
-package main.java.simulation.core;
+package simulation.core;
 
-import main.java.simulation.asset.AssetManager;
-import main.java.simulation.asset.RandomSupplementaryAssetFactory;
-import main.java.simulation.holders.RandomHolderFactory;
-import main.java.simulation.holders.TradingEntitiesManager;
-import main.java.simulation.market.Market;
-import main.java.simulation.market.MarketType;
-import main.java.simulation.market.RandomMarketFactory;
-import main.java.simulation.util.Constants;
-import main.java.simulation.util.GlobalHoldersLock;
-import main.java.simulation.util.ResourceHolder;
+import simulation.asset.AssetManager;
+import simulation.asset.RandomSupplementaryAssetFactory;
+import simulation.holders.RandomHolderFactory;
+import simulation.holders.TradingEntitiesManager;
+import simulation.market.Market;
+import simulation.market.MarketType;
+import simulation.market.RandomMarketFactory;
+import simulation.util.Constants;
+import simulation.util.GlobalHoldersLock;
+import simulation.util.ResourceHolder;
 
 import java.io.IOException;
 import java.util.HashSet;
@@ -90,5 +90,7 @@ public class Simulation {
         RandomMarketFactory.setFactoryResource(resourceHolder);
     }
 
-    public AssetManager getAssetManager() { return this.assetManager; }
+    public AssetManager getAssetManager() {
+        return this.assetManager;
+    }
 }

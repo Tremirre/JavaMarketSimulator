@@ -1,4 +1,4 @@
-package main.java.simulation.util.records;
+package simulation.util.records;
 
 public class CommodityRecord extends Record {
     private String unit;

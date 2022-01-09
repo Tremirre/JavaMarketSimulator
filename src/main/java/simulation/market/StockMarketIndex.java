@@ -1,6 +1,6 @@
-package main.java.simulation.market;
+package simulation.market;
 
-import main.java.simulation.holders.Company;
+import simulation.holders.Company;
 
 import java.util.ArrayList;
 import java.util.HashSet;

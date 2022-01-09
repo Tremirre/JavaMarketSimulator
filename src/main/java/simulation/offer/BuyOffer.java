@@ -1,4 +1,4 @@
-package main.java.simulation.offer;
+package simulation.offer;
 
 public class BuyOffer extends Offer {
     protected BuyingEntity sender;
@@ -18,5 +18,7 @@ public class BuyOffer extends Offer {
         this.sender.processBuyWithdrawal(this.price, this.size, this.getOfferCurrency());
     }
 
-    public BuyingEntity getSender() {return this.sender;}
+    public BuyingEntity getSender() {
+        return this.sender;
+    }
 }

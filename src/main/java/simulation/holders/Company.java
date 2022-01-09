@@ -1,10 +1,10 @@
-package main.java.simulation.holders;
+package simulation.holders;
 
-import main.java.simulation.holders.strategies.InvestmentStrategy;
-import main.java.simulation.market.Market;
-import main.java.simulation.util.Constants;
-import main.java.simulation.util.GlobalHoldersLock;
-import main.java.simulation.util.RandomService;
+import simulation.holders.strategies.InvestmentStrategy;
+import simulation.market.Market;
+import simulation.util.Constants;
+import simulation.util.GlobalHoldersLock;
+import simulation.util.RandomService;
 
 import java.util.ArrayList;
 
@@ -111,7 +111,9 @@ public class Company extends AssetHolder {
         this.currentTradingVolume = 0;
     }
 
-    public void endDayEvent() { this.saveAndResetStockTransactionsData(); }
+    public void endDayEvent() {
+        this.saveAndResetStockTransactionsData();
+    }
 
     public Address getAddress() {
         return address;
@@ -129,7 +131,7 @@ public class Company extends AssetHolder {
     }
 
     protected void increaseNumberOfShares() {
-        int newStocks = this.numberOfStocks/2;
+        int newStocks = this.numberOfStocks / 2;
         this.numberOfStocks += newStocks;
         this.storedAssets.put(this.associatedAsset, (double) newStocks);
         for (var market : this.availableMarkets) {
@@ -142,7 +144,7 @@ public class Company extends AssetHolder {
 
     @Override
     public void run() {
-        while(this.running) {
+        while (this.running) {
             try {
                 Thread.sleep(Constants.COMPANY_SLEEP_TIME);
             } catch (InterruptedException e) {

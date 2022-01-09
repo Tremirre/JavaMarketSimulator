@@ -1,4 +1,4 @@
-package main.java.simulation.asset;
+package simulation.asset;
 
 public abstract class SupplementaryAssetFactory {
     protected final AssetManager assetManager;
@@ -8,5 +8,6 @@ public abstract class SupplementaryAssetFactory {
     }
 
     public abstract String createCurrencyAsset();
+
     public abstract String createCommodityAsset();
 }

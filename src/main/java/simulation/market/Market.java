@@ -1,10 +1,10 @@
-package main.java.simulation.market;
+package simulation.market;
 
-import main.java.simulation.core.SimulationConfig;
-import main.java.simulation.asset.AssetManager;
-import main.java.simulation.holders.Address;
-import main.java.simulation.offer.*;
-import main.java.simulation.util.Constants;
+import simulation.core.SimulationConfig;
+import simulation.asset.AssetManager;
+import simulation.holders.Address;
+import simulation.offer.*;
+import simulation.util.Constants;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -51,8 +51,8 @@ abstract public class Market {
         var amount = Math.min(sellOffer.getSize(), buyOffer.getSize());
         var priceDiff = buyOffer.getPrice() * buyOffer.getSize() - commonPrice * amount;
         var latestOfferCurrencyRate = this.assetManager.findPrice(buyOffer.getOfferCurrency());
-        var convertedCommonPrice = commonPrice*latestOfferCurrencyRate;
-        buyer.processBuyOffer(assetType, priceDiff*latestOfferCurrencyRate, amount);
+        var convertedCommonPrice = commonPrice * latestOfferCurrencyRate;
+        buyer.processBuyOffer(assetType, priceDiff * latestOfferCurrencyRate, amount);
         seller.processSellOffer(assetType, convertedCommonPrice, amount);
         this.useTransactionData(assetType, convertedCommonPrice, amount);
         sellOffer.setSize(sellOffer.getSize() - amount);
@@ -121,7 +121,7 @@ abstract public class Market {
         this.buyOffers.removeIf(offer -> offersForRemoval.contains(offer.getID()));
         this.sellOffers.removeIf(offer -> offersForRemoval.contains(offer.getID()));
     }
-    
+
     public synchronized int countSenderOffers(int id) {
         int total = 0;
         for (var offer : this.buyOffers) {
@@ -135,7 +135,9 @@ abstract public class Market {
         return total;
     }
 
-    public HashSet<String> getAvailableAssetTypes() {return this.assetTypesOnMarket;}
+    public HashSet<String> getAvailableAssetTypes() {
+        return this.assetTypesOnMarket;
+    }
 
     public Address getAddress() {
         return this.address;
@@ -165,7 +167,9 @@ abstract public class Market {
         this.sellFee = sellFee;
     }
 
-    public AssetManager getAssetManager() { return this.assetManager; }
+    public AssetManager getAssetManager() {
+        return this.assetManager;
+    }
 
     public String getAssetTradingCurrency(String assetType) {
         return Constants.DEFAULT_CURRENCY;

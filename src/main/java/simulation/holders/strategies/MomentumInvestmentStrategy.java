@@ -1,6 +1,6 @@
-package main.java.simulation.holders.strategies;
+package simulation.holders.strategies;
 
-import main.java.simulation.asset.AssetManager;
+import simulation.asset.AssetManager;
 
 import java.util.Set;
 
@@ -47,7 +47,7 @@ public class MomentumInvestmentStrategy extends InvestmentStrategy {
     public double updateBuyPrice(double oldPrice, double amount, double availableFunds, String assetType) {
         var newPrice = oldPrice * 1.05;
         if (availableFunds < (newPrice - oldPrice) * amount) {
-            newPrice = oldPrice + availableFunds/amount;
+            newPrice = oldPrice + availableFunds / amount;
         }
         return newPrice;
     }

@@ -1,4 +1,4 @@
-package main.java.simulation.holders;
+package simulation.holders;
 
 public class Address {
     private String country;

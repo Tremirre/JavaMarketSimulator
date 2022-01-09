@@ -1,4 +1,4 @@
-package main.java.simulation.util;
+package simulation.util;
 
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 

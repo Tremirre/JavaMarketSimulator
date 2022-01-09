@@ -1,6 +1,6 @@
-package main.java.simulation.asset;
+package simulation.asset;
 
-import main.java.simulation.util.RandomService;
+import simulation.util.RandomService;
 
 import java.util.HashSet;
 
@@ -28,7 +28,9 @@ public class CurrencyData extends AssetData {
         return this.countriesOfUse;
     }
 
-    public void addCountriesOfUse(HashSet<String> countries) {this.countriesOfUse.addAll(countries);}
+    public void addCountriesOfUse(HashSet<String> countries) {
+        this.countriesOfUse.addAll(countries);
+    }
 
     public void setStability(double stability) {
         this.stability = Math.max(Math.min(stability, 1), 0);

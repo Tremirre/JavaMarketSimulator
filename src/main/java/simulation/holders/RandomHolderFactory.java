@@ -1,10 +1,10 @@
-package main.java.simulation.holders;
+package simulation.holders;
 
-import main.java.simulation.asset.AssetManager;
-import main.java.simulation.holders.strategies.*;
-import main.java.simulation.util.Constants;
-import main.java.simulation.util.RandomService;
-import main.java.simulation.util.ResourceHolder;
+import simulation.asset.AssetManager;
+import simulation.holders.strategies.*;
+import simulation.util.Constants;
+import simulation.util.RandomService;
+import simulation.util.ResourceHolder;
 
 public class RandomHolderFactory extends HolderFactory {
     private static ResourceHolder resourceHolder;
@@ -19,7 +19,7 @@ public class RandomHolderFactory extends HolderFactory {
     }
 
     private InvestmentStrategy pickRandomStrategy(RandomService rand) {
-        switch(rand.yieldRandomInteger(3)) {
+        switch (rand.yieldRandomInteger(3)) {
             case 0 -> {
                 return new NaiveInvestmentStrategy(this.assetManager,
                         rand.yieldRandomGaussianNumber(0.03, 0.9));
@@ -65,7 +65,7 @@ public class RandomHolderFactory extends HolderFactory {
         }
         var initialStockValue = rand.yieldRandomInteger(Constants.COMPANY_MAXIMAL_ADDITIONAL_INITIAL_STOCK_VALUE)
                 + Constants.COMPANY_MINIMAL_INITIAL_STOCK_VALUE;
-        var initialStockSize = (Constants.COMPANY_GENERATION_CONSTANT/initialStockValue)
+        var initialStockSize = (Constants.COMPANY_GENERATION_CONSTANT / initialStockValue)
                 + rand.yieldRandomInteger(Constants.COMPANY_MAXIMAL_ADDITIONAL_STOCK_NUMBER);
         var profit = rand.yieldRandomInteger(Constants.COMPANY_MAXIMAL_ADDITIONAL_PROFIT) - Constants.COMPANY_MINIMAL_PROFIT;
         var revenue = rand.yieldRandomInteger(Constants.COMPANY_MAXIMAL_ADDITIONAL_REVENUE) + Constants.COMPANY_MINIMAL_REVENUE;
@@ -82,7 +82,7 @@ public class RandomHolderFactory extends HolderFactory {
         var address = rand.yieldRandomAddress(resourceHolder);
         var initialStockValue = rand.yieldRandomInteger(Constants.COMPANY_MAXIMAL_ADDITIONAL_INITIAL_STOCK_VALUE)
                 + Constants.COMPANY_MINIMAL_INITIAL_STOCK_VALUE;
-        var initialStockSize = (Constants.COMPANY_GENERATION_CONSTANT/initialStockValue)
+        var initialStockSize = (Constants.COMPANY_GENERATION_CONSTANT / initialStockValue)
                 + rand.yieldRandomInteger(Constants.COMPANY_MAXIMAL_ADDITIONAL_STOCK_NUMBER);
         InvestmentStrategy strategy = this.pickRandomStrategy(rand);
         var ownerName = (String) rand.sampleElement(resourceHolder.getNames());

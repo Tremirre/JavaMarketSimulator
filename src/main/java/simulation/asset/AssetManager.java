@@ -1,7 +1,7 @@
-package main.java.simulation.asset;
+package simulation.asset;
 
-import main.java.simulation.holders.Company;
-import main.java.simulation.util.Constants;
+import simulation.holders.Company;
+import simulation.util.Constants;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -41,7 +41,7 @@ public final class AssetManager {
         return cur;
     }
 
-    public AssetData getAssetData(String uniqueName){
+    public AssetData getAssetData(String uniqueName) {
         return this.allAssets.getOrDefault(uniqueName, null);
     }
 

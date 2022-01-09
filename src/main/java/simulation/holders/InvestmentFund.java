@@ -1,11 +1,11 @@
-package main.java.simulation.holders;
+package simulation.holders;
 
-import main.java.simulation.holders.strategies.InvestmentStrategy;
-import main.java.simulation.holders.strategies.PassiveCompanyStrategy;
-import main.java.simulation.market.Market;
-import main.java.simulation.util.Constants;
-import main.java.simulation.util.GlobalHoldersLock;
-import main.java.simulation.util.RandomService;
+import simulation.holders.strategies.InvestmentStrategy;
+import simulation.holders.strategies.PassiveCompanyStrategy;
+import simulation.market.Market;
+import simulation.util.Constants;
+import simulation.util.GlobalHoldersLock;
+import simulation.util.RandomService;
 
 public class InvestmentFund extends Company {
     private String ownerName;

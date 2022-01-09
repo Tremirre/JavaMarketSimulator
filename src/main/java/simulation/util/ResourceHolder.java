@@ -1,7 +1,7 @@
-package main.java.simulation.util;
+package simulation.util;
 
-import main.java.simulation.util.records.CommodityRecord;
-import main.java.simulation.util.records.CurrencyRecord;
+import simulation.util.records.CommodityRecord;
+import simulation.util.records.CurrencyRecord;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -11,9 +11,10 @@ import java.util.Arrays;
 import java.util.HashMap;
 
 public class ResourceHolder {
-    private final static String addressPath = "resource\\address_data\\";
-    private final static String customNamesPath = "resource\\custom_names\\";
-    private final static String assetPath = "resource\\asset_data\\";
+    private final static String simulationResourcePath = "src\\main\\resources\\simulation_data";
+    private final static String addressPath = simulationResourcePath + "\\address_data\\";
+    private final static String customNamesPath = simulationResourcePath + "\\custom_names\\";
+    private final static String assetPath = simulationResourcePath + "\\asset_data\\";
 
     private final HashMap<String, String[]> citiesCountryMapping;
     private final ArrayList<CurrencyRecord> currencies;
@@ -84,7 +85,6 @@ public class ResourceHolder {
     }
 
     public ResourceHolder() {
-        System.out.println("[LOGGING] Initializing RandomDataGenerator...");
         this.citiesCountryMapping = new HashMap<>();
         this.currencies = new ArrayList<>();
         this.commodities = new ArrayList<>();
@@ -152,7 +152,9 @@ public class ResourceHolder {
         return surnames;
     }
 
-    public String[] getMarketNames() {return this.marketNames;}
+    public String[] getMarketNames() {
+        return this.marketNames;
+    }
 
     public ArrayList<String> getCompanyNames() {
         return companyNames;

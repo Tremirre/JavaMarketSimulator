@@ -1,4 +1,4 @@
-package main.java.simulation.offer;
+package simulation.offer;
 
 public abstract class Offer {
     protected int id;
@@ -45,7 +45,9 @@ public abstract class Offer {
         return this.size;
     }
 
-    public OfferingEntity getSender() {return this.sender;}
+    public OfferingEntity getSender() {
+        return this.sender;
+    }
 
     public int getDaysSinceGiven() {
         return this.daysSinceGiven;

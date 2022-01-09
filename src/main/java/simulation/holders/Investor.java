@@ -1,9 +1,9 @@
-package main.java.simulation.holders;
+package simulation.holders;
 
-import main.java.simulation.holders.strategies.InvestmentStrategy;
-import main.java.simulation.util.Constants;
-import main.java.simulation.util.GlobalHoldersLock;
-import main.java.simulation.util.RandomService;
+import simulation.holders.strategies.InvestmentStrategy;
+import simulation.util.Constants;
+import simulation.util.GlobalHoldersLock;
+import simulation.util.RandomService;
 
 public class Investor extends AssetHolder {
     private String firstName;
@@ -15,7 +15,7 @@ public class Investor extends AssetHolder {
         this.lastName = lastName;
     }
 
-    public void increaseFunds(double probability){
+    public void increaseFunds(double probability) {
         if (RandomService.getInstance().yieldRandomNumber(1) < probability) {
             this.investmentBudget += Constants.INVESTOR_FUNDS_INCREASE_AMOUNT;
         }

@@ -1,11 +1,11 @@
-package main.java.simulation.holders;
+package simulation.holders;
 
-import main.java.simulation.core.SimulationConfig;
-import main.java.simulation.holders.strategies.InvestmentStrategy;
-import main.java.simulation.market.Market;
-import main.java.simulation.offer.BuyingEntity;
-import main.java.simulation.offer.SellingEntity;
-import main.java.simulation.util.RandomService;
+import simulation.core.SimulationConfig;
+import simulation.holders.strategies.InvestmentStrategy;
+import simulation.market.Market;
+import simulation.offer.BuyingEntity;
+import simulation.offer.SellingEntity;
+import simulation.util.RandomService;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -62,7 +62,7 @@ public abstract class AssetHolder extends Thread implements SellingEntity, Buyin
         var convertedPrice = rate * price;
         double newPrice = this.strategy.updateBuyPrice(convertedPrice, amount, this.investmentBudget, assetType);
         this.investmentBudget -= (newPrice - convertedPrice) * amount;
-        return newPrice/rate;
+        return newPrice / rate;
     }
 
     protected void sendSellOffer(Market market) {
@@ -97,7 +97,7 @@ public abstract class AssetHolder extends Thread implements SellingEntity, Buyin
 
     public double processSellOfferAlteration(double price, String assetType, String assetCurrency) {
         var rate = this.strategy.getAssetManager().findPrice(assetCurrency);
-        return this.strategy.updateSellPrice(price * rate, assetType)/rate;
+        return this.strategy.updateSellPrice(price * rate, assetType) / rate;
     }
 
     protected void generateOrders() {
@@ -139,7 +139,8 @@ public abstract class AssetHolder extends Thread implements SellingEntity, Buyin
         this.investmentBudget = budget;
     }
 
-    public void endDayEvent() {}
+    public void endDayEvent() {
+    }
 
     public void start() {
         this.running = true;

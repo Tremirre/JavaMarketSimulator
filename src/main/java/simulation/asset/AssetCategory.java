@@ -1,4 +1,4 @@
-package main.java.simulation.asset;
+package simulation.asset;
 
 public enum AssetCategory {
     COMMODITY,

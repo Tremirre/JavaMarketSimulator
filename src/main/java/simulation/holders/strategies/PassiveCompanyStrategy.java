@@ -1,10 +1,10 @@
-package main.java.simulation.holders.strategies;
+package simulation.holders.strategies;
 
-import main.java.simulation.asset.AssetManager;
+import simulation.asset.AssetManager;
 
 import java.util.Set;
 
-public class PassiveCompanyStrategy extends InvestmentStrategy{
+public class PassiveCompanyStrategy extends InvestmentStrategy {
 
     public PassiveCompanyStrategy(AssetManager assetManager) {
         super(assetManager);

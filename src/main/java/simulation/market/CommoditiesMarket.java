@@ -1,11 +1,11 @@
-package main.java.simulation.market;
+package simulation.market;
 
-import main.java.simulation.asset.AssetCategory;
-import main.java.simulation.asset.AssetManager;
-import main.java.simulation.asset.CommodityData;
-import main.java.simulation.holders.Address;
+import simulation.asset.AssetCategory;
+import simulation.asset.AssetManager;
+import simulation.asset.CommodityData;
+import simulation.holders.Address;
 
-public class CommoditiesMarket extends Market{
+public class CommoditiesMarket extends Market {
     private InitialVoidSeller ivs = new InitialVoidSeller();
 
     public CommoditiesMarket(AssetManager assetManager, String name, double buyFee, double sellFee, Address address) {
@@ -21,7 +21,7 @@ public class CommoditiesMarket extends Market{
 
     public String getAssetTradingCurrency(String commodity) {
         if (!this.assetManager.doesAssetExist(commodity, AssetCategory.COMMODITY)) {
-             throw new IllegalArgumentException("Invalid asset type passed to a currency market: " + commodity);
+            throw new IllegalArgumentException("Invalid asset type passed to a currency market: " + commodity);
         }
         return ((CommodityData) this.assetManager.getAssetData(commodity)).getTradingCurrency();
     }

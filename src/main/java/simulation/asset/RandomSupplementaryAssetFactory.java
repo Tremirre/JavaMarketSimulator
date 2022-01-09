@@ -1,9 +1,9 @@
-package main.java.simulation.asset;
+package simulation.asset;
 
-import main.java.simulation.util.RandomService;
-import main.java.simulation.util.ResourceHolder;
-import main.java.simulation.util.records.CommodityRecord;
-import main.java.simulation.util.records.CurrencyRecord;
+import simulation.util.RandomService;
+import simulation.util.ResourceHolder;
+import simulation.util.records.CommodityRecord;
+import simulation.util.records.CurrencyRecord;
 
 public class RandomSupplementaryAssetFactory extends SupplementaryAssetFactory {
     private static ResourceHolder resourceHolder;

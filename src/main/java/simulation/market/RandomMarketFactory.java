@@ -1,13 +1,13 @@
-package main.java.simulation.market;
+package simulation.market;
 
-import main.java.simulation.asset.AssetManager;
-import main.java.simulation.asset.CurrencyData;
-import main.java.simulation.asset.InformedSupplementaryAssetFactory;
-import main.java.simulation.asset.RandomSupplementaryAssetFactory;
-import main.java.simulation.holders.TradingEntitiesManager;
-import main.java.simulation.util.RandomService;
-import main.java.simulation.util.ResourceHolder;
-import main.java.simulation.util.records.CurrencyRecord;
+import simulation.asset.AssetManager;
+import simulation.asset.CurrencyData;
+import simulation.asset.InformedSupplementaryAssetFactory;
+import simulation.asset.RandomSupplementaryAssetFactory;
+import simulation.holders.TradingEntitiesManager;
+import simulation.util.RandomService;
+import simulation.util.ResourceHolder;
+import simulation.util.records.CurrencyRecord;
 
 public class RandomMarketFactory implements MarketFactory {
     private static ResourceHolder resourceHolder;
@@ -53,7 +53,7 @@ public class RandomMarketFactory implements MarketFactory {
                 for (int i = 0; i < initialNumberOfAssets; i++) {
                     idx.addCompany(this.tradingEntitiesManager.createNewCompany());
                 }
-                for (int i = 0; i < initialNumberOfAssets/2; i++) {
+                for (int i = 0; i < initialNumberOfAssets / 2; i++) {
                     idx.addCompany(this.tradingEntitiesManager.createNewFund());
                 }
                 newMarket.addStockMarketIndex(idx);
