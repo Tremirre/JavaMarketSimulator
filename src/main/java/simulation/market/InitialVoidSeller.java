@@ -1,0 +1,23 @@
+package main.java.simulation.market;
+
+import main.java.simulation.offer.SellingEntity;
+import main.java.simulation.util.RandomService;
+
+public class InitialVoidSeller implements SellingEntity {
+    public void sendInitialOffer(Market market, String assetType) {
+        var assetCurrencyRate = market.getAssetManager().findPrice(market.getAssetTradingCurrency(assetType));
+        var price = market.getAssetManager().getAssetData(assetType).getOpeningPrice()/assetCurrencyRate;
+        var size = RandomService.getInstance().yieldRandomGaussianNumber(25, 100);
+        market.addSellOffer(assetType, this, price, size);
+    }
+
+    @Override
+    public int getID() {
+        return -1;
+    }
+
+    @Override
+    public boolean canWithdraw(String assetType) {
+        return false;
+    }
+}

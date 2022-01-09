@@ -1,0 +1,32 @@
+Japan;Yen;0.00874
+India;Indian Rupee;0.01332
+China;Yuan;0.15723
+Brazil;Brazilian Real;0.17637
+Mexico;Mexican Peso;0.04852
+Egypt;Egyptian Pound;0.06361
+United States;US Dollar;1.0
+Russia;Ruble;0.01359
+Turkey;Turkish Lira;0.09217
+France;Euro;1.13636
+United Kingdom;British Pound;1.33333
+Spain;Euro;1.13636
+Canada;Canadian Dollar;0.78125
+Australia;Australian Dollar;0.72464
+Germany;Euro;1.13636
+Ukraine;Hryvnia;0.03675
+Italy;Euro;1.13636
+Poland;Zloty;0.2445
+Belgium;Euro;1.13636
+Netherlands;Euro;1.13636
+Mongolia;Tugrik;0.00035
+Czechia;Czech Koruna;0.04517
+Sweden;Swedish Krona;0.10977
+Norway;Norwegian Krone;0.11299
+Greece;Euro;1.13636
+Finland;Euro;1.13636
+Latvia;Euro;1.13636
+Denmark;Danish Krone;0.15221
+Lithuania;Euro;1.13636
+Portugal;Euro;1.13636
+Estonia;Euro;1.13636
+Switzerland;Swiss Franc;1.06383
