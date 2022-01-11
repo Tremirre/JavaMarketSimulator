@@ -1,5 +1,6 @@
 package simulation.util;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
@@ -8,8 +9,15 @@ import java.util.HashMap;
 import java.util.List;
 
 public class DataExporter {
+    private void makeDirectory(String dirname) {
+        File dir = new File(dirname);
+        dir.mkdir();
+    }
+
     public <T> void exportLabeledData(HashMap<String, ? extends List<T>> data, String exportedFileName) {
-        try (Writer writer = new FileWriter(exportedFileName)) {
+        var dirname = "exports";
+        makeDirectory(dirname);
+        try (Writer writer = new FileWriter(dirname + "\\" + exportedFileName)) {
             ArrayList<String> assetNames = new ArrayList<>(data.keySet());
             StringBuilder line = new StringBuilder();
             int historyLength = 0;

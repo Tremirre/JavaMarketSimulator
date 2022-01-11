@@ -28,10 +28,11 @@ public class Simulation {
         this.setupMarket(MarketType.COMMODITIES_MARKET);
         this.setupMarket(MarketType.CURRENCIES_MARKET);
         this.setupInvestors();
-        this.start();
     }
 
-    public void runSimulationDay(int day) {
+    public void runSimulationDay() {
+        System.out.println("Processing simulation day");
+        GlobalHoldersLock.writeUnlock();
         try {
             Thread.sleep(Constants.BASE_TRADING_TIME);
         } catch (InterruptedException e) {
@@ -52,29 +53,20 @@ public class Simulation {
         }*/
         this.assetManager.processEndDay();
         this.tradingEntitiesManager.processEndDay();
-        GlobalHoldersLock.writeUnlock();
     }
 
     public void stop() {
         this.tradingEntitiesManager.stopEntities();
+        GlobalHoldersLock.writeUnlock();
     }
 
-    private void start() {
+    public void start() {
         this.tradingEntitiesManager.startEntities();
+        GlobalHoldersLock.writeLock();
     }
 
     private void setupMarket(MarketType type) {
         this.markets.add(new RandomMarketFactory(this.assetManager, this.tradingEntitiesManager).createMarket(type));
-    }
-
-    public void pause() {
-        GlobalHoldersLock.writeLock();
-        try {
-            System.in.read();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        GlobalHoldersLock.writeUnlock();
     }
 
     private void setupInvestors() {
@@ -93,4 +85,6 @@ public class Simulation {
     public AssetManager getAssetManager() {
         return this.assetManager;
     }
+
+    public TradingEntitiesManager getEntitiesManager() { return this.tradingEntitiesManager; }
 }
