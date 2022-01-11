@@ -1,21 +1,18 @@
 package simulation.holders;
 
+import simulation.address.RandomAddressFactory;
 import simulation.asset.AssetManager;
 import simulation.holders.strategies.*;
 import simulation.util.Constants;
 import simulation.util.RandomService;
 import simulation.util.ResourceHolder;
+import simulation.util.Resourced;
 
-public class RandomHolderFactory extends HolderFactory {
-    private static ResourceHolder resourceHolder;
+public class RandomHolderFactory extends HolderFactory implements Resourced {
     private final AssetManager assetManager;
 
     public RandomHolderFactory(AssetManager assetManager) {
         this.assetManager = assetManager;
-    }
-
-    public static void setFactoryResource(ResourceHolder resource) {
-        resourceHolder = resource;
     }
 
     private InvestmentStrategy pickRandomStrategy(RandomService rand) {
@@ -55,7 +52,7 @@ public class RandomHolderFactory extends HolderFactory {
             return null;
         var rand = RandomService.getInstance();
         var date = rand.yieldDate();
-        var address = rand.yieldRandomAddress(resourceHolder);
+        var address = new RandomAddressFactory().createAddress();
         var name = (String) rand.sampleElement(resourceHolder.getCompanyNames().toArray());
         resourceHolder.removeCompanyName(name);
         if (name == null) {
@@ -79,7 +76,7 @@ public class RandomHolderFactory extends HolderFactory {
             return null;
         var rand = RandomService.getInstance();
         var date = rand.yieldDate();
-        var address = rand.yieldRandomAddress(resourceHolder);
+        var address = new RandomAddressFactory().createAddress();
         var initialStockValue = rand.yieldRandomInteger(Constants.COMPANY_MAXIMAL_ADDITIONAL_INITIAL_STOCK_VALUE)
                 + Constants.COMPANY_MINIMAL_INITIAL_STOCK_VALUE;
         var initialStockSize = (Constants.COMPANY_GENERATION_CONSTANT / initialStockValue)

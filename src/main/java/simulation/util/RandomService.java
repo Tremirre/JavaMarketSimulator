@@ -1,7 +1,5 @@
 package simulation.util;
 
-import simulation.holders.Address;
-
 import java.util.Random;
 
 public final class RandomService {
@@ -55,15 +53,6 @@ public final class RandomService {
         String dayD = day < 10 ? "0" : "";
         dayD += String.valueOf(day);
         return String.valueOf(year) + '-' + monthD + '-' + dayD;
-    }
-
-    public Address yieldRandomAddress(ResourceHolder resourceHolder) {
-        var country = (String) this.sampleElement(resourceHolder.getCountries());
-        var city = (String) this.sampleElement(resourceHolder.getCitiesForCountry(country));
-        var postalCode = this.yieldPostCode();
-        var streetName = (String) this.sampleElement(resourceHolder.getStreets());
-        var buildingNumber = this.yieldRandomInteger(1000) + 1;
-        return new Address(country, city, postalCode, streetName, buildingNumber);
     }
 
     public synchronized static RandomService getInstance() {

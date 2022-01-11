@@ -3,7 +3,7 @@ package simulation.market;
 import simulation.asset.AssetCategory;
 import simulation.asset.AssetManager;
 import simulation.asset.CommodityData;
-import simulation.holders.Address;
+import simulation.address.Address;
 
 public class CommoditiesMarket extends Market {
     private InitialVoidSeller ivs = new InitialVoidSeller();

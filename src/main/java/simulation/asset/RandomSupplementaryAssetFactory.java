@@ -2,18 +2,14 @@ package simulation.asset;
 
 import simulation.util.RandomService;
 import simulation.util.ResourceHolder;
+import simulation.util.Resourced;
 import simulation.util.records.CommodityRecord;
 import simulation.util.records.CurrencyRecord;
 
-public class RandomSupplementaryAssetFactory extends SupplementaryAssetFactory {
-    private static ResourceHolder resourceHolder;
+public class RandomSupplementaryAssetFactory extends SupplementaryAssetFactory implements Resourced {
 
     public RandomSupplementaryAssetFactory(AssetManager assetManager) {
         super(assetManager);
-    }
-
-    public static void setFactoryResource(ResourceHolder resource) {
-        resourceHolder = resource;
     }
 
     @Override

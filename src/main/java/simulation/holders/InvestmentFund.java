@@ -1,5 +1,6 @@
 package simulation.holders;
 
+import simulation.address.Address;
 import simulation.holders.strategies.InvestmentStrategy;
 import simulation.holders.strategies.PassiveCompanyStrategy;
 import simulation.market.Market;

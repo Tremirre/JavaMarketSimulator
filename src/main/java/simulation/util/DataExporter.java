@@ -27,7 +27,7 @@ public class DataExporter {
                 line.append(assetName);
                 line.append(';');
             }
-            line.setLength(line.length() - 1);
+            line.setLength(Math.max(line.length() - 1, 0));
             line.append(System.lineSeparator());
             writer.append(line.toString());
             line.setLength(0);
@@ -36,7 +36,7 @@ public class DataExporter {
                     line.append(data.get(assetName).get(i));
                     line.append(';');
                 }
-                line.setLength(line.length() - 1);
+                line.setLength(Math.max(line.length() - 1, 0));
                 line.append(System.lineSeparator());
                 writer.append(line.toString());
                 line.setLength(0);

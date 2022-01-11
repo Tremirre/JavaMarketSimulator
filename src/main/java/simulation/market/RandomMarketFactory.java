@@ -1,5 +1,6 @@
 package simulation.market;
 
+import simulation.address.RandomAddressFactory;
 import simulation.asset.AssetManager;
 import simulation.asset.CurrencyData;
 import simulation.asset.InformedSupplementaryAssetFactory;
@@ -7,20 +8,15 @@ import simulation.asset.RandomSupplementaryAssetFactory;
 import simulation.holders.TradingEntitiesManager;
 import simulation.util.RandomService;
 import simulation.util.ResourceHolder;
+import simulation.util.Resourced;
 import simulation.util.records.CurrencyRecord;
 
-public class RandomMarketFactory implements MarketFactory {
-    private static ResourceHolder resourceHolder;
+public class RandomMarketFactory extends MarketFactory implements Resourced {
     private final TradingEntitiesManager tradingEntitiesManager;
-    private final AssetManager assetManager;
 
     public RandomMarketFactory(AssetManager assetManager, TradingEntitiesManager tradingEntitiesManager) {
-        this.assetManager = assetManager;
+        super(assetManager);
         this.tradingEntitiesManager = tradingEntitiesManager;
-    }
-
-    public static void setFactoryResource(ResourceHolder resource) {
-        resourceHolder = resource;
     }
 
     @Override
@@ -30,7 +26,7 @@ public class RandomMarketFactory implements MarketFactory {
         var buyFee = 0.01 * rand.yieldRandomInteger(10) + 0.01;
         var sellFee = 0.01 * rand.yieldRandomInteger(10) + 0.01;
         var initialNumberOfAssets = rand.yieldRandomInteger(8) + 3;
-        var address = rand.yieldRandomAddress(resourceHolder);
+        var address = new RandomAddressFactory().createAddress();
         switch (type) {
             case STOCK_MARKET -> {
                 var currency = (CurrencyRecord) rand.sampleElement(resourceHolder.getCurrencies().toArray());

@@ -3,7 +3,7 @@ package simulation.market;
 import simulation.asset.AssetCategory;
 import simulation.asset.AssetManager;
 import simulation.asset.StockData;
-import simulation.holders.Address;
+import simulation.address.Address;
 
 import java.util.HashSet;
 

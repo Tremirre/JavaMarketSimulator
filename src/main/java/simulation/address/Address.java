@@ -1,4 +1,4 @@
-package simulation.holders;
+package simulation.address;
 
 public class Address {
     private String country;

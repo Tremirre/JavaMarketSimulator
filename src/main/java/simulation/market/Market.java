@@ -2,7 +2,7 @@ package simulation.market;
 
 import simulation.core.SimulationConfig;
 import simulation.asset.AssetManager;
-import simulation.holders.Address;
+import simulation.address.Address;
 import simulation.offer.*;
 import simulation.util.Constants;
 
