@@ -1,50 +1,35 @@
 package application.driver;
 
+import application.panels.MarketCreationPanelController;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.stage.Stage;
 import simulation.core.Simulation;
-import simulation.util.DataExporter;
+
+import java.io.IOException;
 
 public class Controller {
     private Simulation simulation;
 
     @FXML
-    private Label dayLabel;
+    private Button addMarketButton;
     @FXML
-    private Button startButton;
+    private Button addCompanyButton;
     @FXML
-    private Button dayButton;
-    @FXML
-    private Button stopButton;
+    private Button addAssetButton;
 
-    @FXML
-    public void initialize() {
-        this.dayButton.setDisable(true);
-        this.stopButton.setDisable(true);
-    }
-
-    public void onStartButtonClick() {
-        this.simulation = new Simulation();
-        this.simulation.start();
-        this.startButton.setDisable(true);
-        this.dayButton.setDisable(false);
-        this.stopButton.setDisable(false);
-    }
-
-    public void onDayButtonClick() {
-        this.simulation.runSimulationDay();
-        var text = this.dayLabel.getText();
-        var number = Integer.parseInt(text.split(" ")[1]);
-        this.dayLabel.setText("Day: " + (++number));
-    }
-
-    public void onStopButtonClick() {
-        this.simulation.stop();
-        DataExporter dataEx = new DataExporter();
-        dataEx.exportLabeledData(this.simulation.getAssetManager().getAllAssetsPriceHistory(), "GUI_export_test.csv");
-        this.dayButton.setDisable(true);
-        this.stopButton.setDisable(true);
-        this.startButton.setDisable(false);
+    public void onAddMarketButtonClick() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(MarketCreationPanelController.class.getResource("market_creation_panel.fxml"));
+        Scene mainScene = new Scene(fxmlLoader.load());
+        MarketCreationPanelController controller = (MarketCreationPanelController) fxmlLoader.getController();
+        controller.passSimulationReference(simulation);
+        Stage stage = new Stage();
+        stage.setTitle("Market Creation Panel");
+        stage.setScene(mainScene);
+        stage.getIcons().add(new Image(Application.class.getResource("icon.ico").toString()));
+        stage.show();
     }
 }

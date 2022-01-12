@@ -41,4 +41,11 @@ public class StockMarket extends Market {
     public String getAssetTradingCurrency(String assetType) {
         return this.tradingCurrency;
     }
+
+    public void setMarketCurrency(String currency) {
+        if (this.assetManager.doesAssetExist(currency, AssetCategory.CURRENCY)) {
+            throw new IllegalArgumentException("Non-existent currency passed as a market currency: " + currency);
+        }
+        this.tradingCurrency = currency;
+    }
 }

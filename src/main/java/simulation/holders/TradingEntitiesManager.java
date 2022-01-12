@@ -23,7 +23,7 @@ public final class TradingEntitiesManager {
                 return entity;
             }
         }
-        throw new IllegalStateException("Invalid entity ID passed to the manager!: " + id);
+        throw new IllegalArgumentException("Invalid entity ID passed to the manager!: " + id);
     }
 
     public void processEndDay() {
@@ -78,5 +78,14 @@ public final class TradingEntitiesManager {
     public void startEntities() {
         for (var entity : entities)
             entity.start();
+    }
+
+    public void autoCreateInvestors(boolean run) {
+        int neededInvestors = this.assetManager.getNumberOfAssetTypes() * 10;
+        for (var entity : entities)
+            neededInvestors -= entity instanceof Investor ? 1 : 0;
+        for (int i = 0; i < neededInvestors; i++) {
+            var investor = run ? this.createInvestorAndRun() : this.createNewInvestor();
+        }
     }
 }

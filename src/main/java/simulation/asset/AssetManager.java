@@ -106,4 +106,8 @@ public final class AssetManager {
         return currencyName.equals(Constants.DEFAULT_CURRENCY) ? 1.0
                 : this.getAssetData(currencyName).getOpeningPrice();
     }
+
+    public int getNumberOfAssetTypes() {
+        return this.allAssets.size();
+    }
 }

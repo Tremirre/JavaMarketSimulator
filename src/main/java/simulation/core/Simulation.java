@@ -23,10 +23,9 @@ public class Simulation {
         this.markets = new HashSet<>();
         this.assetManager = new AssetManager();
         this.tradingEntitiesManager = new TradingEntitiesManager(this.assetManager, this.markets);
-        this.setupRandomMarket(MarketType.CURRENCIES_MARKET);
-        this.setupRandomMarket(MarketType.COMMODITIES_MARKET);
-        this.setupRandomMarket(MarketType.STOCK_MARKET);
-        this.setupInvestors();
+        this.setupRandomMarket(MarketType.CURRENCIES_MARKET, false);
+        this.setupRandomMarket(MarketType.COMMODITIES_MARKET, false);
+        this.setupRandomMarket(MarketType.STOCK_MARKET, false);
     }
 
     public void runSimulationDay() {
@@ -42,13 +41,6 @@ public class Simulation {
             market.updateOffers();
             market.removeOutdatedOffers();
         }
-        /*if (day == 1) {
-            SimulationConfig.getInstance().setBullProportion(0.65);
-        } else if (day == Constants.YEAR) {
-            SimulationConfig.getInstance().setBullProportion(0.35);
-        } else if (day == Constants.YEAR + 100) {
-            SimulationConfig.getInstance().setBullProportion(0.65);
-        }*/
         this.assetManager.processEndDay();
         this.tradingEntitiesManager.processEndDay();
     }
@@ -63,8 +55,14 @@ public class Simulation {
         GlobalHoldersLock.writeLock();
     }
 
-    private void setupRandomMarket(MarketType type) {
-        this.markets.add(new RandomMarketFactory(this.assetManager, this.tradingEntitiesManager).createMarket(type));
+    private void setupRandomMarket(MarketType type, boolean runNewInvestors) {
+        this.addNewMarket(new RandomMarketFactory(this.assetManager, this.tradingEntitiesManager).createMarket(type),
+                runNewInvestors);
+    }
+
+    public void addNewMarket(Market market, boolean runNewInvestors) {
+        this.markets.add(market);
+        this.tradingEntitiesManager.autoCreateInvestors(runNewInvestors);
     }
 
     private void setupInvestors() {

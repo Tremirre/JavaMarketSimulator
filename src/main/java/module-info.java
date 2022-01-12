@@ -11,5 +11,7 @@ module bst.marketsimulator {
     requires eu.hansolo.tilesfx;
 
     opens application.driver to javafx.fxml;
+    opens application.panels to javafx.fxml;
     exports application.driver;
+    exports application.panels;
 }

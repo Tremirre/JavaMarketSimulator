@@ -19,6 +19,17 @@ public class InformedMarketFactory extends MarketFactory{
 
     @Override
     public Market createMarket(MarketType type) {
-        return null;
+        switch(type) {
+            case CURRENCIES_MARKET -> {
+                return new CurrenciesMarket(assetManager, this.name, this.buyFee, this.sellFee, this.address);
+            }
+            case COMMODITIES_MARKET -> {
+                return new CommoditiesMarket(assetManager, this.name, this.buyFee, this.sellFee, this.address);
+            }
+            case STOCK_MARKET -> {
+                return new StockMarket(assetManager, this.name, this.buyFee, this.sellFee, null, this.address);
+            }
+            default -> throw new IllegalStateException();
+        }
     }
 }
