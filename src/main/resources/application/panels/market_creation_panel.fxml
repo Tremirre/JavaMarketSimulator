@@ -46,7 +46,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" prefHeight="232.0" prefWidth="478.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.panels.MarketCreationPanelController">
+<VBox alignment="CENTER" prefHeight="381.0" prefWidth="478.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.panels.MarketCreationPanelController">
    <children>
       <Label alignment="CENTER" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="20.0" prefWidth="450.0" text="Create Market">
          <font>
@@ -86,7 +86,26 @@
             <TextField fx:id="buyFeeField" prefHeight="25.0" prefWidth="50.0" />
          </children>
       </HBox>
-      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="30.0">
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="5.0">
+         <children>
+            <Label prefHeight="17.0" prefWidth="50.0" text="Country:" />
+            <TextField fx:id="countryField" />
+            <Region prefHeight="42.0" prefWidth="45.0" />
+            <Label text="City:" />
+            <TextField fx:id="cityField" />
+         </children>
+      </HBox>
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="6.0">
+         <children>
+            <Label text="Postal Code:" />
+            <TextField fx:id="postalCodeField" prefHeight="25.0" prefWidth="64.0" />
+            <Label text="Street:" />
+            <TextField fx:id="streetField" />
+            <Label text="Building no.:" />
+            <TextField fx:id="buildingNumberField" prefHeight="25.0" prefWidth="34.0" />
+         </children>
+      </HBox>
+      <HBox alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="200.0" spacing="30.0">
          <children>
             <VBox alignment="CENTER" prefHeight="100.0" prefWidth="121.0" spacing="10.0">
                <children>
@@ -94,12 +113,11 @@
                   <ComboBox fx:id="assetComboBox" prefWidth="150.0" promptText="Choose asset" />
                </children>
             </VBox>
-            <ListView fx:id="assetListView" prefHeight="200.0" prefWidth="200.0">
+            <ListView fx:id="assetListView" prefHeight="100.0" prefWidth="260.0">
                <contextMenu>
                   <ContextMenu />
                </contextMenu>
             </ListView>
-            <Region prefHeight="100.0" prefWidth="85.0" />
          </children>
       </HBox>
       <HBox alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="200.0" spacing="100.0">

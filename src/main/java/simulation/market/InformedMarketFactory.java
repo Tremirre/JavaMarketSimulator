@@ -1,5 +1,6 @@
 package simulation.market;
 
+import simulation.asset.AssetCategory;
 import simulation.asset.AssetManager;
 import simulation.address.Address;
 
@@ -18,15 +19,15 @@ public class InformedMarketFactory extends MarketFactory{
     }
 
     @Override
-    public Market createMarket(MarketType type) {
-        switch(type) {
-            case CURRENCIES_MARKET -> {
+    public Market createMarket(AssetCategory category) {
+        switch(category) {
+            case CURRENCY -> {
                 return new CurrenciesMarket(assetManager, this.name, this.buyFee, this.sellFee, this.address);
             }
-            case COMMODITIES_MARKET -> {
+            case COMMODITY -> {
                 return new CommoditiesMarket(assetManager, this.name, this.buyFee, this.sellFee, this.address);
             }
-            case STOCK_MARKET -> {
+            case STOCK -> {
                 return new StockMarket(assetManager, this.name, this.buyFee, this.sellFee, null, this.address);
             }
             default -> throw new IllegalStateException();

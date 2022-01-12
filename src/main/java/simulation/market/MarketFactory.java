@@ -1,5 +1,6 @@
 package simulation.market;
 
+import simulation.asset.AssetCategory;
 import simulation.asset.AssetManager;
 
 public abstract class MarketFactory {
@@ -9,5 +10,5 @@ public abstract class MarketFactory {
         this.assetManager = assetManager;
     }
 
-    public abstract Market createMarket(MarketType type);
+    public abstract Market createMarket(AssetCategory category);
 }

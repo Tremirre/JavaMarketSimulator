@@ -107,7 +107,25 @@ public final class AssetManager {
                 : this.getAssetData(currencyName).getOpeningPrice();
     }
 
+    private boolean isAssetOfCategory(AssetData asset, AssetCategory category) {
+        switch (category) {
+            case CURRENCY -> {return asset instanceof CurrencyData;}
+            case COMMODITY -> {return asset instanceof  CommodityData;}
+            case STOCK -> {return asset instanceof StockData;}
+            default -> throw new IllegalStateException();
+        }
+    }
+
     public int getNumberOfAssetTypes() {
         return this.allAssets.size();
+    }
+
+    public HashSet<String> getAssetsByCategory(AssetCategory category) {
+        HashSet<String> filteredAssets = new HashSet<>();
+        for (var entry : this.allAssets.entrySet()) {
+            if (this.isAssetOfCategory(entry.getValue(), category))
+                filteredAssets.add(entry.getKey());
+        }
+        return filteredAssets;
     }
 }

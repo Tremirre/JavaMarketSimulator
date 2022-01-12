@@ -1,10 +1,7 @@
 package simulation.market;
 
 import simulation.address.RandomAddressFactory;
-import simulation.asset.AssetManager;
-import simulation.asset.CurrencyData;
-import simulation.asset.InformedSupplementaryAssetFactory;
-import simulation.asset.RandomSupplementaryAssetFactory;
+import simulation.asset.*;
 import simulation.holders.TradingEntitiesManager;
 import simulation.util.RandomService;
 import simulation.util.ResourceHolder;
@@ -20,15 +17,15 @@ public class RandomMarketFactory extends MarketFactory implements Resourced {
     }
 
     @Override
-    public Market createMarket(MarketType type) {
+    public Market createMarket(AssetCategory category) {
         var rand = RandomService.getInstance();
         var name = (String) rand.sampleElement(resourceHolder.getMarketNames());
         var buyFee = 0.01 * rand.yieldRandomInteger(10) + 0.01;
         var sellFee = 0.01 * rand.yieldRandomInteger(10) + 0.01;
         var initialNumberOfAssets = rand.yieldRandomInteger(8) + 3;
         var address = new RandomAddressFactory().createAddress();
-        switch (type) {
-            case STOCK_MARKET -> {
+        switch (category) {
+            case STOCK -> {
                 var currency = (CurrencyRecord) rand.sampleElement(resourceHolder.getCurrencies().toArray());
                 if (currency == null) {
                     throw new RuntimeException("Run out of free random currencies");
@@ -55,14 +52,14 @@ public class RandomMarketFactory extends MarketFactory implements Resourced {
                 newMarket.addStockMarketIndex(idx);
                 return newMarket;
             }
-            case CURRENCIES_MARKET -> {
+            case CURRENCY -> {
                 var newMarket = new CurrenciesMarket(this.assetManager, name, buyFee, sellFee, address);
                 for (int i = 0; i < initialNumberOfAssets; i++) {
                     newMarket.addNewAsset(new RandomSupplementaryAssetFactory(this.assetManager).createCurrencyAsset());
                 }
                 return newMarket;
             }
-            case COMMODITIES_MARKET -> {
+            case COMMODITY -> {
                 var newMarket = new CommoditiesMarket(this.assetManager, name, buyFee, sellFee, address);
                 for (int i = 0; i < initialNumberOfAssets; i++) {
                     newMarket.addNewAsset(new RandomSupplementaryAssetFactory(this.assetManager).createCommodityAsset());

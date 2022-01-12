@@ -1,17 +1,13 @@
 package simulation.core;
 
+import simulation.asset.AssetCategory;
 import simulation.asset.AssetManager;
-import simulation.asset.RandomSupplementaryAssetFactory;
-import simulation.holders.RandomHolderFactory;
 import simulation.holders.TradingEntitiesManager;
 import simulation.market.Market;
-import simulation.market.MarketType;
 import simulation.market.RandomMarketFactory;
 import simulation.util.Constants;
 import simulation.util.GlobalHoldersLock;
-import simulation.util.ResourceHolder;
 
-import java.io.IOException;
 import java.util.HashSet;
 
 public class Simulation {
@@ -23,9 +19,6 @@ public class Simulation {
         this.markets = new HashSet<>();
         this.assetManager = new AssetManager();
         this.tradingEntitiesManager = new TradingEntitiesManager(this.assetManager, this.markets);
-        this.setupRandomMarket(MarketType.CURRENCIES_MARKET, false);
-        this.setupRandomMarket(MarketType.COMMODITIES_MARKET, false);
-        this.setupRandomMarket(MarketType.STOCK_MARKET, false);
     }
 
     public void runSimulationDay() {
@@ -55,8 +48,8 @@ public class Simulation {
         GlobalHoldersLock.writeLock();
     }
 
-    private void setupRandomMarket(MarketType type, boolean runNewInvestors) {
-        this.addNewMarket(new RandomMarketFactory(this.assetManager, this.tradingEntitiesManager).createMarket(type),
+    private void setupRandomMarket(AssetCategory category, boolean runNewInvestors) {
+        this.addNewMarket(new RandomMarketFactory(this.assetManager, this.tradingEntitiesManager).createMarket(category),
                 runNewInvestors);
     }
 
@@ -76,4 +69,22 @@ public class Simulation {
     }
 
     public TradingEntitiesManager getEntitiesManager() { return this.tradingEntitiesManager; }
+
+    public Market getMarketByName(String name) {
+        for (var market : this.markets) {
+            if (market.getName().equals(name)) {
+                return market;
+            }
+        }
+        throw new IllegalArgumentException("Invalid market name: " + name);
+    }
+
+    public boolean doesMarketExist(String name) {
+        for (var market : this.markets) {
+            if (market.getName().equals(name)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
