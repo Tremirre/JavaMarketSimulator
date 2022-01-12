@@ -47,22 +47,20 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" minHeight="380.0" minWidth="520.0" prefHeight="380.0" prefWidth="520.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.panels.MarketCreationPanelController">
+<VBox alignment="CENTER" minHeight="380.0" minWidth="520.0" prefHeight="380.0" prefWidth="520.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.panels.AssetCreationPanelController">
    <children>
-      <Label alignment="CENTER" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="20.0" prefWidth="450.0" text="Create Market">
+      <Label alignment="CENTER" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="20.0" prefWidth="450.0" text="Create Non-stock Asset">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
       <HBox alignment="CENTER" fillHeight="false" maxHeight="100.0" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="200.0" spacing="30.0">
          <children>
-            <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="50.0" prefWidth="129.0" text="Choose Market Type:" />
-            <RadioButton fx:id="stockRadioButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onRadioButtonChange" prefHeight="69.0" prefWidth="87.0" selected="true" text="Stock">
+            <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="50.0" prefWidth="129.0" text="Choose Asset Type:" />
+            <RadioButton fx:id="currencyRadioButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onRadioButtonChange" prefHeight="62.0" prefWidth="87.0" selected="true" text="Currency">
                <toggleGroup>
                   <ToggleGroup fx:id="marketType" />
-               </toggleGroup>
-            </RadioButton>
-            <RadioButton fx:id="currencyRadioButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onRadioButtonChange" prefHeight="62.0" prefWidth="87.0" text="Currency" toggleGroup="$marketType" />
+               </toggleGroup></RadioButton>
             <RadioButton fx:id="commodityRadioButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onRadioButtonChange" prefHeight="60.0" prefWidth="87.0" text="Commodity" toggleGroup="$marketType" />
          </children>
          <VBox.margin>
@@ -72,52 +70,47 @@
             <Insets right="10.0" />
          </padding>
       </HBox>
-      <HBox alignment="CENTER" maxHeight="40.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="200.0" spacing="5.0">
+      <HBox alignment="CENTER" maxHeight="40.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="509.0" spacing="5.0">
          <VBox.margin>
             <Insets bottom="2.0" left="10.0" right="10.0" top="2.0" />
          </VBox.margin>
          <children>
-            <Label prefHeight="50.0" prefWidth="41.0" text="Prefix:" />
+            <Label prefHeight="50.0" prefWidth="41.0" text="Name:" />
             <TextField fx:id="nameField" prefHeight="25.0" prefWidth="120.0">
                <tooltip>
                   <Tooltip text="Prefix market name, i.e. if you input &quot;Super&quot;, the markets name will be &quot;Super [MARKET TYPE] Market of [MARKET CITY]&quot;" />
                </tooltip></TextField>
-            <Region prefHeight="40.0" prefWidth="36.0" />
-            <Label prefHeight="50.0" prefWidth="50.0" text="Sell fee:" />
-            <TextField fx:id="sellFeeField" prefHeight="25.0" prefWidth="50.0" />
-            <Region prefHeight="25.0" prefWidth="13.0" />
-            <Label prefHeight="77.0" prefWidth="53.0" text="Buy fee:" />
-            <TextField fx:id="buyFeeField" prefHeight="25.0" prefWidth="50.0" />
+            <Region prefHeight="40.0" prefWidth="176.0" />
+            <Label prefHeight="17.0" prefWidth="35.0" text="Rate:" />
+            <TextField fx:id="tateField" prefHeight="25.0" prefWidth="101.0" />
          </children>
       </HBox>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="5.0">
          <children>
-            <Label prefHeight="17.0" prefWidth="50.0" text="Country:" />
-            <TextField fx:id="countryField" />
-            <Region prefHeight="42.0" prefWidth="45.0" />
-            <Label text="City:" />
-            <TextField fx:id="cityField" />
+            <Label prefHeight="17.0" prefWidth="91.0" text="Trading Unit:" />
+            <ComboBox disable="true" prefHeight="25.0" prefWidth="119.0" promptText="Choose Unit" />
+            <Region prefHeight="41.0" prefWidth="67.0" />
+            <Label prefHeight="17.0" prefWidth="108.0" text="Trading Currency:" />
+            <ComboBox disable="true" prefWidth="150.0" promptText="Choose Currency" />
          </children>
       </HBox>
-      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="6.0">
+      <HBox alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
          <children>
-            <Label text="Postal Code:" />
-            <TextField fx:id="postalCodeField" prefHeight="25.0" prefWidth="64.0" />
-            <Label text="Street:" />
-            <TextField fx:id="streetField" />
-            <Label text="Building no.:" />
-            <TextField fx:id="buildingNumberField" prefHeight="25.0" prefWidth="39.0" />
-         </children>
-      </HBox>
-      <HBox alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="200.0" spacing="30.0">
-         <children>
-            <VBox alignment="CENTER" prefHeight="100.0" prefWidth="121.0" spacing="10.0">
+            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="26.0">
                <children>
-                  <Label prefHeight="34.0" prefWidth="100.0" text="Assets available on the market:" textAlignment="CENTER" wrapText="true" />
-                  <ComboBox fx:id="assetComboBox" prefWidth="150.0" promptText="Choose asset" />
+                  <Label text="Currency Stability:" />
+                  <TextField fx:id="stabilityField" />
                </children>
             </VBox>
-            <ListView fx:id="assetListView" prefHeight="100.0" prefWidth="260.0">
+            <Region prefHeight="100.0" prefWidth="60.0" />
+            <VBox alignment="CENTER" prefHeight="100.0" prefWidth="121.0" spacing="10.0">
+               <children>
+                  <Label prefHeight="34.0" prefWidth="100.0" text="Countries using the currency:" textAlignment="CENTER" wrapText="true" />
+                  <Region prefHeight="21.0" prefWidth="120.0" />
+                  <TextField fx:id="countryField" promptText="Input country" />
+               </children>
+            </VBox>
+            <ListView fx:id="countryListView" prefHeight="100.0" prefWidth="171.0">
                <contextMenu>
                   <ContextMenu />
                </contextMenu>

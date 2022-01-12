@@ -1,6 +1,5 @@
 package application.panels;
 
-import application.driver.MainController;
 import application.util.DoubleFormatter;
 import application.util.IntegerFormatter;
 import javafx.fxml.FXML;
@@ -17,13 +16,11 @@ import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.Locale;
 
-public class MarketCreationPanelController {
+public class MarketCreationPanelController extends CreationPanelController {
     @FXML
     private TextField buyFeeField;
     @FXML
     private TextField sellFeeField;
-    @FXML
-    private TextField nameField;
     @FXML
     private TextField countryField;
     @FXML
@@ -41,17 +38,6 @@ public class MarketCreationPanelController {
     @FXML
     private ComboBox<String> assetComboBox;
 
-    @FXML
-    private Button cancelButton;
-    @FXML
-    private Button createButton;
-    @FXML
-    private Button randomizeButton;
-
-
-    private Simulation simulation;
-    private MainController mainController;
-
     private AssetCategory readMarketTypeFromComboBox() {
         AssetCategory type;
         switch(((RadioButton) this.marketType.getSelectedToggle()).getText()) {
@@ -67,7 +53,6 @@ public class MarketCreationPanelController {
         this.buyFeeField.setTextFormatter(DoubleFormatter.createFormatter());
         this.sellFeeField.setTextFormatter(DoubleFormatter.createFormatter());
         this.buildingNumberField.setTextFormatter(IntegerFormatter.createFormatter());
-        this.assetComboBox.getItems().addAll(simulation.getAssetManager().getAssetsByCategory(this.readMarketTypeFromComboBox()));
         //this.createButton.setDisable(true);
         /*Validator validator = new Validator();
         validator.createCheck()
@@ -123,16 +108,13 @@ public class MarketCreationPanelController {
         this.buildingNumberField.setText(String.valueOf(address.getBuildingNumber()));
     }
 
-    public void onCancelButtonClicked() {
-        Stage stage = (Stage) this.cancelButton.getScene().getWindow();
-        stage.close();
+    public void onRadioButtonChange() {
+        this.assetComboBox.getItems().addAll(simulation.getAssetManager().getAssetsByCategory(this.readMarketTypeFromComboBox()));
+        this.assetListView.getItems().clear();
     }
 
     public void passSimulationReference(Simulation simulation) {
-        this.simulation = simulation;
-    }
-
-    public void passMainControllerReference(MainController controller) {
-        this.mainController = controller;
+        super.passSimulationReference(simulation);
+        this.assetComboBox.getItems().addAll(simulation.getAssetManager().getAssetsByCategory(this.readMarketTypeFromComboBox()));
     }
 }

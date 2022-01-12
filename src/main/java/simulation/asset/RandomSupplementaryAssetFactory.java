@@ -36,9 +36,6 @@ public class RandomSupplementaryAssetFactory extends SupplementaryAssetFactory i
         var rate = commodity.getInitialRate();
         var unit = commodity.getUnit();
         var currency = (CurrencyRecord) rand.sampleElement(resourceHolder.getCurrencies().toArray());
-        if (currency == null) {
-            throw new RuntimeException("Run out of free random currencies");
-        }
         currency.use();
         String currencyID;
         var currencyData = this.assetManager.findCurrencyByName(currency.getName());
