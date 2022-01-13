@@ -163,4 +163,11 @@ public class ResourceHolder {
     public void removeCompanyName(String name) {
         this.companyNames.remove(name);
     }
+
+    public void refresh() {
+        for (var currency : this.currencies)
+            currency.unUse();
+        for (var commodity : this.commodities)
+            commodity.unUse();
+    }
 }

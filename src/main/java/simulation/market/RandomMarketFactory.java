@@ -55,7 +55,13 @@ public class RandomMarketFactory extends MarketFactory implements Resourced {
             case CURRENCY -> {
                 var newMarket = new CurrenciesMarket(this.assetManager, name, buyFee, sellFee, address);
                 for (int i = 0; i < initialNumberOfAssets; i++) {
-                    newMarket.addNewAsset(new RandomSupplementaryAssetFactory(this.assetManager).createCurrencyAsset());
+                    var currency = new RandomSupplementaryAssetFactory(this.assetManager).createCurrencyAsset();
+                    if (currency == null) {
+                        currency = (String) rand.sampleElement(
+                                this.assetManager.getAssetsByCategory(AssetCategory.CURRENCY).toArray()
+                        );
+                    }
+                    newMarket.addNewAsset(currency);
                 }
                 return newMarket;
             }

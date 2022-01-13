@@ -17,7 +17,7 @@ public class RandomSupplementaryAssetFactory extends SupplementaryAssetFactory i
         var rand = RandomService.getInstance();
         var currency = (CurrencyRecord) rand.sampleElement(resourceHolder.getUnusedCurrencies().toArray());
         if (currency == null) {
-            throw new RuntimeException("Run out of free random currencies");
+            return null;
         }
         currency.use();
         var rate = currency.getInitialRate();

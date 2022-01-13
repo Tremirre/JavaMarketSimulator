@@ -19,4 +19,12 @@ public class CommodityData extends AssetData {
     public String getTradingCurrency() {
         return this.tradingCurrency;
     }
+
+    public void setTradingCurrency(String currency) {
+        this.tradingCurrency = currency;
+    }
+
+    public void setTradingUnit(String unit) {
+        this.tradingUnit = unit;
+    }
 }

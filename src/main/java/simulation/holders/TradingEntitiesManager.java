@@ -88,4 +88,13 @@ public final class TradingEntitiesManager {
             var investor = run ? this.createInvestorAndRun() : this.createNewInvestor();
         }
     }
+
+    public HashSet<Investor> getInvestors() {
+        HashSet<Investor> investors = new HashSet<>();
+        for (var entity : entities) {
+            if (entity instanceof Investor)
+                investors.add((Investor) entity);
+        }
+        return investors;
+    }
 }

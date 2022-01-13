@@ -7,15 +7,17 @@ import simulation.market.Market;
 import simulation.market.RandomMarketFactory;
 import simulation.util.Constants;
 import simulation.util.GlobalHoldersLock;
+import simulation.util.Resourced;
 
 import java.util.HashSet;
 
-public class Simulation {
+public class Simulation implements Resourced {
     private final HashSet<Market> markets;
     private final AssetManager assetManager;
     private final TradingEntitiesManager tradingEntitiesManager;
 
     public Simulation() {
+        this.resourceHolder.refresh();
         this.markets = new HashSet<>();
         this.assetManager = new AssetManager();
         this.tradingEntitiesManager = new TradingEntitiesManager(this.assetManager, this.markets);
@@ -48,7 +50,7 @@ public class Simulation {
         GlobalHoldersLock.writeLock();
     }
 
-    private void setupRandomMarket(AssetCategory category, boolean runNewInvestors) {
+    public void setupRandomMarket(AssetCategory category, boolean runNewInvestors) {
         this.addNewMarket(new RandomMarketFactory(this.assetManager, this.tradingEntitiesManager).createMarket(category),
                 runNewInvestors);
     }
@@ -58,17 +60,15 @@ public class Simulation {
         this.tradingEntitiesManager.autoCreateInvestors(runNewInvestors);
     }
 
-    private void setupInvestors() {
-        for (int i = 0; i < 400; i++) {
-            this.tradingEntitiesManager.createNewInvestor();
-        }
-    }
-
     public AssetManager getAssetManager() {
         return this.assetManager;
     }
 
     public TradingEntitiesManager getEntitiesManager() { return this.tradingEntitiesManager; }
+
+    public HashSet<Market> getMarkets() {
+        return this.markets;
+    }
 
     public Market getMarketByName(String name) {
         for (var market : this.markets) {

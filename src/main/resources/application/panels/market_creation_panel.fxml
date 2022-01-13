@@ -47,7 +47,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" minHeight="380.0" minWidth="520.0" prefHeight="380.0" prefWidth="520.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.panels.MarketCreationPanelController">
+<VBox alignment="CENTER" minHeight="380.0" minWidth="520.0" prefHeight="423.0" prefWidth="529.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.panels.MarketCreationPanelController">
    <children>
       <Label alignment="CENTER" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="20.0" prefWidth="450.0" text="Create Market">
          <font>
@@ -94,7 +94,7 @@
          <children>
             <Label prefHeight="17.0" prefWidth="50.0" text="Country:" />
             <TextField fx:id="countryField" />
-            <Region prefHeight="42.0" prefWidth="45.0" />
+            <Region prefHeight="41.0" prefWidth="57.0" />
             <Label text="City:" />
             <TextField fx:id="cityField" />
          </children>
@@ -122,6 +122,12 @@
                   <ContextMenu />
                </contextMenu>
             </ListView>
+         </children>
+      </HBox>
+      <HBox alignment="CENTER" minHeight="40.0" prefHeight="54.0" prefWidth="500.0" spacing="10.0">
+         <children>
+            <Label text="Choose market currency:" />
+            <ComboBox fx:id="currencyComboBox" prefWidth="150.0" promptText="Choose currency" />
          </children>
       </HBox>
       <HBox alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="200.0" spacing="100.0">

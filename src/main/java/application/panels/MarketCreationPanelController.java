@@ -4,12 +4,12 @@ import application.util.DoubleFormatter;
 import application.util.IntegerFormatter;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.stage.Stage;
 import simulation.address.Address;
 import simulation.address.RandomAddressFactory;
 import simulation.asset.AssetCategory;
 import simulation.core.Simulation;
 import simulation.market.InformedMarketFactory;
+import simulation.util.Constants;
 import simulation.util.RandomService;
 
 import java.text.DecimalFormat;
@@ -37,6 +37,8 @@ public class MarketCreationPanelController extends CreationPanelController {
     private ListView<String> assetListView;
     @FXML
     private ComboBox<String> assetComboBox;
+    @FXML
+    private ComboBox<String> currencyComboBox;
 
     private AssetCategory readMarketTypeFromComboBox() {
         AssetCategory type;
@@ -109,12 +111,17 @@ public class MarketCreationPanelController extends CreationPanelController {
     }
 
     public void onRadioButtonChange() {
-        this.assetComboBox.getItems().addAll(simulation.getAssetManager().getAssetsByCategory(this.readMarketTypeFromComboBox()));
+        var type = this.readMarketTypeFromComboBox();
+        this.assetComboBox.getItems().clear();
+        this.assetComboBox.getItems().addAll(simulation.getAssetManager().getAssetsByCategory(type));
         this.assetListView.getItems().clear();
+        this.currencyComboBox.setDisable(type != AssetCategory.STOCK);
     }
 
     public void passSimulationReference(Simulation simulation) {
         super.passSimulationReference(simulation);
         this.assetComboBox.getItems().addAll(simulation.getAssetManager().getAssetsByCategory(this.readMarketTypeFromComboBox()));
+        this.currencyComboBox.getItems().addAll(simulation.getAssetManager().getAssetsByCategory(AssetCategory.CURRENCY));
+        this.currencyComboBox.getItems().add(Constants.DEFAULT_CURRENCY);
     }
 }

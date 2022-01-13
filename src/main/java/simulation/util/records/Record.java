@@ -18,6 +18,8 @@ public abstract class Record {
         this.isUsed = true;
     }
 
+    public void unUse() { this.isUsed = false; }
+
     public String getName() {
         return name;
     }
