@@ -66,6 +66,12 @@ public class MainController {
             this.marketListView.getItems().add(market.getName());
     }
 
+    private void refreshSMIView() {
+        this.smiListView.getItems().clear();
+        for (var idx : this.simulation.getEntitiesManager().getStockMarketIndexes())
+            this.smiListView.getItems().add(idx.getName());
+    }
+
     private void refreshAssetView(AssetCategory category) {
         ListView<String> listView = this.categoryMapping.get(category);
         listView.getItems().clear();
@@ -77,6 +83,7 @@ public class MainController {
             this.refreshAssetView(category);
         this.refreshMarketView();
         this.refreshInvestorView();
+        this.refreshSMIView();
     }
 
     private void refreshInvestorView() {

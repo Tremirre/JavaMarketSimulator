@@ -118,6 +118,10 @@ public final class TradingEntitiesManager {
         throw new IllegalArgumentException("Invalid Stock Market Index name passed to TEM: " + name);
     }
 
+    public HashSet<StockMarketIndex> getStockMarketIndexes() {
+        return this.stockMarketIndexes;
+    }
+
     public HashSet<Investor> getInvestors() {
         HashSet<Investor> investors = new HashSet<>();
         for (var entity : entities) {

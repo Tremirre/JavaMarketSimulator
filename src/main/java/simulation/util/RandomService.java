@@ -5,10 +5,9 @@ import java.util.Random;
 public final class RandomService {
     private static RandomService instance;
     private final Random generator;
-    private static final int SEED = 1;
 
     private RandomService() {
-        this.generator = SEED >= 0 ? new Random(SEED) : new Random();
+        this.generator = Constants.RANDOM_SERVICE_SEED >= 0 ? new Random(Constants.RANDOM_SERVICE_SEED) : new Random();
     }
 
     public String yieldPostCode() {
