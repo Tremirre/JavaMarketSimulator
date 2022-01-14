@@ -18,7 +18,7 @@ public class Company extends AssetHolder {
     protected final String associatedAsset;
     protected final ArrayList<Integer> dailyTradingVolumes = new ArrayList<>();
     protected final ArrayList<Double> dailyTotalSales = new ArrayList<>();
-    protected int currentTradingVolume = 0; //number of transactions of stocks of that company
+    protected int currentTradingVolume = 0;
     protected double currentTotalSales = 0;
     protected int numberOfStocks;
 

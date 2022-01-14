@@ -4,6 +4,7 @@ import application.util.DoubleFormatter;
 import application.util.IntegerFormatter;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import net.synedra.validatorfx.Validator;
 import simulation.address.Address;
 import simulation.address.RandomAddressFactory;
 import simulation.asset.AssetCategory;
@@ -51,12 +52,8 @@ public class MarketCreationPanelController extends CreationPanelController {
         return type;
     }
 
-    public void initialize() {
-        this.buyFeeField.setTextFormatter(DoubleFormatter.createFormatter());
-        this.sellFeeField.setTextFormatter(DoubleFormatter.createFormatter());
-        this.buildingNumberField.setTextFormatter(IntegerFormatter.createFormatter());
-        //this.createButton.setDisable(true);
-        /*Validator validator = new Validator();
+    private void setupValidations() {
+        Validator validator = new Validator();
         validator.createCheck()
                 .dependsOn("buyField", buyFeeField.textProperty())
                 .withMethod(c -> {
@@ -72,8 +69,14 @@ public class MarketCreationPanelController extends CreationPanelController {
                     if (value > 1 || value < 0)
                         c.warn("Fee can only be between 0 and 1!");
                 }).decorates(sellFeeField).immediate();
+    }
 
-         */
+    public void initialize() {
+        this.buyFeeField.setTextFormatter(DoubleFormatter.createFormatter());
+        this.sellFeeField.setTextFormatter(DoubleFormatter.createFormatter());
+        this.buildingNumberField.setTextFormatter(IntegerFormatter.createFormatter());
+        //this.createButton.setDisable(true);
+
     }
 
     public void onCreateButtonClicked() {

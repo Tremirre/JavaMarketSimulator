@@ -1,4 +1,4 @@
-package application;
+package simulation;
 
 import simulation.core.Simulation;
 import simulation.util.Constants;

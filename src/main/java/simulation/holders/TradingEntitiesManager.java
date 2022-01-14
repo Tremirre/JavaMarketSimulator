@@ -35,21 +35,24 @@ public final class TradingEntitiesManager {
     }
 
     public Company createNewCompany() {
-        var newCompany = new RandomHolderFactory(this.assetManager).createCompany();
+        var newCompany = new RandomHolderFactory(this.getTotalNumberOfEntities(), this.assetManager)
+                .createCompany();
         newCompany.giveAccessToMarkets(this.availableMarkets);
         this.entities.add(newCompany);
         return newCompany;
     }
 
     public InvestmentFund createNewFund() {
-        var newFund = new RandomHolderFactory(this.assetManager).createInvestmentFund();
+        var newFund = new RandomHolderFactory(this.getTotalNumberOfEntities(), this.assetManager)
+                .createInvestmentFund();
         newFund.giveAccessToMarkets(this.availableMarkets);
         this.entities.add(newFund);
         return newFund;
     }
 
     public Investor createNewInvestor() {
-        var newInvestor = new RandomHolderFactory(this.assetManager).createInvestor();
+        var newInvestor = new RandomHolderFactory(this.getTotalNumberOfEntities(), this.assetManager)
+                .createInvestor();
         newInvestor.giveAccessToMarkets(this.availableMarkets);
         this.entities.add(newInvestor);
         return newInvestor;
@@ -129,5 +132,9 @@ public final class TradingEntitiesManager {
                 investors.add((Investor) entity);
         }
         return investors;
+    }
+
+    public int getTotalNumberOfEntities() {
+        return this.entities.size();
     }
 }

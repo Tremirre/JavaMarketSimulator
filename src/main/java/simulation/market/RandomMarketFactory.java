@@ -4,7 +4,6 @@ import simulation.address.RandomAddressFactory;
 import simulation.asset.*;
 import simulation.holders.TradingEntitiesManager;
 import simulation.util.RandomService;
-import simulation.util.ResourceHolder;
 import simulation.util.Resourced;
 import simulation.util.records.CurrencyRecord;
 

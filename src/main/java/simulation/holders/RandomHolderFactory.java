@@ -5,14 +5,12 @@ import simulation.asset.AssetManager;
 import simulation.holders.strategies.*;
 import simulation.util.Constants;
 import simulation.util.RandomService;
-import simulation.util.ResourceHolder;
 import simulation.util.Resourced;
 
 public class RandomHolderFactory extends HolderFactory implements Resourced {
-    private final AssetManager assetManager;
 
-    public RandomHolderFactory(AssetManager assetManager) {
-        this.assetManager = assetManager;
+    public RandomHolderFactory(int entitiesCount, AssetManager assetManager) {
+        super(entitiesCount, assetManager);
     }
 
     private InvestmentStrategy pickRandomStrategy(RandomService rand) {
@@ -35,7 +33,8 @@ public class RandomHolderFactory extends HolderFactory implements Resourced {
 
     @Override
     public Investor createInvestor() {
-        if (newThreadExceedsLimit())
+        int id = useID();
+        if (id == -1)
             return null;
         var rand = RandomService.getInstance();
         var funds = rand.yieldRandomGaussianNumber(Constants.INVESTOR_INITIAL_FUNDS_DEVIATION,
@@ -43,12 +42,13 @@ public class RandomHolderFactory extends HolderFactory implements Resourced {
         InvestmentStrategy strategy = this.pickRandomStrategy(rand);
         var name = (String) rand.sampleElement(resourceHolder.getNames());
         var surname = (String) rand.sampleElement(resourceHolder.getSurnames());
-        return new Investor(id++, funds, name, surname, strategy);
+        return new Investor(id, funds, name, surname, strategy);
     }
 
     @Override
     public Company createCompany() {
-        if (newThreadExceedsLimit())
+        int id = useID();
+        if (id == -1)
             return null;
         var rand = RandomService.getInstance();
         var date = rand.yieldDate();
@@ -67,12 +67,13 @@ public class RandomHolderFactory extends HolderFactory implements Resourced {
         var profit = rand.yieldRandomInteger(Constants.COMPANY_MAXIMAL_ADDITIONAL_PROFIT) - Constants.COMPANY_MINIMAL_PROFIT;
         var revenue = rand.yieldRandomInteger(Constants.COMPANY_MAXIMAL_ADDITIONAL_REVENUE) + Constants.COMPANY_MINIMAL_REVENUE;
         InvestmentStrategy strategy = new PassiveCompanyStrategy(this.assetManager);
-        return new Company(id++, initialStockSize, name, date, address, initialStockValue, profit, revenue, strategy);
+        return new Company(id, initialStockSize, name, date, address, initialStockValue, profit, revenue, strategy);
     }
 
     @Override
     public InvestmentFund createInvestmentFund() {
-        if (newThreadExceedsLimit())
+        int id = useID();
+        if (id == -1)
             return null;
         var rand = RandomService.getInstance();
         var date = rand.yieldDate();
@@ -86,7 +87,7 @@ public class RandomHolderFactory extends HolderFactory implements Resourced {
         var ownerSurname = (String) rand.sampleElement(resourceHolder.getSurnames());
         var initialBudget = rand.yieldRandomGaussianNumber(Constants.INVESTMENT_FUND_INITIAL_FUNDS_DEVIATION,
                 Constants.INVESTMENT_FUND_MEAN_INITIAL_FUNDS);
-        return new InvestmentFund(id++,
+        return new InvestmentFund(id,
                 initialStockSize,
                 date,
                 address,
