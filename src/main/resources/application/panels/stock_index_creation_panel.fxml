@@ -34,6 +34,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.ContextMenu?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
@@ -44,9 +45,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" minHeight="277.0" minWidth="520.0" prefHeight="343.0" prefWidth="520.0" spacing="20.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.panels.creative.CurrencyAssetCreationPanelController">
+<VBox alignment="CENTER" minHeight="277.0" minWidth="467.0" prefHeight="339.0" prefWidth="467.0" spacing="20.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.panels.creative.StockIndexCreationPanelController">
    <children>
-      <Label alignment="CENTER" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="44.0" prefWidth="500.0" text="Create Currency Asset">
+      <Label alignment="CENTER" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="44.0" prefWidth="500.0" text="Create Stock Market Index">
          <font>
             <Font size="14.0" />
          </font>
@@ -57,31 +58,23 @@
          </VBox.margin>
          <children>
             <Label prefHeight="50.0" prefWidth="41.0" text="Name:" />
-            <TextField fx:id="nameField" prefHeight="25.0" prefWidth="120.0">
+            <TextField fx:id="nameField" prefHeight="25.0" prefWidth="207.0">
                <tooltip>
                   <Tooltip text="Prefix market name, i.e. if you input &quot;Super&quot;, the markets name will be &quot;Super [MARKET TYPE] Market of [MARKET CITY]&quot;" />
                </tooltip></TextField>
-            <Region prefHeight="40.0" prefWidth="134.0" />
-            <Label prefHeight="17.0" prefWidth="35.0" text="Rate:" />
-            <TextField fx:id="rateField" prefHeight="25.0" prefWidth="101.0" />
+            <Region prefHeight="40.0" prefWidth="103.0" />
          </children>
       </HBox>
       <HBox alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
          <children>
-            <VBox alignment="BOTTOM_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
-               <children>
-                  <Label text="Currency Stability:" />
-                  <TextField fx:id="stabilityField" promptText="Input stability" />
-               </children>
-            </VBox>
             <Region prefHeight="100.0" prefWidth="43.0" />
-            <VBox alignment="BOTTOM_CENTER" prefHeight="100.0" prefWidth="121.0" spacing="10.0">
+            <VBox alignment="BOTTOM_CENTER" prefHeight="100.0" prefWidth="192.0" spacing="10.0">
                <children>
-                  <Label prefHeight="34.0" prefWidth="100.0" text="Countries using the currency:" textAlignment="CENTER" wrapText="true" />
-                  <TextField fx:id="countryField" promptText="Input country" />
+                  <Label alignment="TOP_CENTER" prefHeight="34.0" prefWidth="163.0" text="Companies in the index:" textAlignment="CENTER" wrapText="true" />
+                  <ComboBox fx:id="stockComboBox" onAction="#onStockComboBoxChanged" prefHeight="25.0" prefWidth="166.0" promptText="Choose stock asset" />
                </children>
             </VBox>
-            <ListView fx:id="countryListView" prefHeight="100.0" prefWidth="171.0">
+            <ListView fx:id="stockListView" prefHeight="100.0" prefWidth="285.0">
                <contextMenu>
                   <ContextMenu />
                </contextMenu>

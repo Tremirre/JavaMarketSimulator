@@ -1,7 +1,7 @@
 package application.driver;
 
-import application.panels.CreationPanelController;
-import application.panels.MarketCreationPanelController;
+import application.panels.ReferencingController;
+import application.panels.creative.MarketCreationPanelController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -45,7 +45,7 @@ public class MainController {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(source);
             Scene mainScene = new Scene(fxmlLoader.load());
-            CreationPanelController controller = fxmlLoader.getController();
+            ReferencingController controller = fxmlLoader.getController();
             controller.passSimulationReference(simulation);
             controller.passMainControllerReference(this);
             Stage stage = new Stage();
@@ -127,7 +127,12 @@ public class MainController {
     }
 
     public void onAddSMIButtonClicked() {
+        var source = MarketCreationPanelController.class.getResource("stock_index_creation_panel.fxml");
+        this.openNewWindow(source, "Stock Index Creation Panel");
+    }
 
+    public void newIndexAdded(String name) {
+        this.smiListView.getItems().add(name);
     }
 
     public void newMarketAdded(String marketName) {

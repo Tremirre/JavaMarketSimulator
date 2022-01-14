@@ -1,15 +1,18 @@
-package application.panels;
+package application.panels.creative;
 
+import application.panels.ReferencingController;
 import application.util.DoubleFormatter;
 import application.util.IntegerFormatter;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseButton;
 import net.synedra.validatorfx.Validator;
 import simulation.address.Address;
 import simulation.address.RandomAddressFactory;
 import simulation.asset.AssetCategory;
 import simulation.core.Simulation;
 import simulation.market.InformedMarketFactory;
+import simulation.market.StockMarket;
 import simulation.util.Constants;
 import simulation.util.RandomService;
 
@@ -17,7 +20,7 @@ import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.Locale;
 
-public class MarketCreationPanelController extends CreationPanelController {
+public class MarketCreationPanelController extends ReferencingController {
     @FXML
     private TextField buyFeeField;
     @FXML
@@ -75,11 +78,25 @@ public class MarketCreationPanelController extends CreationPanelController {
         this.buyFeeField.setTextFormatter(DoubleFormatter.createFormatter());
         this.sellFeeField.setTextFormatter(DoubleFormatter.createFormatter());
         this.buildingNumberField.setTextFormatter(IntegerFormatter.createFormatter());
-        //this.createButton.setDisable(true);
+        this.assetListView.setOnMouseClicked( me -> {
+            if (me.getButton() == MouseButton.SECONDARY) {
+                int index = this.assetListView.getSelectionModel().getSelectedIndex();
+                if (index >= 0) {
+                    this.assetListView.getItems().remove(index);
+                }
+            }
+        });
+    }
 
+    public void onAssetComboBoxChanged() {
+        String asset = this.assetComboBox.getValue();
+        if (!this.assetListView.getItems().contains(asset)) {
+            this.assetListView.getItems().add(asset);
+        }
     }
 
     public void onCreateButtonClicked() {
+        var type = this.readMarketTypeFromComboBox();
         var address = new Address(this.countryField.getText(),
                 this.cityField.getText(),
                 this.postalCodeField.getText(),
@@ -92,8 +109,15 @@ public class MarketCreationPanelController extends CreationPanelController {
                 Double.parseDouble(this.buyFeeField.getText()),
                 Double.parseDouble(this.sellFeeField.getText()))
                 .createMarket(this.readMarketTypeFromComboBox());
-        for (var assetType : this.assetListView.getItems())
-            newMarket.addNewAsset(assetType);
+        if (type != AssetCategory.STOCK) {
+            for (var assetType : this.assetListView.getItems())
+                newMarket.addNewAsset(assetType);
+        } else {
+            for (var idxName : this.assetListView.getItems()) {
+                var idx = this.simulation.getEntitiesManager().getIndexByName(idxName);
+                ((StockMarket) newMarket).addStockMarketIndex(idx);
+            }
+        }
         this.simulation.addNewMarket(newMarket);
         this.mainController.newMarketAdded(newMarket.getName());
     }
@@ -116,14 +140,25 @@ public class MarketCreationPanelController extends CreationPanelController {
     public void onRadioButtonChange() {
         var type = this.readMarketTypeFromComboBox();
         this.assetComboBox.getItems().clear();
-        this.assetComboBox.getItems().addAll(simulation.getAssetManager().getAssetsByCategory(type));
+        if (type != AssetCategory.STOCK) {
+            this.assetComboBox.getItems().addAll(simulation.getAssetManager().getAssetsByCategory(type));
+            this.currencyComboBox.setDisable(true);
+        }
+        else {
+            this.addStockMarketIndexesAsComboBoxOptions();
+            this.currencyComboBox.setDisable(false);
+        }
         this.assetListView.getItems().clear();
-        this.currencyComboBox.setDisable(type != AssetCategory.STOCK);
+    }
+
+    private void addStockMarketIndexesAsComboBoxOptions() {
+        for (var idx : this.simulation.getEntitiesManager().getStockMarketIndexes())
+            this.assetComboBox.getItems().add(idx.getName());
     }
 
     public void passSimulationReference(Simulation simulation) {
         super.passSimulationReference(simulation);
-        this.assetComboBox.getItems().addAll(simulation.getAssetManager().getAssetsByCategory(this.readMarketTypeFromComboBox()));
+        this.addStockMarketIndexesAsComboBoxOptions();
         this.currencyComboBox.getItems().addAll(simulation.getAssetManager().getAssetsByCategory(AssetCategory.CURRENCY));
         this.currencyComboBox.getItems().add(Constants.DEFAULT_CURRENCY);
     }

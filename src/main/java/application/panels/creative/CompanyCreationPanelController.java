@@ -1,5 +1,6 @@
-package application.panels;
+package application.panels.creative;
 
+import application.panels.ReferencingController;
 import javafx.fxml.FXML;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
@@ -16,7 +17,7 @@ import java.text.DecimalFormatSymbols;
 import java.time.LocalDate;
 import java.util.Locale;
 
-public class CompanyCreationPanelController extends CreationPanelController implements Resourced {
+public class CompanyCreationPanelController extends ReferencingController implements Resourced {
     @FXML
     private DatePicker datePicker;
     @FXML

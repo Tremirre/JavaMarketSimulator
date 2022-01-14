@@ -7,7 +7,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import simulation.core.Simulation;
 
-public abstract class CreationPanelController {
+public abstract class ReferencingController {
     protected Simulation simulation;
     protected MainController mainController;
 

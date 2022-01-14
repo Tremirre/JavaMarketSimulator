@@ -43,7 +43,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" minHeight="227.0" minWidth="520.0" prefHeight="227.0" prefWidth="520.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.panels.CommodityAssetCreationPanelController">
+<VBox alignment="CENTER" minHeight="227.0" minWidth="520.0" prefHeight="227.0" prefWidth="520.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.panels.creative.CommodityAssetCreationPanelController">
    <children>
       <Label alignment="TOP_CENTER" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="39.0" prefWidth="500.0" text="Create Commodity Asset">
          <font>

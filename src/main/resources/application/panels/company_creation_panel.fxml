@@ -43,7 +43,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" minHeight="338.0" minWidth="520.0" prefHeight="338.0" prefWidth="536.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.panels.CompanyCreationPanelController">
+<VBox alignment="CENTER" minHeight="338.0" minWidth="520.0" prefHeight="338.0" prefWidth="536.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.panels.creative.CompanyCreationPanelController">
    <children>
       <Label alignment="CENTER" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="509.0" text="Create Company (Stock)">
          <font>

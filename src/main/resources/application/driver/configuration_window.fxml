@@ -126,7 +126,7 @@
                         <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
                            <children>
                               <ListView fx:id="smiListView" />
-                              <Button fx:id="smiAddButton" mnemonicParsing="false" text="+" />
+                              <Button fx:id="smiAddButton" mnemonicParsing="false" onAction="#onAddSMIButtonClicked" text="+" />
                            </children>
                         </VBox>
                      </content>

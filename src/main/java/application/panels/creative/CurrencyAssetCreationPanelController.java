@@ -1,5 +1,6 @@
-package application.panels;
+package application.panels.creative;
 
+import application.panels.ReferencingController;
 import application.util.DoubleFormatter;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
@@ -18,7 +19,7 @@ import java.text.DecimalFormatSymbols;
 import java.util.HashSet;
 import java.util.Locale;
 
-public class CurrencyAssetCreationPanelController extends CreationPanelController implements Resourced {
+public class CurrencyAssetCreationPanelController extends ReferencingController implements Resourced {
 
     @FXML
     private TextField rateField;
