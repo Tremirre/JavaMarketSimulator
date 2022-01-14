@@ -2,6 +2,7 @@ package simulation.market;
 
 import simulation.address.RandomAddressFactory;
 import simulation.asset.*;
+import simulation.holders.RandomHolderFactory;
 import simulation.holders.TradingEntitiesManager;
 import simulation.util.RandomService;
 import simulation.util.Resourced;
@@ -26,6 +27,10 @@ public class RandomMarketFactory extends MarketFactory implements Resourced {
         switch (category) {
             case STOCK -> {
                 var currency = (CurrencyRecord) rand.sampleElement(resourceHolder.getCurrencies().toArray());
+                var factory = new RandomHolderFactory(
+                        this.tradingEntitiesManager.getTotalNumberOfEntities(),
+                        this.assetManager
+                );
                 if (currency == null) {
                     throw new RuntimeException("Run out of free random currencies");
                 }
@@ -45,10 +50,10 @@ public class RandomMarketFactory extends MarketFactory implements Resourced {
                         rand.yieldRandomString(4).toUpperCase() + (rand.yieldRandomInteger(100) + 10)
                 );
                 for (int i = 0; i < initialNumberOfAssets; i++) {
-                    idx.addCompany(this.tradingEntitiesManager.createNewCompany());
+                    idx.addCompany(this.tradingEntitiesManager.createNewCompany(factory));
                 }
                 for (int i = 0; i < initialNumberOfAssets / 2; i++) {
-                    idx.addCompany(this.tradingEntitiesManager.createNewFund());
+                    idx.addCompany(this.tradingEntitiesManager.createNewFund(factory));
                 }
                 newMarket.addStockMarketIndex(idx);
                 return newMarket;

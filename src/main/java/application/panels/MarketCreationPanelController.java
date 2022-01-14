@@ -94,7 +94,7 @@ public class MarketCreationPanelController extends CreationPanelController {
                 .createMarket(this.readMarketTypeFromComboBox());
         for (var assetType : this.assetListView.getItems())
             newMarket.addNewAsset(assetType);
-        this.simulation.addNewMarket(newMarket, false);
+        this.simulation.addNewMarket(newMarket);
         this.mainController.newMarketAdded(newMarket.getName());
     }
 

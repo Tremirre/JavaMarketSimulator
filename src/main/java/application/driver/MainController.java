@@ -97,7 +97,7 @@ public class MainController {
 
     public void onRandomizeSetupMenuSelected() {
         for (var category : AssetCategory.class.getEnumConstants())
-            this.simulation.setupRandomMarket(category,false);
+            this.simulation.setupRandomMarket(category);
         this.refreshListViews();
     }
 

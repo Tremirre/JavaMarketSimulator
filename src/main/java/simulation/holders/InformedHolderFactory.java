@@ -18,7 +18,7 @@ public class InformedHolderFactory extends HolderFactory {
     private double revenue;
     private InvestmentStrategy strategy;
 
-    protected InformedHolderFactory(int entitiesCount, AssetManager assetManager) {
+    public InformedHolderFactory(int entitiesCount, AssetManager assetManager) {
         super(entitiesCount, assetManager);
     }
 

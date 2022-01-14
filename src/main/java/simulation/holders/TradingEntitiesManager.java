@@ -34,45 +34,24 @@ public final class TradingEntitiesManager {
             entity.endDayEvent();
     }
 
-    public Company createNewCompany() {
-        var newCompany = new RandomHolderFactory(this.getTotalNumberOfEntities(), this.assetManager)
-                .createCompany();
+    public Company createNewCompany(HolderFactory factory) {
+        var newCompany = factory.createCompany();
         newCompany.giveAccessToMarkets(this.availableMarkets);
         this.entities.add(newCompany);
         return newCompany;
     }
 
-    public InvestmentFund createNewFund() {
-        var newFund = new RandomHolderFactory(this.getTotalNumberOfEntities(), this.assetManager)
-                .createInvestmentFund();
+    public InvestmentFund createNewFund(HolderFactory factory) {
+        var newFund = factory.createInvestmentFund();
         newFund.giveAccessToMarkets(this.availableMarkets);
         this.entities.add(newFund);
         return newFund;
     }
 
-    public Investor createNewInvestor() {
-        var newInvestor = new RandomHolderFactory(this.getTotalNumberOfEntities(), this.assetManager)
-                .createInvestor();
+    public Investor createNewInvestor(HolderFactory factory) {
+        var newInvestor = factory.createInvestor();
         newInvestor.giveAccessToMarkets(this.availableMarkets);
         this.entities.add(newInvestor);
-        return newInvestor;
-    }
-
-    public Company createCompanyAndRun() {
-        var newCompany = this.createNewCompany();
-        newCompany.start();
-        return newCompany;
-    }
-
-    public InvestmentFund createInvestmentFundAndRun() {
-        var newFund = this.createNewFund();
-        newFund.start();
-        return newFund;
-    }
-
-    public Investor createInvestorAndRun() {
-        var newInvestor = this.createNewInvestor();
-        newInvestor.start();
         return newInvestor;
     }
 
@@ -86,12 +65,12 @@ public final class TradingEntitiesManager {
             entity.start();
     }
 
-    public void autoCreateInvestors(boolean run) {
+    public void autoCreateInvestors() {
         int neededInvestors = this.assetManager.getNumberOfAssetTypes() * 10;
         for (var entity : entities)
             neededInvestors -= entity instanceof Investor ? 1 : 0;
         for (int i = 0; i < neededInvestors; i++) {
-            var investor = run ? this.createInvestorAndRun() : this.createNewInvestor();
+            this.createNewInvestor(new RandomHolderFactory(this.getTotalNumberOfEntities(), this.assetManager));
         }
     }
 

@@ -50,14 +50,13 @@ public class Simulation implements Resourced {
         GlobalHoldersLock.writeLock();
     }
 
-    public void setupRandomMarket(AssetCategory category, boolean runNewInvestors) {
-        this.addNewMarket(new RandomMarketFactory(this.assetManager, this.tradingEntitiesManager).createMarket(category),
-                runNewInvestors);
+    public void setupRandomMarket(AssetCategory category) {
+        this.addNewMarket(new RandomMarketFactory(this.assetManager, this.tradingEntitiesManager).createMarket(category));
     }
 
-    public void addNewMarket(Market market, boolean runNewInvestors) {
+    public void addNewMarket(Market market) {
         this.markets.add(market);
-        this.tradingEntitiesManager.autoCreateInvestors(runNewInvestors);
+        this.tradingEntitiesManager.autoCreateInvestors();
     }
 
     public AssetManager getAssetManager() {
