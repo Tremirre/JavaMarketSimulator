@@ -3,14 +3,17 @@ package simulation.holders;
 
 import simulation.asset.AssetManager;
 import simulation.market.Market;
+import simulation.market.StockMarketIndex;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 
 public final class TradingEntitiesManager {
     private final ArrayList<AssetHolder> entities = new ArrayList<>();
+    private final HashSet<StockMarketIndex> stockMarketIndexes = new HashSet<>();
     private final HashSet<Market> availableMarkets;
     private final AssetManager assetManager;
+
 
     public TradingEntitiesManager(AssetManager assetManager, HashSet<Market> markets) {
         this.assetManager = assetManager;
@@ -87,6 +90,32 @@ public final class TradingEntitiesManager {
         for (int i = 0; i < neededInvestors; i++) {
             var investor = run ? this.createInvestorAndRun() : this.createNewInvestor();
         }
+    }
+
+    public StockMarketIndex createNewStockIndex(String name) {
+        var newIdx = new StockMarketIndex(name);
+        this.stockMarketIndexes.add(newIdx);
+        return newIdx;
+    }
+
+    public void addNewIndex(StockMarketIndex idx) {
+        this.stockMarketIndexes.add(idx);
+    }
+
+    public boolean isIndexNameFree(String name) {
+        for (var idx : this.stockMarketIndexes) {
+            if (idx.getName().equals(name))
+                return false;
+        }
+        return true;
+    }
+
+    public StockMarketIndex getIndexByName(String name) {
+        for (var idx : this.stockMarketIndexes) {
+            if (idx.getName().equals(name))
+                return idx;
+        }
+        throw new IllegalArgumentException("Invalid Stock Market Index name passed to TEM: " + name);
     }
 
     public HashSet<Investor> getInvestors() {

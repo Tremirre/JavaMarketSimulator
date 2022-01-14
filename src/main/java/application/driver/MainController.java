@@ -60,12 +60,6 @@ public class MainController {
         }
     }
 
-    public void onRandomizeSetupMenuSelected() {
-        for (var category : AssetCategory.class.getEnumConstants())
-            this.simulation.setupRandomMarket(category,false);
-        this.refreshListViews();
-    }
-
     private void refreshMarketView() {
         this.marketListView.getItems().clear();
         for (var market : this.simulation.getMarkets())
@@ -94,6 +88,12 @@ public class MainController {
         }
     }
 
+    public void onRandomizeSetupMenuSelected() {
+        for (var category : AssetCategory.class.getEnumConstants())
+            this.simulation.setupRandomMarket(category,false);
+        this.refreshListViews();
+    }
+
     public void onClearSetupButtonClicked() {
         this.simulation = new Simulation();
         this.refreshListViews();
@@ -117,6 +117,10 @@ public class MainController {
     public void onAddStockButtonClicked() {
         var source = MarketCreationPanelController.class.getResource("company_creation_panel.fxml");
         this.openNewWindow(source, "Company Creation Panel");
+    }
+
+    public void onAddSMIButtonClicked() {
+
     }
 
     public void newMarketAdded(String marketName) {

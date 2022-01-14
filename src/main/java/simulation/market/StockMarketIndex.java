@@ -6,9 +6,11 @@ import java.util.ArrayList;
 import java.util.HashSet;
 
 public class StockMarketIndex {
+    private String name;
     private HashSet<Company> companies;
 
-    public StockMarketIndex() {
+    public StockMarketIndex(String name) {
+        this.name = name;
         this.companies = new HashSet<>();
     }
 
@@ -28,22 +30,15 @@ public class StockMarketIndex {
         return total;
     }
 
-    public HashSet<Company> getCompanies() {
-        return companies;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public static ArrayList<StockMarketIndex> splitCompaniesIntoIndexes(Company[] companies) {
-        ArrayList<StockMarketIndex> indexes = new ArrayList<>();
-        final int indexSize = 5;
-        int current = 0;
-        indexes.add(new StockMarketIndex());
-        for (Company company : companies) {
-            indexes.get(indexes.size() - 1).addCompany(company);
-            if (current++ >= indexSize) {
-                indexes.add(new StockMarketIndex());
-                current = 0;
-            }
-        }
-        return indexes;
+    public String getName() {
+        return this.name;
+    }
+
+    public HashSet<Company> getCompanies() {
+        return companies;
     }
 }

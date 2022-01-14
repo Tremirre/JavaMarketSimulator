@@ -42,7 +42,7 @@ public class RandomMarketFactory extends MarketFactory implements Resourced {
                     currencyID = currencyData.getUniqueIdentifyingName();
                 }
                 var newMarket = new StockMarket(this.assetManager, name, buyFee, sellFee, currencyID, address);
-                var idx = new StockMarketIndex();
+                var idx = this.tradingEntitiesManager.createNewStockIndex(rand.yieldRandomString(10));
                 for (int i = 0; i < initialNumberOfAssets; i++) {
                     idx.addCompany(this.tradingEntitiesManager.createNewCompany());
                 }
