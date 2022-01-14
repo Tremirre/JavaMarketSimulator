@@ -3,7 +3,7 @@ package simulation.util;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 public class GlobalHoldersLock {
-    private static final ReentrantReadWriteLock lock = new ReentrantReadWriteLock();
+    private static ReentrantReadWriteLock lock = new ReentrantReadWriteLock();
 
     public static void readLock() {
         lock.readLock().lock();

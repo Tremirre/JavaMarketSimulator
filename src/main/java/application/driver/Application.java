@@ -11,7 +11,7 @@ public class Application extends javafx.application.Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Application.class.getResource("configuration_window.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Application.class.getResource("main_window.fxml"));
         Scene mainScene = new Scene(fxmlLoader.load());
         stage.setTitle("Market Simulator");
         stage.setScene(mainScene);
@@ -21,5 +21,10 @@ public class Application extends javafx.application.Application {
 
     public static void main(String[] args) {
         launch();
+    }
+
+    @Override
+    public void stop() {
+        MainController.ensureSimulationStop();
     }
 }

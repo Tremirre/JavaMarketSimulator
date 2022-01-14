@@ -116,4 +116,11 @@ public final class TradingEntitiesManager {
     public int getTotalNumberOfEntities() {
         return this.entities.size();
     }
+
+    public void runIdleEntities() {
+        for (var entity : entities) {
+            if (!entity.isRunning())
+                entity.start();
+        }
+    }
 }

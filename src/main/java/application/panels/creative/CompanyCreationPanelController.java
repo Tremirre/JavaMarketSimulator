@@ -1,6 +1,8 @@
 package application.panels.creative;
 
 import application.panels.ReferencingController;
+import application.util.DoubleFormatter;
+import application.util.IntegerFormatter;
 import javafx.fxml.FXML;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
@@ -38,6 +40,14 @@ public class CompanyCreationPanelController extends ReferencingController implem
     private TextField shareValueField;
     @FXML
     private TextField shareCountField;
+
+    public void initialize() {
+        this.buildingNumberField.setTextFormatter(IntegerFormatter.createFormatter());
+        this.profitField.setTextFormatter(DoubleFormatter.createFormatter());
+        this.revenueField.setTextFormatter(DoubleFormatter.createFormatter());
+        this.shareValueField.setTextFormatter(DoubleFormatter.createFormatter());
+        this.shareCountField.setTextFormatter(IntegerFormatter.createFormatter());
+    }
 
     @Override
     public void onCreateButtonClicked() {

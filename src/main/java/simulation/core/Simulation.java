@@ -15,6 +15,8 @@ public class Simulation implements Resourced {
     private final HashSet<Market> markets;
     private final AssetManager assetManager;
     private final TradingEntitiesManager tradingEntitiesManager;
+    private boolean started = false;
+    private int day = 0;
 
     public Simulation() {
         this.resourceHolder.refresh();
@@ -24,6 +26,7 @@ public class Simulation implements Resourced {
     }
 
     public void runSimulationDay() {
+        this.day++;
         GlobalHoldersLock.writeUnlock();
         try {
             Thread.sleep(Constants.BASE_TRADING_TIME);
@@ -41,12 +44,13 @@ public class Simulation implements Resourced {
     }
 
     public void stop() {
-        this.tradingEntitiesManager.stopEntities();
         GlobalHoldersLock.writeUnlock();
+        this.tradingEntitiesManager.stopEntities();
     }
 
     public void start() {
         this.tradingEntitiesManager.startEntities();
+        this.started = true;
         GlobalHoldersLock.writeLock();
     }
 
@@ -85,5 +89,13 @@ public class Simulation implements Resourced {
             }
         }
         return false;
+    }
+
+    public boolean hasStarted() {
+        return this.started;
+    }
+
+    public int getSimulationDay() {
+        return this.day;
     }
 }

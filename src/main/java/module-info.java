@@ -16,4 +16,6 @@ module bst.marketsimulator {
     exports application.panels;
     opens application.panels.creative to javafx.fxml;
     exports application.panels.creative;
+    opens application.panels.informative to javafx.fxml;
+    exports application.panels.informative;
 }

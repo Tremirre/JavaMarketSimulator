@@ -109,6 +109,8 @@ public class MarketCreationPanelController extends ReferencingController {
                 Double.parseDouble(this.buyFeeField.getText()),
                 Double.parseDouble(this.sellFeeField.getText()))
                 .createMarket(this.readMarketTypeFromComboBox());
+        if (this.simulation.doesMarketExist(newMarket.getName()))
+            return;
         if (type != AssetCategory.STOCK) {
             for (var assetType : this.assetListView.getItems())
                 newMarket.addNewAsset(assetType);

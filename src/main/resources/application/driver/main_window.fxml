@@ -36,26 +36,33 @@
 <?import javafx.scene.control.Accordion?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.TextFlow?>
 
-<VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.driver.MainController">
+<VBox prefHeight="568.0" prefWidth="758.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.driver.MainController">
   <children>
     <MenuBar VBox.vgrow="NEVER">
       <menus>
-        <Menu mnemonicParsing="false" text="Options">
-          <items>
-                  <MenuItem mnemonicParsing="false" onAction="#onRandomizeSetupMenuSelected" text="Randomize Setup" />
-            <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Quit" />
-          </items>
-        </Menu>
+            <Menu mnemonicParsing="false" text="Export">
+              <items>
+                <MenuItem fx:id="priceExportMenuItem" mnemonicParsing="false" onAction="#onAssetPriceHistoryExport" text="Asset Price History" />
+              </items>
+            </Menu>
         <Menu mnemonicParsing="false" text="Help">
           <items>
             <MenuItem mnemonicParsing="false" text="About Creator Window" />
@@ -63,9 +70,9 @@
         </Menu>
       </menus>
     </MenuBar>
-      <SplitPane prefHeight="383.0" prefWidth="640.0">
+      <SplitPane dividerPositions="0.5">
          <items>
-            <Accordion minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="640.0">
+            <Accordion maxWidth="250.0" prefHeight="1000.0">
               <panes>
                 <TitledPane text="Markets">
                      <content>
@@ -79,7 +86,7 @@
                 </TitledPane>
                 <TitledPane text="Assets">
                      <content>
-                        <Accordion minHeight="320.0" minWidth="640.0">
+                        <Accordion minHeight="320.0" minWidth="100.0">
                           <panes>
                             <TitledPane text="Currencies">
                                  <content>
@@ -133,7 +140,7 @@
                   </TitledPane>
                   <TitledPane text="Investors">
                      <content>
-                        <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0">
+                        <VBox alignment="TOP_CENTER">
                            <children>
                               <ListView fx:id="investorListView" />
                            </children>
@@ -142,17 +149,75 @@
                   </TitledPane>
               </panes>
             </Accordion>
+            <VBox alignment="TOP_CENTER">
+               <children>
+                  <ToolBar prefHeight="40.0" prefWidth="200.0">
+                     <items>
+                        <Button fx:id="startButton" defaultButton="true" mnemonicParsing="false" onAction="#onStartButtonClicked" text="Start Simulation" />
+                        <Region minWidth="12.0" prefHeight="40.0" prefWidth="12.0" />
+                        <ToggleButton fx:id="pauseButton" mnemonicParsing="false" onAction="#onPauseButtonClicked" prefHeight="25.0" text="Pause Simulation" />
+                     </items>
+                     <padding>
+                        <Insets left="20.0" right="20.0" />
+                     </padding>
+                  </ToolBar>
+                  <Label prefHeight="34.0" prefWidth="156.0" text="General Simulation Info">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+                  <GridPane alignment="CENTER_LEFT" gridLinesVisible="true">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </padding>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <children>
+                        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="5.0">
+                           <children>
+                              <Label fx:id="simulationDayLabel" text="Simulation Day: -" />
+                           </children>
+                           <padding>
+                              <Insets left="10.0" right="10.0" />
+                           </padding>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnIndex="1">
+                           <children>
+                              <Label fx:id="entitiesCountLabel" text="Number of Entities: -" />
+                           </children>
+                           <padding>
+                              <Insets left="10.0" right="10.0" />
+                           </padding>
+                        </HBox>
+                     </children>
+                  </GridPane>
+               </children>
+            </VBox>
          </items>
       </SplitPane>
-      <ButtonBar prefHeight="40.0" prefWidth="200.0">
+      <ButtonBar minHeight="-Infinity" prefHeight="40.0" prefWidth="784.0">
         <buttons>
+            <Button fx:id="generateMarketsButton" cancelButton="true" mnemonicParsing="false" onAction="#onGenerateRandomMarketSelected" text="Generate Random Markets" />
             <Button fx:id="simulationConfigButton" mnemonicParsing="false" text="Simulation Config" />
-            <Button fx:id="clearSetupButton" mnemonicParsing="false" onAction="#onClearSetupButtonClicked" text="Clear Setup" />
-          <Button fx:id="simulationScreenButton" mnemonicParsing="false" text="Simulation Screen" />
+            <Button fx:id="resetButton" cancelButton="true" mnemonicParsing="false" onAction="#onResetButtonClicked" text="Reset Everything" />
         </buttons>
          <padding>
             <Insets left="40.0" right="40.0" />
          </padding>
       </ButtonBar>
+      <TextFlow prefHeight="200.0" prefWidth="200.0" />
   </children>
 </VBox>
