@@ -174,4 +174,12 @@ abstract public class Market {
     public String getAssetTradingCurrency(String assetType) {
         return Constants.DEFAULT_CURRENCY;
     }
+
+    public int getSellOfferCount() {
+        return this.sellOffers.size();
+    }
+
+    public int getBuyOfferCount() {
+        return this.buyOffers.size();
+    }
 }

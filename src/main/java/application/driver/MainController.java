@@ -1,7 +1,10 @@
 package application.driver;
 
 import application.panels.ReferencingController;
-import application.panels.creative.MarketCreationPanelController;
+import application.panels.Refreshable;
+import application.panels.creative.CreativePanelController;
+import application.panels.informative.AssetInfoPanelController;
+import application.panels.informative.InfoPanelController;
 import application.util.SimulationRunner;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -9,19 +12,22 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.MouseButton;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import simulation.asset.AssetCategory;
 import simulation.core.Simulation;
 import simulation.util.DataExporter;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.HashMap;
+import java.util.*;
 
 public class MainController {
     private static Simulation simulation;
     private static SimulationRunner simRunner;
-
+    private HashSet<Refreshable> infoControllers = new HashSet<>();
     @FXML
     private ListView<String> stockListView;
     @FXML
@@ -63,6 +69,54 @@ public class MainController {
 
     private HashMap<AssetCategory, ListView<String>> categoryMapping;
 
+    private void setListViewEvents() {
+        ArrayList<ListView<String>> listViews = new ArrayList<>();
+        ArrayList<Map.Entry<String, String>> windowsData = new ArrayList<>();
+        Collections.addAll(
+                listViews,
+                this.marketListView,
+                this.commodityListView,
+                this.currencyListView,
+                this.stockListView,
+                this.smiListView,
+                this.investorListView
+        );
+        Collections.addAll(
+                windowsData,
+                new AbstractMap.SimpleEntry<>("market_info_panel.fxml", "Market Info Panel"),
+                new AbstractMap.SimpleEntry<>("commodity_asset_info_panel.fxml", "Commodity Info Panel"),
+                new AbstractMap.SimpleEntry<>("currency_asset_info_panel.fxml", "Currency Info Panel"),
+                new AbstractMap.SimpleEntry<>("company_info_panel.fxml", "Stock (Company) Info Panel"),
+                new AbstractMap.SimpleEntry<>("stock_index_info_panel.fxml", "Stock Index Info Panel"),
+                new AbstractMap.SimpleEntry<>("investor_info_panel.fxml", "Investor Info Panel")
+        );
+        for (int i = 0; i < listViews.size(); i++) {
+            var currentListView = listViews.get(i);
+            var fileName = windowsData.get(i).getKey();
+            var title = windowsData.get(i).getValue();
+            currentListView.setOnMouseClicked( me -> {
+                        if (me.getButton() == MouseButton.PRIMARY) {
+                            int index = currentListView.getSelectionModel().getSelectedIndex();
+                            if (index >= 0) {
+                                var id = currentListView.getItems().get(index);
+                                this.onListViewClicked(fileName, title, id);
+                            }
+                        }
+                    }
+            );
+            currentListView.setOnKeyPressed(ke  -> {
+                        if (ke.getCode() == KeyCode.ENTER) {
+                            int index = currentListView.getSelectionModel().getSelectedIndex();
+                            if (index >= 0) {
+                                var id = currentListView.getItems().get(index);
+                                this.onListViewClicked(fileName, title, id);
+                            }
+                        }
+                    }
+            );
+        }
+    }
+
     public void initialize() {
         simulation = new Simulation();
         simRunner = new SimulationRunner(this, simulation);
@@ -71,6 +125,8 @@ public class MainController {
         this.categoryMapping.put(AssetCategory.COMMODITY, this.commodityListView);
         this.categoryMapping.put(AssetCategory.STOCK, this.stockListView);
         this.pauseButton.setDisable(true);
+
+        this.setListViewEvents();
     }
     private void disableSimulationModifyingElements(boolean disable) {
         this.marketAddButton.setDisable(disable);
@@ -81,14 +137,23 @@ public class MainController {
         this.generateMarketsButton.setDisable(disable);
         this.simulationConfigButton.setDisable(disable);
         this.resetButton.setDisable(disable);
-
+        this.priceExportMenuItem.setDisable(disable);
     }
 
-    private void openNewWindow(URL source, String title) {
+    private void openNewInfoWindow(URL source, String title, String id) {
+        var controller = (InfoPanelController) this.openNewWindow(source, title);
+        controller.getStage().addEventFilter(WindowEvent.WINDOW_CLOSE_REQUEST,
+                e -> this.infoControllers.remove(controller));
+        controller.passID(id);
+        this.infoControllers.add(controller);
+    }
+
+    private ReferencingController openNewWindow(URL source, String title) {
+        ReferencingController controller = null;
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(source);
             Scene mainScene = new Scene(fxmlLoader.load());
-            ReferencingController controller = fxmlLoader.getController();
+            controller = fxmlLoader.getController();
             controller.passSimulationReference(simulation);
             controller.passMainControllerReference(this);
             Stage stage = new Stage();
@@ -100,6 +165,7 @@ public class MainController {
             System.out.println("Failed to open window " + title);
             System.out.println(e.getMessage());
         }
+        return controller;
     }
 
     private void refreshMarketView() {
@@ -180,28 +246,33 @@ public class MainController {
     }
 
     public void onAddMarketButtonClicked() {
-        var source = MarketCreationPanelController.class.getResource("market_creation_panel.fxml");
+        var source = CreativePanelController.class.getResource("market_creation_panel.fxml");
         this.openNewWindow(source, "Market Creation Panel");
     }
 
     public void onAddCommodityButtonClicked() {
-        var source = MarketCreationPanelController.class.getResource("commodity_asset_creation_panel.fxml");
+        var source = CreativePanelController.class.getResource("commodity_asset_creation_panel.fxml");
         this.openNewWindow(source, "Commodity Creation Panel");
     }
 
     public void onAddCurrencyButtonClicked() {
-        var source = MarketCreationPanelController.class.getResource("currency_asset_creation_panel.fxml");
+        var source = CreativePanelController.class.getResource("currency_asset_creation_panel.fxml");
         this.openNewWindow(source, "Commodity Creation Panel");
     }
 
     public void onAddStockButtonClicked() {
-        var source = MarketCreationPanelController.class.getResource("company_creation_panel.fxml");
+        var source = CreativePanelController.class.getResource("company_creation_panel.fxml");
         this.openNewWindow(source, "Company Creation Panel");
     }
 
     public void onAddSMIButtonClicked() {
-        var source = MarketCreationPanelController.class.getResource("stock_index_creation_panel.fxml");
+        var source = CreativePanelController.class.getResource("stock_index_creation_panel.fxml");
         this.openNewWindow(source, "Stock Index Creation Panel");
+    }
+
+    public void onListViewClicked(String fxmlFileName, String title, String id) {
+        var source = AssetInfoPanelController.class.getResource(fxmlFileName);
+        this.openNewInfoWindow(source, title, id);
     }
 
     public void newIndexAdded(String name) {
@@ -223,6 +294,8 @@ public class MainController {
         Platform.runLater(() -> {
             this.simulationDayLabel.setText("Simulation Day: " + simulation.getSimulationDay());
             this.entitiesCountLabel.setText("Number of Entities: " + simulation.getEntitiesManager().getTotalNumberOfEntities());
+            for (var controller : this.infoControllers)
+                controller.refresh();
         });
     }
 

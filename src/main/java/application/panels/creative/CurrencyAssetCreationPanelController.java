@@ -1,6 +1,6 @@
 package application.panels.creative;
 
-import application.panels.ReferencingController;
+import application.util.DecimalDisplayFormat;
 import application.util.DoubleFormatter;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
@@ -19,7 +19,7 @@ import java.text.DecimalFormatSymbols;
 import java.util.HashSet;
 import java.util.Locale;
 
-public class CurrencyAssetCreationPanelController extends ReferencingController implements Resourced {
+public class CurrencyAssetCreationPanelController extends CreativePanelController implements Resourced {
 
     @FXML
     private TextField rateField;
@@ -64,8 +64,7 @@ public class CurrencyAssetCreationPanelController extends ReferencingController 
 
     @Override
     public void onRandomizeButtonClicked() {
-        DecimalFormatSymbols decimalFormatSymbols = new DecimalFormatSymbols(Locale.ENGLISH);
-        var decimal = new DecimalFormat("#0.00#", decimalFormatSymbols);
+        var decimal = new DecimalDisplayFormat(3);
         this.countryListView.getItems().clear();
         var rand = RandomService.getInstance();
         var currency = (CurrencyRecord) rand.sampleElement(this.resourceHolder.getCurrencies().toArray());

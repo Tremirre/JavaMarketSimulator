@@ -1,6 +1,5 @@
 package application.panels.creative;
 
-import application.panels.ReferencingController;
 import application.util.DoubleFormatter;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
@@ -14,7 +13,7 @@ import simulation.util.RandomService;
 import simulation.util.Resourced;
 import simulation.util.records.CommodityRecord;
 
-public class CommodityAssetCreationPanelController extends ReferencingController implements Resourced {
+public class CommodityAssetCreationPanelController extends CreativePanelController implements Resourced {
 
     @FXML
     private TextField rateField;

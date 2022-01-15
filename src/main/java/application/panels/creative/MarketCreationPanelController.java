@@ -1,6 +1,6 @@
 package application.panels.creative;
 
-import application.panels.ReferencingController;
+import application.util.DecimalDisplayFormat;
 import application.util.DoubleFormatter;
 import application.util.IntegerFormatter;
 import javafx.fxml.FXML;
@@ -20,7 +20,7 @@ import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.Locale;
 
-public class MarketCreationPanelController extends ReferencingController {
+public class MarketCreationPanelController extends CreativePanelController {
     @FXML
     private TextField buyFeeField;
     @FXML
@@ -125,8 +125,7 @@ public class MarketCreationPanelController extends ReferencingController {
     }
 
     public void onRandomizeButtonClicked() {
-        DecimalFormatSymbols decimalFormatSymbols = new DecimalFormatSymbols(Locale.ENGLISH);
-        var decimal = new DecimalFormat("#0.00#", decimalFormatSymbols);
+        var decimal = new DecimalDisplayFormat(3);
         var sellFee = RandomService.getInstance().yieldRandomGaussianNumber(0.01, 0.05);
         this.sellFeeField.setText(decimal.format(sellFee));
         var buyFee = RandomService.getInstance().yieldRandomGaussianNumber(0.01, 0.05);

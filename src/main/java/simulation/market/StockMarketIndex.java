@@ -22,7 +22,7 @@ public class StockMarketIndex {
         companies.remove(company);
     }
 
-    public double calculateMarketValue() {
+    public double calculateIndexValue() {
         double total = 0;
         for (var company : companies) {
             total += company.getCapital();

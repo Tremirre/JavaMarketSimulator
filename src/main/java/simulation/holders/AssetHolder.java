@@ -119,6 +119,14 @@ public abstract class AssetHolder extends Thread implements SellingEntity, Buyin
         return this.investmentBudget;
     }
 
+    public InvestmentStrategy getStrategy() {
+        return this.strategy;
+    }
+
+    public HashMap<String, Double> getOwnedAssets() {
+        return this.storedAssets;
+    }
+
     public int getID() {
         return this.id;
     }

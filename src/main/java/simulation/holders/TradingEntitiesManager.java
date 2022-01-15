@@ -66,7 +66,7 @@ public final class TradingEntitiesManager {
     }
 
     public void autoCreateInvestors() {
-        int neededInvestors = this.assetManager.getNumberOfAssetTypes() * 10;
+        int neededInvestors = this.assetManager.getNumberOfAssetTypes() * 16;
         for (var entity : entities)
             neededInvestors -= entity instanceof Investor ? 1 : 0;
         for (int i = 0; i < neededInvestors; i++) {

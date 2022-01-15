@@ -1,6 +1,6 @@
 package application.panels.creative;
 
-import application.panels.ReferencingController;
+import application.util.DecimalDisplayFormat;
 import application.util.DoubleFormatter;
 import application.util.IntegerFormatter;
 import javafx.fxml.FXML;
@@ -14,12 +14,9 @@ import simulation.util.Constants;
 import simulation.util.RandomService;
 import simulation.util.Resourced;
 
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
 import java.time.LocalDate;
-import java.util.Locale;
 
-public class CompanyCreationPanelController extends ReferencingController implements Resourced {
+public class CompanyCreationPanelController extends CreativePanelController implements Resourced {
     @FXML
     private DatePicker datePicker;
     @FXML
@@ -77,8 +74,7 @@ public class CompanyCreationPanelController extends ReferencingController implem
 
     @Override
     public void onRandomizeButtonClicked() {
-        DecimalFormatSymbols decimalFormatSymbols = new DecimalFormatSymbols(Locale.ENGLISH);
-        var decimal = new DecimalFormat("#0.00#", decimalFormatSymbols);
+        var decimal = new DecimalDisplayFormat(3);
         var rand = RandomService.getInstance();
         this.nameField.setText((String) rand.sampleElement(this.resourceHolder.getCompanyNames().toArray()));
         this.datePicker.setValue(LocalDate.parse(rand.yieldDate()));

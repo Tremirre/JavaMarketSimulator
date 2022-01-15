@@ -1,7 +1,6 @@
 package simulation.asset;
 
 import simulation.util.RandomService;
-import simulation.util.ResourceHolder;
 import simulation.util.Resourced;
 import simulation.util.records.CommodityRecord;
 import simulation.util.records.CurrencyRecord;
@@ -46,7 +45,7 @@ public class RandomSupplementaryAssetFactory extends SupplementaryAssetFactory i
                     .createCurrencyAsset();
             currencyData = (CurrencyData) this.assetManager.getAssetData(currencyID);
             currencyData.addCountriesOfUse(currency.getCountriesOfUse());
-            currencyData.setStability(rand.yieldRandomGaussianNumber(0.01, 0.5));
+            currencyData.setStability(rand.yieldRandomGaussianNumber(0.2, 0.5));
         } else {
             currencyID = currencyData.getUniqueIdentifyingName();
         }

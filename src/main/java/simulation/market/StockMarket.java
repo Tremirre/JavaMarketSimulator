@@ -48,4 +48,8 @@ public class StockMarket extends Market {
         }
         this.tradingCurrency = currency;
     }
+
+    public HashSet<StockMarketIndex> getStockMarketIndexes() {
+        return this.stockMarketIndexes;
+    }
 }

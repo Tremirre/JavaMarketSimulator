@@ -1,6 +1,5 @@
 package application.panels.creative;
 
-import application.panels.ReferencingController;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
@@ -9,7 +8,7 @@ import simulation.asset.AssetCategory;
 import simulation.core.Simulation;
 import simulation.util.RandomService;
 
-public class StockIndexCreationPanelController extends ReferencingController {
+public class StockIndexCreationPanelController extends CreativePanelController {
     @FXML
     private ComboBox<String> stockComboBox;
     @FXML
