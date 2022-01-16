@@ -32,4 +32,9 @@ public class CurrencyAssetInfoPanelController extends AssetInfoPanelController {
     public void refresh() {
         this.passID(this.assetData.getUniqueIdentifyingName());
     }
+
+    @Override
+    protected String getAssetID() {
+        return this.assetData.getUniqueIdentifyingName();
+    }
 }

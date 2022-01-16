@@ -2,6 +2,7 @@ package application.panels.informative;
 
 import application.panels.ReferencingController;
 import application.panels.Refreshable;
+import application.panels.plot.PlotPanelController;
 import application.util.DecimalDisplayFormat;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -19,7 +20,14 @@ public abstract class AssetInfoPanelController extends InfoPanelController imple
     @FXML
     protected Button plotButton;
 
-    public void onPlotButtonCLicked(){};
+    public void onPlotButtonClicked() {
+        this.mainController.openNewPlotWindow(
+                PlotPanelController.class.getResource("plot_panel.fxml"),
+                "Plot",
+                this.getAssetID());
+    }
+
+    protected abstract String getAssetID();
 
     protected void updateFields(AssetData assetData) {
         this.nameLabel.setText(assetData.getName());

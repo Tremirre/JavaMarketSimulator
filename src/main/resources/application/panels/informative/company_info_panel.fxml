@@ -199,7 +199,7 @@
       <HBox alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="200.0" spacing="100.0">
          <children>
             <Button fx:id="cancelButton" cancelButton="true" mnemonicParsing="false" onAction="#onCancelButtonClicked" text="Close" />
-            <Button fx:id="plotButton" mnemonicParsing="false" text="Plot prices" />
+            <Button fx:id="plotButton" mnemonicParsing="false" onAction="#onPlotButtonClicked" text="Plot prices" />
          </children>
       </HBox>
    </children>

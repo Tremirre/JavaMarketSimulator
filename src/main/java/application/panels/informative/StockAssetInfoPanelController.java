@@ -6,7 +6,6 @@ import javafx.scene.control.Label;
 import simulation.asset.StockData;
 
 public class StockAssetInfoPanelController extends AssetInfoPanelController {
-
     private StockData assetData;
 
     @FXML
@@ -54,5 +53,10 @@ public class StockAssetInfoPanelController extends AssetInfoPanelController {
     @Override
     public void refresh() {
         this.passID(this.assetData.getUniqueIdentifyingName());
+    }
+
+    @Override
+    protected String getAssetID() {
+        return this.assetData.getUniqueIdentifyingName();
     }
 }

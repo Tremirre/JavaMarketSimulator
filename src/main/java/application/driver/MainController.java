@@ -6,6 +6,7 @@ import application.panels.Refreshable;
 import application.panels.creative.CreativePanelController;
 import application.panels.informative.AssetInfoPanelController;
 import application.panels.informative.InfoPanelController;
+import application.panels.plot.PlotPanelController;
 import application.util.SimulationRunner;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -29,7 +30,7 @@ import java.util.*;
 public class MainController {
     private static Simulation simulation;
     private static SimulationRunner simRunner;
-    private HashSet<Refreshable> infoControllers = new HashSet<>();
+    private final HashSet<Refreshable> refreshableControllers = new HashSet<>();
     @FXML
     private ListView<String> stockListView;
     @FXML
@@ -146,15 +147,23 @@ public class MainController {
         this.priceExportMenuItem.setDisable(disable);
     }
 
-    private void openNewInfoWindow(URL source, String title, String id) {
-        var controller = (InfoPanelController) this.openNewWindow(source, title);
+    public void openNewPlotWindow(URL source, String title, String assetID) {
+        var controller = (PlotPanelController) this.openNewWindow(source, title);
         controller.getStage().addEventFilter(WindowEvent.WINDOW_CLOSE_REQUEST,
-                e -> this.infoControllers.remove(controller));
-        controller.passID(id);
-        this.infoControllers.add(controller);
+                e -> this.refreshableControllers.remove(controller));
+        controller.passAssetID(assetID);
+        this.refreshableControllers.add(controller);
     }
 
-    private ReferencingController openNewWindow(URL source, String title) {
+    public void openNewInfoWindow(URL source, String title, String id) {
+        var controller = (InfoPanelController) this.openNewWindow(source, title);
+        controller.getStage().addEventFilter(WindowEvent.WINDOW_CLOSE_REQUEST,
+                e -> this.refreshableControllers.remove(controller));
+        controller.passID(id);
+        this.refreshableControllers.add(controller);
+    }
+
+    public ReferencingController openNewWindow(URL source, String title) {
         ReferencingController controller = null;
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(source);
@@ -305,7 +314,7 @@ public class MainController {
         Platform.runLater(() -> {
             this.simulationDayLabel.setText("Simulation Day: " + simulation.getSimulationDay());
             this.entitiesCountLabel.setText("Number of Entities: " + simulation.getEntitiesManager().getTotalNumberOfEntities());
-            for (var controller : this.infoControllers)
+            for (var controller : this.refreshableControllers)
                 controller.refresh();
         });
     }
@@ -317,7 +326,7 @@ public class MainController {
     public void setOnCloseEvent() {
         this.startButton.getScene().getWindow().addEventFilter(WindowEvent.WINDOW_CLOSE_REQUEST,
             e -> {
-                for (var controller : this.infoControllers)
+                for (var controller : this.refreshableControllers)
                     controller.getStage().close();
             });
     }

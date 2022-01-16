@@ -27,4 +27,8 @@ public class CommodityAssetInfoPanelController extends AssetInfoPanelController 
         this.tradingUnitLabel.setText(this.assetData.getTradingUnit());
     }
 
+    @Override
+    protected String getAssetID() {
+        return this.assetData.getUniqueIdentifyingName();
+    }
 }
