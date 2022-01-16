@@ -29,7 +29,7 @@ public class Simulation implements Resourced {
         this.day++;
         GlobalHoldersLock.writeUnlock();
         try {
-            Thread.sleep(Constants.BASE_TRADING_TIME);
+            Thread.sleep((long) (Constants.BASE_TRADING_TIME * SimulationConfig.getInstance().getTimeMultiplier()));
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

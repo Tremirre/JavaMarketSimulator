@@ -7,6 +7,7 @@ public final class SimulationConfig {
     private final AtomicInteger maxTransactionsPerDayPerMarket = new AtomicInteger(100);
     private final AtomicInteger maxOfferAge = new AtomicInteger(10);
     private double bullProportion = 0.5;
+    private double timeMultiplier = 1.0;
 
     public int getMaxOfferAge() {
         return maxOfferAge.get();
@@ -41,5 +42,13 @@ public final class SimulationConfig {
             instance = new SimulationConfig();
         }
         return instance;
+    }
+
+    public synchronized double getTimeMultiplier() {
+        return this.timeMultiplier;
+    }
+
+    public synchronized void setTimeMultiplier(double timeMultiplier) {
+        this.timeMultiplier = Math.max(1, timeMultiplier);
     }
 }

@@ -1,5 +1,6 @@
 package simulation.holders;
 
+import simulation.core.SimulationConfig;
 import simulation.holders.strategies.InvestmentStrategy;
 import simulation.util.Constants;
 import simulation.util.GlobalHoldersLock;
@@ -29,8 +30,8 @@ public class Investor extends AssetHolder {
             this.generateOrders();
             GlobalHoldersLock.readUnlock();
             try {
-                Thread.sleep(RandomService.getInstance().yieldRandomInteger(Constants.INVESTOR_SLEEP_TIME_DEVIATION) +
-                        Constants.BASE_INVESTOR_SLEEP_TIME);
+                Thread.sleep((long) ((RandomService.getInstance().yieldRandomInteger(Constants.INVESTOR_SLEEP_TIME_DEVIATION) +
+                                        Constants.BASE_INVESTOR_SLEEP_TIME) * SimulationConfig.getInstance().getTimeMultiplier()));
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

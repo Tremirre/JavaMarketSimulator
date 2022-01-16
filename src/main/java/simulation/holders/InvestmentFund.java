@@ -1,6 +1,7 @@
 package simulation.holders;
 
 import simulation.address.Address;
+import simulation.core.SimulationConfig;
 import simulation.holders.strategies.InvestmentStrategy;
 import simulation.holders.strategies.PassiveCompanyStrategy;
 import simulation.market.Market;
@@ -124,9 +125,11 @@ public class InvestmentFund extends Company {
             }
             GlobalHoldersLock.readUnlock();
             try {
-                Thread.sleep(RandomService.getInstance().yieldRandomInteger(
-                        Constants.INVESTMENT_FUND_MAXIMAL_ADDITIONAL_SLEEP_TIME) +
-                        Constants.BASE_INVESTMENT_FUND_SLEEP_TIME);
+                Thread.sleep(
+                        (long) ((RandomService.getInstance().yieldRandomInteger(
+                                Constants.INVESTMENT_FUND_MAXIMAL_ADDITIONAL_SLEEP_TIME
+                        ) + Constants.BASE_INVESTMENT_FUND_SLEEP_TIME) * SimulationConfig.getInstance().getTimeMultiplier())
+                );
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

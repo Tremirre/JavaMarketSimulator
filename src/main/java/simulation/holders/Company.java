@@ -1,6 +1,7 @@
 package simulation.holders;
 
 import simulation.address.Address;
+import simulation.core.SimulationConfig;
 import simulation.holders.strategies.InvestmentStrategy;
 import simulation.market.Market;
 import simulation.util.Constants;
@@ -147,7 +148,7 @@ public class Company extends AssetHolder {
     public void run() {
         while (this.running) {
             try {
-                Thread.sleep(Constants.COMPANY_SLEEP_TIME);
+                Thread.sleep((long) (Constants.COMPANY_SLEEP_TIME * SimulationConfig.getInstance().getTimeMultiplier()));
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
