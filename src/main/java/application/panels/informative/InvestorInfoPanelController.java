@@ -6,6 +6,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import simulation.holders.Investor;
 
+import java.util.HashMap;
+
 public class InvestorInfoPanelController extends InfoPanelController{
     private Investor investor;
 
@@ -17,7 +19,7 @@ public class InvestorInfoPanelController extends InfoPanelController{
     private ListView<String> assetListView;
 
     @Override
-    public synchronized void refresh() {
+    public void refresh() {
         this.passID(String.valueOf(investor.getID()));
     }
 
@@ -27,7 +29,8 @@ public class InvestorInfoPanelController extends InfoPanelController{
         var decimal = new DecimalDisplayFormat(2);
         this.fundsLabel.setText(decimal.format(this.investor.getInvestmentBudget()));
         this.strategyLabel.setText(this.investor.getStrategy().getClass().getName().split("\\.")[3]);
-        for (var entry : this.investor.getOwnedAssets().entrySet()) {
+        var assets = new HashMap<>(this.investor.getOwnedAssets());
+        for (var entry : assets.entrySet()) {
             this.assetListView.getItems().add(
                     entry.getKey() + " - " + decimal.format(entry.getValue())
             );

@@ -21,6 +21,7 @@ public class CurrencyAssetInfoPanelController extends AssetInfoPanelController {
     }
 
     protected void updateFields(CurrencyData assetData) {
+        this.countryListView.getItems().clear();
         super.updateFields(assetData);
         this.stabilityLabel.setText(new DecimalDisplayFormat(3).format((this.assetData.getQualityMeasure())));
         for (var country : assetData.getCountriesOfUse())

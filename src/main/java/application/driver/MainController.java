@@ -1,5 +1,6 @@
 package application.driver;
 
+import application.panels.ConfigurationPanelController;
 import application.panels.ReferencingController;
 import application.panels.Refreshable;
 import application.panels.creative.CreativePanelController;
@@ -18,6 +19,7 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import simulation.asset.AssetCategory;
 import simulation.core.Simulation;
+import simulation.core.SimulationConfig;
 import simulation.util.DataExporter;
 
 import java.io.IOException;
@@ -66,6 +68,8 @@ public class MainController {
     private Button resetButton;
     @FXML
     private MenuItem priceExportMenuItem;
+    @FXML
+    private Slider timeMultiplierSlider;
 
     private HashMap<AssetCategory, ListView<String>> categoryMapping;
 
@@ -127,6 +131,8 @@ public class MainController {
         this.pauseButton.setDisable(true);
 
         this.setListViewEvents();
+        this.timeMultiplierSlider.valueProperty().addListener((observable, oldValue, newValue) ->
+            SimulationConfig.getInstance().setTimeMultiplier((Double) newValue));
     }
     private void disableSimulationModifyingElements(boolean disable) {
         this.marketAddButton.setDisable(disable);
@@ -270,6 +276,11 @@ public class MainController {
         this.openNewWindow(source, "Stock Index Creation Panel");
     }
 
+    public void onSimulationConfigButtonClicked() {
+        var source = ConfigurationPanelController.class.getResource("config_panel.fxml");
+        this.openNewWindow(source, "Configuration Panel");
+    }
+
     public void onListViewClicked(String fxmlFileName, String title, String id) {
         var source = AssetInfoPanelController.class.getResource(fxmlFileName);
         this.openNewInfoWindow(source, title, id);
@@ -301,5 +312,13 @@ public class MainController {
 
     public static void ensureSimulationStop() {
         simRunner.stopRunning();
+    }
+
+    public void setOnCloseEvent() {
+        this.startButton.getScene().getWindow().addEventFilter(WindowEvent.WINDOW_CLOSE_REQUEST,
+            e -> {
+                for (var controller : this.infoControllers)
+                    controller.getStage().close();
+            });
     }
 }

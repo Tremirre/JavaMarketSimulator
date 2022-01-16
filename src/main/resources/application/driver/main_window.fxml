@@ -41,6 +41,8 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.Slider?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.control.ToggleButton?>
@@ -54,9 +56,9 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.TextFlow?>
 
-<VBox prefHeight="568.0" prefWidth="758.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.driver.MainController">
+<VBox minWidth="800.0" prefHeight="571.0" prefWidth="789.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.driver.MainController">
   <children>
-    <MenuBar VBox.vgrow="NEVER">
+    <MenuBar minWidth="800.0" VBox.vgrow="NEVER">
       <menus>
             <Menu mnemonicParsing="false" text="Export">
               <items>
@@ -70,9 +72,9 @@
         </Menu>
       </menus>
     </MenuBar>
-      <SplitPane dividerPositions="0.5">
+      <SplitPane dividerPositions="0.5" minWidth="790.0">
          <items>
-            <Accordion maxWidth="250.0" prefHeight="1000.0">
+            <Accordion maxWidth="250.0" prefHeight="1000.0" prefWidth="173.0">
               <panes>
                 <TitledPane text="Markets">
                      <content>
@@ -149,13 +151,16 @@
                   </TitledPane>
               </panes>
             </Accordion>
-            <VBox alignment="TOP_CENTER">
+            <VBox alignment="TOP_CENTER" minWidth="600.0">
                <children>
-                  <ToolBar prefHeight="40.0" prefWidth="200.0">
+                  <ToolBar prefHeight="40.0" prefWidth="600.0">
                      <items>
                         <Button fx:id="startButton" defaultButton="true" mnemonicParsing="false" onAction="#onStartButtonClicked" text="Start Simulation" />
                         <Region minWidth="12.0" prefHeight="40.0" prefWidth="12.0" />
                         <ToggleButton fx:id="pauseButton" mnemonicParsing="false" onAction="#onPauseButtonClicked" prefHeight="25.0" text="Pause Simulation" />
+                        <Separator orientation="VERTICAL" prefHeight="0.0" prefWidth="13.0" />
+                        <Label text="Time multiplier:" />
+                        <Slider fx:id="timeMultiplierSlider" blockIncrement="0.1" majorTickUnit="5.0" max="20.0" min="1.0" minorTickCount="5" prefHeight="37.0" prefWidth="212.0" showTickLabels="true" showTickMarks="true" value="1.0" />
                      </items>
                      <padding>
                         <Insets left="20.0" right="20.0" />
@@ -208,10 +213,10 @@
             </VBox>
          </items>
       </SplitPane>
-      <ButtonBar minHeight="-Infinity" prefHeight="40.0" prefWidth="784.0">
+      <ButtonBar minHeight="-Infinity" minWidth="800.0" prefHeight="40.0" prefWidth="784.0">
         <buttons>
             <Button fx:id="generateMarketsButton" cancelButton="true" mnemonicParsing="false" onAction="#onGenerateRandomMarketSelected" text="Generate Random Markets" />
-            <Button fx:id="simulationConfigButton" mnemonicParsing="false" text="Simulation Config" />
+            <Button fx:id="simulationConfigButton" mnemonicParsing="false" onAction="#onSimulationConfigButtonClicked" text="Simulation Config" />
             <Button fx:id="resetButton" cancelButton="true" mnemonicParsing="false" onAction="#onResetButtonClicked" text="Reset Everything" />
         </buttons>
          <padding>

@@ -4,6 +4,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import simulation.Main;
 
 import java.io.IOException;
 
@@ -17,6 +18,7 @@ public class Application extends javafx.application.Application {
         stage.setScene(mainScene);
         stage.getIcons().add(new Image(Application.class.getResource("icon.ico").toString()));
         stage.show();
+        ((MainController) fxmlLoader.getController()).setOnCloseEvent();
     }
 
     public static void main(String[] args) {
