@@ -5,6 +5,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.input.MouseButton;
 import simulation.asset.AssetCategory;
+import simulation.asset.StockData;
 import simulation.core.Simulation;
 import simulation.util.RandomService;
 
@@ -37,7 +38,10 @@ public class StockIndexCreationPanelController extends CreativePanelController {
         String name = this.nameField.getText();
         if (!this.simulation.getEntitiesManager().isIndexNameFree(name))
             return;
-        this.simulation.getEntitiesManager().createNewStockIndex(name);
+        var idx = this.simulation.getEntitiesManager().createNewStockIndex(name);
+        for (var stockAsset : this.stockListView.getItems()) {
+            idx.addCompany(((StockData) this.simulation.getAssetManager().getAssetData(stockAsset)).getCompany());
+        }
         this.mainController.newIndexAdded(name);
     }
 

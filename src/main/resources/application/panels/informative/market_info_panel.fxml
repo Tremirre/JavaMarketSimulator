@@ -45,7 +45,7 @@
 
 <VBox alignment="CENTER" minHeight="227.0" minWidth="520.0" prefHeight="300.0" prefWidth="520.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.panels.informative.MarketInfoPanelController">
    <children>
-      <Label alignment="CENTER" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="29.0" prefWidth="500.0" text="Company (Stock) Info Panel">
+      <Label alignment="CENTER" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="29.0" prefWidth="500.0" text="Market Info Panel">
          <font>
             <Font size="14.0" />
          </font>
@@ -56,7 +56,7 @@
          </padding>
          <children>
             <Label text="Name:" />
-            <Label fx:id="nameLabel" text="-" />
+            <Label fx:id="nameLabel" prefHeight="17.0" prefWidth="409.0" text="-" />
          </children>
       </HBox>
       <GridPane minHeight="50.0">
@@ -168,9 +168,9 @@
             <Insets left="10.0" />
          </VBox.margin>
       </GridPane>
-      <HBox alignment="CENTER" spacing="100.0">
+      <HBox alignment="CENTER" spacing="50.0">
          <children>
-            <VBox alignment="TOP_CENTER" prefHeight="88.0" prefWidth="113.0">
+            <VBox alignment="TOP_CENTER" prefHeight="84.0" prefWidth="209.0">
                <children>
                   <Label text="Market Currency:" />
                   <Label fx:id="currencyLabel" text="-" />

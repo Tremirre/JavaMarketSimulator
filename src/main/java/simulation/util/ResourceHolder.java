@@ -6,8 +6,6 @@ import simulation.util.records.CurrencyRecord;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.URI;
-import java.nio.file.*;
 import java.util.*;
 
 public class ResourceHolder {
@@ -25,14 +23,6 @@ public class ResourceHolder {
     private String[] marketNames;
     private ArrayList<String> companyNames;
 
-    private FileSystem initFileSystem(URI uri) throws IOException {
-        try {
-            return FileSystems.newFileSystem(uri, Collections.emptyMap());
-        } catch (IllegalArgumentException e) {
-            return FileSystems.getDefault();
-        }
-    }
-
     private String writeFromFileToString(String path) {
         StringBuilder sb = new StringBuilder();
         try (BufferedReader br = new BufferedReader(
@@ -49,6 +39,9 @@ public class ResourceHolder {
             System.out.println("Failed to load from: " + path);
             System.out.println(e.getMessage());
             System.exit(1);
+        }
+        if (sb.charAt(sb.length() - 1) == '\n') {
+            sb.setLength(sb.length() - 1);
         }
         return sb.toString();
     }

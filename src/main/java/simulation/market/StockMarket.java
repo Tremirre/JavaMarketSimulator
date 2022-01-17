@@ -4,6 +4,7 @@ import simulation.asset.AssetCategory;
 import simulation.asset.AssetManager;
 import simulation.asset.StockData;
 import simulation.address.Address;
+import simulation.util.Constants;
 
 import java.util.HashSet;
 
@@ -43,7 +44,8 @@ public class StockMarket extends Market {
     }
 
     public void setMarketCurrency(String currency) {
-        if (this.assetManager.doesAssetExist(currency, AssetCategory.CURRENCY)) {
+        if (!this.assetManager.doesAssetExist(currency, AssetCategory.CURRENCY)
+                && !currency.equals(Constants.DEFAULT_CURRENCY)) {
             throw new IllegalArgumentException("Non-existent currency passed as a market currency: " + currency);
         }
         this.tradingCurrency = currency;

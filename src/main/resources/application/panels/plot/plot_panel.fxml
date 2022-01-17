@@ -24,7 +24,7 @@
       <Separator prefWidth="200.0" />
       <HBox alignment="CENTER" minHeight="30.0" prefHeight="100.0" prefWidth="200.0">
          <children>
-            <Button fx:id="cancelButton" mnemonicParsing="false" text="Close" />
+            <Button fx:id="cancelButton" mnemonicParsing="false" onAction="#onCancelButtonClicked" text="Close" />
          </children>
       </HBox>
    </children>

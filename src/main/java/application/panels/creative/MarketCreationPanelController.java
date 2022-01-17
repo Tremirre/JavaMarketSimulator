@@ -43,6 +43,8 @@ public class MarketCreationPanelController extends CreativePanelController {
     private ComboBox<String> assetComboBox;
     @FXML
     private ComboBox<String> currencyComboBox;
+    @FXML
+    private Label availableAssetLabel;
 
     private AssetCategory readMarketTypeFromComboBox() {
         AssetCategory type;
@@ -115,6 +117,7 @@ public class MarketCreationPanelController extends CreativePanelController {
             for (var assetType : this.assetListView.getItems())
                 newMarket.addNewAsset(assetType);
         } else {
+            ((StockMarket) newMarket).setMarketCurrency(this.currencyComboBox.getValue());
             for (var idxName : this.assetListView.getItems()) {
                 var idx = this.simulation.getEntitiesManager().getIndexByName(idxName);
                 ((StockMarket) newMarket).addStockMarketIndex(idx);
@@ -142,12 +145,20 @@ public class MarketCreationPanelController extends CreativePanelController {
         var type = this.readMarketTypeFromComboBox();
         this.assetComboBox.getItems().clear();
         if (type != AssetCategory.STOCK) {
+            this.assetComboBox.setPromptText("Choose Asset");
             this.assetComboBox.getItems().addAll(simulation.getAssetManager().getAssetsByCategory(type));
             this.currencyComboBox.setDisable(true);
+            this.availableAssetLabel.setText(
+                    "Assets available on the market:"
+            );
         }
         else {
+            this.assetComboBox.setPromptText("Choose Index");
             this.addStockMarketIndexesAsComboBoxOptions();
             this.currencyComboBox.setDisable(false);
+            this.availableAssetLabel.setText(
+                    "Indexes available on the market:"
+            );
         }
         this.assetListView.getItems().clear();
     }
