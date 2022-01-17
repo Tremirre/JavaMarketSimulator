@@ -200,6 +200,7 @@
          <children>
             <Button fx:id="cancelButton" cancelButton="true" mnemonicParsing="false" onAction="#onCancelButtonClicked" text="Close" />
             <Button fx:id="plotButton" mnemonicParsing="false" onAction="#onPlotButtonClicked" text="Plot prices" />
+            <Button mnemonicParsing="false" onAction="#onBuyoutButtonClicked" text="Buyout" />
          </children>
       </HBox>
    </children>

@@ -7,6 +7,7 @@ import application.panels.creative.CreativePanelController;
 import application.panels.informative.AssetInfoPanelController;
 import application.panels.informative.InfoPanelController;
 import application.panels.plot.PlotPanelController;
+import application.util.DecimalDisplayFormat;
 import application.util.SimulationRunner;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -51,6 +52,10 @@ public class MainController {
     private Label simulationDayLabel;
     @FXML
     private Label entitiesCountLabel;
+    @FXML
+    private Label totalFundsLabel;
+    @FXML
+    private Label assetPriceLabel;
     @FXML
     private Button marketAddButton;
     @FXML
@@ -312,8 +317,21 @@ public class MainController {
 
     public void refreshSimulationData() {
         Platform.runLater(() -> {
-            this.simulationDayLabel.setText("Simulation Day: " + simulation.getSimulationDay());
-            this.entitiesCountLabel.setText("Number of Entities: " + simulation.getEntitiesManager().getTotalNumberOfEntities());
+            var decimal = new DecimalDisplayFormat(3);
+            double funds = 0;
+            for (var inv : simulation.getEntitiesManager().getInvestors()) {
+                funds += inv.getInvestmentBudget();
+            }
+            double averagePrice = 0;
+            var assetPrices = new HashMap<>(simulation.getAssetManager().getLatestAverageAssetPrices());
+            for (var entry : assetPrices.entrySet()) {
+                averagePrice += entry.getValue();
+            }
+            averagePrice /= assetPrices.size();
+            this.simulationDayLabel.setText(String.valueOf(simulation.getSimulationDay()));
+            this.entitiesCountLabel.setText(String.valueOf(simulation.getEntitiesManager().getTotalNumberOfEntities()));
+            this.totalFundsLabel.setText(decimal.format(funds));
+            this.assetPriceLabel.setText(decimal.format(averagePrice));
             for (var controller : this.refreshableControllers)
                 controller.refresh();
         });

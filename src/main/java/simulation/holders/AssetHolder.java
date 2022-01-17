@@ -123,6 +123,10 @@ public abstract class AssetHolder extends Thread implements SellingEntity, Buyin
         return this.strategy;
     }
 
+    public void setStrategy(InvestmentStrategy strategy) {
+        this.strategy = strategy;
+    }
+
     public HashMap<String, Double> getOwnedAssets() {
         return this.storedAssets;
     }
@@ -147,8 +151,7 @@ public abstract class AssetHolder extends Thread implements SellingEntity, Buyin
         this.investmentBudget = budget;
     }
 
-    public void endDayEvent() {
-    }
+    public void endDayEvent() {}
 
     public void start() {
         this.running = true;

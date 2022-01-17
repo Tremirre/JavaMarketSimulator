@@ -12,7 +12,7 @@
    <children>
       <LineChart fx:id="mainPlot" animated="false" createSymbols="false" legendVisible="false" title="Asset Price Plot">
         <xAxis>
-          <NumberAxis label="Day" side="BOTTOM" fx:id="xAxis" />
+          <NumberAxis forceZeroInRange="false" label="Day" side="BOTTOM" fx:id="xAxis" />
         </xAxis>
         <yAxis>
           <NumberAxis fx:id="yAxis" label="Relative value" side="LEFT" upperBound="1.0" />

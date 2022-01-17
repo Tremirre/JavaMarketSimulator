@@ -5,6 +5,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import simulation.asset.StockData;
 
+import java.util.ArrayList;
+
 public class StockAssetInfoPanelController extends AssetInfoPanelController {
     private StockData assetData;
 
@@ -26,6 +28,10 @@ public class StockAssetInfoPanelController extends AssetInfoPanelController {
     private Label streetLabel;
     @FXML
     private Label buildingNumberLabel;
+
+    public void onBuyoutButtonClicked() {
+        this.assetData.getCompany().buyout();
+    }
 
     @Override
     public void passID(String assetUID) {

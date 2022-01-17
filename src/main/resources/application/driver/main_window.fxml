@@ -191,20 +191,50 @@
                         <Insets />
                      </opaqueInsets>
                      <children>
-                        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="5.0">
+                        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
                            <children>
-                              <Label fx:id="simulationDayLabel" text="Simulation Day: -" />
+                              <Label text="Simulation Day:" />
+                              <Label fx:id="simulationDayLabel" text="-" />
                            </children>
                            <padding>
-                              <Insets left="10.0" right="10.0" />
+                              <Insets left="15.0" right="15.0" />
                            </padding>
                         </HBox>
                         <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnIndex="1">
                            <children>
-                              <Label fx:id="entitiesCountLabel" text="Number of Entities: -" />
+                              <Label text="Number of Entities:" />
+                              <Label fx:id="entitiesCountLabel" text="-" />
                            </children>
                            <padding>
-                              <Insets left="10.0" right="10.0" />
+                              <Insets left="15.0" right="15.0" />
+                           </padding>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.rowIndex="1">
+                           <padding>
+                              <Insets left="15.0" right="15.0" />
+                           </padding>
+                           <children>
+                              <Label text="Total Idle Investors' Funds:" />
+                              <Label fx:id="totalFundsLabel" text="-" />
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                           <padding>
+                              <Insets left="15.0" right="15.0" />
+                           </padding>
+                           <children>
+                              <Label text="Average asset opening price:" />
+                              <Label fx:id="assetPriceLabel" text="-" />
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.rowIndex="2">
+                           <padding>
+                              <Insets left="15.0" right="15.0" />
+                           </padding>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                           <padding>
+                              <Insets left="15.0" right="15.0" />
                            </padding>
                         </HBox>
                      </children>
