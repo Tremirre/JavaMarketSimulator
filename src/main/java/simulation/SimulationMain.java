@@ -4,7 +4,7 @@ import simulation.core.Simulation;
 import simulation.util.Constants;
 import simulation.util.DataExporter;
 
-public class Main {
+public class SimulationMain {
     public static void main(String[] args) {
         var simulation = new Simulation();
         simulation.start();

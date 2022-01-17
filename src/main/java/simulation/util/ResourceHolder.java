@@ -3,18 +3,19 @@ package simulation.util;
 import simulation.util.records.CommodityRecord;
 import simulation.util.records.CurrencyRecord;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
+import java.io.InputStreamReader;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.nio.file.*;
+import java.util.*;
 
 public class ResourceHolder {
-    private final static String simulationResourcePath = "src\\main\\resources\\simulation_data";
-    private final static String addressPath = simulationResourcePath + "\\address_data\\";
-    private final static String customNamesPath = simulationResourcePath + "\\custom_names\\";
-    private final static String assetPath = simulationResourcePath + "\\asset_data\\";
+    private final static String addressFolder = "address_data";
+    private final static String customNamesFolder = "custom_names";
+    private final static String assetFolder = "asset_data";
 
     private final HashMap<String, String[]> citiesCountryMapping;
     private final ArrayList<CurrencyRecord> currencies;
@@ -26,8 +27,36 @@ public class ResourceHolder {
     private String[] marketNames;
     private ArrayList<String> companyNames;
 
-    private void loadCurrenciesAndCountries() throws IOException {
-        String countriesCurrencies = Files.readString(Path.of(assetPath + "countries_currencies.txt"));
+    private FileSystem initFileSystem(URI uri) throws IOException {
+        try {
+            return FileSystems.newFileSystem(uri, Collections.emptyMap());
+        } catch (IllegalArgumentException e) {
+            return FileSystems.getDefault();
+        }
+    }
+
+    private String writeFromFileToString(String path) {
+        StringBuilder sb = new StringBuilder();
+        try (BufferedReader br = new BufferedReader(
+                new InputStreamReader(
+                        Objects.requireNonNull(getClass().getResourceAsStream(path)
+                        )
+                )
+        )) {
+            String line;
+            while((line = br.readLine()) != null) {
+                sb.append(line).append('\n');
+            }
+        } catch(IOException | NullPointerException e) {
+            System.out.println("Failed to load from: " + path);
+            System.out.println(e.getMessage());
+            System.exit(1);
+        }
+        return sb.toString();
+    }
+
+    private void loadCurrenciesAndCountries() {
+        String countriesCurrencies = this.writeFromFileToString(assetFolder + "/countries_currencies.txt");
         String[] currencyRecords = countriesCurrencies.split("\n");
         for (var record : currencyRecords) {
             String[] unpackedRecord = record.split(";");
@@ -51,18 +80,18 @@ public class ResourceHolder {
         }
     }
 
-    private void loadAddressData() throws IOException {
+    private void loadAddressData() {
         for (String country : this.citiesCountryMapping.keySet()) {
-            String cities = Files.readString(Path.of(addressPath + country.toLowerCase() + ".txt"));
+            String cities = this.writeFromFileToString(addressFolder+'/' + country.toLowerCase() + ".txt");
             String[] citiesList = cities.split(";");
             citiesCountryMapping.put(country, citiesList);
         }
-        String allStreets = Files.readString(Path.of(addressPath + "street_names.txt"));
+        String allStreets = this.writeFromFileToString(addressFolder+"/street_names.txt");
         this.streets = allStreets.split(";");
     }
 
-    private void loadCommodities() throws IOException {
-        String commodities = Files.readString(Path.of(assetPath + "commodity_data.txt"));
+    private void loadCommodities() {
+        String commodities = this.writeFromFileToString(assetFolder + "/commodity_data.txt");
         String[] commoditiesRecords = commodities.split("\n");
         for (String record : commoditiesRecords) {
             String[] unpackedRecord = record.split(";");
@@ -73,14 +102,14 @@ public class ResourceHolder {
         }
     }
 
-    private void loadCustomNamesData() throws IOException {
-        String allNames = Files.readString(Path.of(customNamesPath + "names.txt"));
+    private void loadCustomNamesData() {
+        String allNames = this.writeFromFileToString(customNamesFolder + "/names.txt");
         this.names = allNames.split(";");
-        String allSurnames = Files.readString(Path.of(customNamesPath + "surnames.txt"));
+        String allSurnames = this.writeFromFileToString(customNamesFolder + "/surnames.txt");
         this.surnames = allSurnames.split(";");
-        String allCompanyNames = Files.readString(Path.of(customNamesPath + "company_names.txt"));
+        String allCompanyNames = this.writeFromFileToString(customNamesFolder + "/company_names.txt");
         this.companyNames = new ArrayList<>(Arrays.asList(allCompanyNames.split(";")));
-        String allMarketNames = Files.readString(Path.of(customNamesPath + "market_names.txt"));
+        String allMarketNames = this.writeFromFileToString(customNamesFolder + "/market_names.txt");
         this.marketNames = allMarketNames.split(";");
     }
 
@@ -88,16 +117,10 @@ public class ResourceHolder {
         this.citiesCountryMapping = new HashMap<>();
         this.currencies = new ArrayList<>();
         this.commodities = new ArrayList<>();
-        try {
-            this.loadCurrenciesAndCountries();
-            this.loadAddressData();
-            this.loadCommodities();
-            this.loadCustomNamesData();
-        } catch (IOException e) {
-            System.out.println("Failed to load a resource!");
-            System.out.println(e.getMessage());
-            System.exit(1);
-        }
+        this.loadCurrenciesAndCountries();
+        this.loadAddressData();
+        this.loadCommodities();
+        this.loadCustomNamesData();
     }
 
     public HashMap<String, String[]> getCitiesCountryMapping() {
