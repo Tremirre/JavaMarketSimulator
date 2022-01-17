@@ -8,6 +8,9 @@ public final class SimulationConfig {
     private final AtomicInteger maxOfferAge = new AtomicInteger(10);
     private double bullProportion = 0.5;
     private double timeMultiplier = 1.0;
+    private double naiveProportion = 2.0/3;
+    private double qualitativeProportion = 1.0/6;
+    private double momentumProportion = 1 - naiveProportion - qualitativeProportion;
 
     public int getMaxOfferAge() {
         return maxOfferAge.get();
@@ -50,5 +53,30 @@ public final class SimulationConfig {
 
     public synchronized void setTimeMultiplier(double timeMultiplier) {
         this.timeMultiplier = Math.max(1, timeMultiplier);
+    }
+
+    public double getNaiveProportion() {
+        return naiveProportion;
+    }
+
+    public double getQualitativeProportion() {
+        return qualitativeProportion;
+    }
+
+    public double getMomentumProportion() {
+        return momentumProportion;
+    }
+
+    public void setProportions(double naiveProportion, double qualitativeProportion, double momentumProportion) {
+        double total = naiveProportion + qualitativeProportion + momentumProportion;
+        if(total != 0) {
+            this.naiveProportion = naiveProportion / total;
+            this.qualitativeProportion = qualitativeProportion / total;
+            this.momentumProportion = momentumProportion / total;
+        } else {
+            this.naiveProportion = 1.0/3;
+            this.qualitativeProportion = 1.0/3;
+            this.momentumProportion = 1 - this.naiveProportion - this.qualitativeProportion;
+        }
     }
 }

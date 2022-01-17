@@ -14,6 +14,15 @@ public class ConfigurationPanelController extends ReferencingController {
     private TextField offerAgeField;
     @FXML
     private Slider ratioSlider;
+    @FXML
+    private Slider naiveSlider;
+    @FXML
+    private Slider qualitativeSlider;
+    @FXML
+    private Slider momentumSlider;
+
+    private boolean strategiesProportionsChanged = false;
+
 
     public void initialize() {
         var simConfig = SimulationConfig.getInstance();
@@ -22,10 +31,27 @@ public class ConfigurationPanelController extends ReferencingController {
         this.ratioSlider.setValue(simConfig.getBullProportion());
         this.offerAgeField.setText(String.valueOf(simConfig.getMaxOfferAge()));
         this.transactionCountField.setText(String.valueOf(simConfig.getMaxTransactionsPerDayPerMarket()));
+        this.naiveSlider.setValue(simConfig.getNaiveProportion());
+        this.qualitativeSlider.setValue(simConfig.getQualitativeProportion());
+        this.momentumSlider.setValue(simConfig.getMomentumProportion());
+    }
+
+    public void onStrategyProportionSliderChanged() {
+        this.strategiesProportionsChanged = true;
     }
 
     public void onApplyButtonClicked() {
         var simConfig = SimulationConfig.getInstance();
+        if (this.strategiesProportionsChanged) {
+            this.strategiesProportionsChanged = false;
+            simConfig.setProportions(
+                    this.naiveSlider.getValue(),
+                    this.qualitativeSlider.getValue(),
+                    this.momentumSlider.getValue()
+
+            );
+            this.simulation.getEntitiesManager().setInvestorStrategies();
+        }
         simConfig.setBullProportion(this.ratioSlider.getValue());
         simConfig.setMaxOfferAge(Integer.parseInt(this.offerAgeField.getText()));
         simConfig.setMaxTransactionsPerDayPerMarket(Integer.parseInt(this.transactionCountField.getText()));

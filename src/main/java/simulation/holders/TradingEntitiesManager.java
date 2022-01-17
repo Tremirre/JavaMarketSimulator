@@ -2,8 +2,13 @@ package simulation.holders;
 
 
 import simulation.asset.AssetManager;
+import simulation.core.SimulationConfig;
+import simulation.holders.strategies.MomentumInvestmentStrategy;
+import simulation.holders.strategies.NaiveInvestmentStrategy;
+import simulation.holders.strategies.QualitativeAssessmentStrategy;
 import simulation.market.Market;
 import simulation.market.StockMarketIndex;
+import simulation.util.RandomService;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -122,5 +127,40 @@ public final class TradingEntitiesManager {
             if (!entity.isRunning())
                 entity.start();
         }
+    }
+
+    public void setInvestorStrategies() {
+        var rand = RandomService.getInstance();
+        var investors = new ArrayList<>(this.getInvestors());
+        var naiveProportion = SimulationConfig.getInstance().getNaiveProportion();
+        var qualitativeProportion = SimulationConfig.getInstance().getQualitativeProportion();
+        int naiveInvestors = (int) (investors.size() * naiveProportion);
+        int qualitativeInvestors = (int) (investors.size() * qualitativeProportion);
+        int i = 0;
+        while(i < naiveInvestors) {
+            investors.get(i++).setStrategy(
+                    new NaiveInvestmentStrategy(
+                        this.assetManager,
+                        rand.yieldRandomGaussianNumber(0.03, 0.9)
+                    )
+            );
+        }
+        while(i < naiveInvestors + qualitativeInvestors) {
+            investors.get(i++).setStrategy(
+                    new QualitativeAssessmentStrategy(
+                            this.assetManager,
+                            rand.yieldRandomGaussianNumber(0.05, 1)
+                    )
+            );
+        }
+        while (i < investors.size()) {
+            investors.get(i++).setStrategy(
+                    new MomentumInvestmentStrategy(
+                            this.assetManager,
+                            rand.yieldRandomInteger(5) + 1
+                    )
+            );
+        }
+
     }
 }

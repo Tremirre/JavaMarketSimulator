@@ -49,6 +49,7 @@ public class Simulation implements Resourced {
     }
 
     public void start() {
+        this.tradingEntitiesManager.setInvestorStrategies();
         this.tradingEntitiesManager.startEntities();
         this.started = true;
         GlobalHoldersLock.writeLock();
