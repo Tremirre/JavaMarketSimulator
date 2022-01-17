@@ -4,7 +4,6 @@ import application.panels.ReferencingController;
 import application.panels.Refreshable;
 import javafx.fxml.FXML;
 import javafx.scene.chart.LineChart;
-import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 
 import java.util.ArrayList;
@@ -14,11 +13,12 @@ public class PlotPanelController extends ReferencingController implements Refres
     private String assetID;
     @FXML
     private LineChart<Number, Number> mainPlot;
-    @FXML
-    private NumberAxis xAxis;
 
     public void passAssetID(String assetID) {
         this.assetID = assetID;
+        this.mainPlot.setTitle(
+                this.simulation.getAssetManager().getAssetData(assetID).getName() + " Prices Plot"
+        );
         this.refresh();
     }
 
