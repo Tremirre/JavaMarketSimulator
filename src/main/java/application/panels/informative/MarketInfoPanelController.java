@@ -1,8 +1,7 @@
 package application.panels.informative;
 
 import application.driver.MainController;
-import application.panels.Refreshable;
-import application.util.DecimalDisplayFormat;
+import application.util.format.DecimalDisplayFormat;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -11,7 +10,7 @@ import simulation.market.CurrenciesMarket;
 import simulation.market.Market;
 import simulation.market.StockMarket;
 
-public class MarketInfoPanelController extends InfoPanelController implements Refreshable {
+public class MarketInfoPanelController extends InfoPanelController {
     private Market market;
 
     @FXML

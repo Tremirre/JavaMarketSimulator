@@ -1,37 +1,27 @@
 package application.driver;
 
 import application.panels.ConfigurationPanelController;
-import application.panels.ReferencingController;
-import application.panels.Refreshable;
 import application.panels.creative.CreativePanelController;
 import application.panels.informative.AssetInfoPanelController;
-import application.panels.informative.InfoPanelController;
-import application.panels.plot.PlotPanelController;
-import application.util.DecimalDisplayFormat;
-import application.util.SimulationRunner;
+import application.util.format.DecimalDisplayFormat;
+import application.util.format.SimulationRunner;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
-import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import simulation.asset.AssetCategory;
 import simulation.core.Simulation;
 import simulation.core.SimulationConfig;
 import simulation.util.DataExporter;
 
-import java.io.IOException;
-import java.net.URL;
 import java.util.*;
 
 public class MainController {
     private static Simulation simulation;
     private static SimulationRunner simRunner;
-    private final HashSet<Refreshable> refreshableControllers = new HashSet<>();
+    private final WindowsManager windowsManager = new WindowsManager(this);
     @FXML
     private ListView<String> stockListView;
     @FXML
@@ -152,42 +142,6 @@ public class MainController {
         this.priceExportMenuItem.setDisable(disable);
     }
 
-    public void openNewPlotWindow(URL source, String title, String assetID) {
-        var controller = (PlotPanelController) this.openNewWindow(source, title);
-        controller.getStage().addEventFilter(WindowEvent.WINDOW_CLOSE_REQUEST,
-                e -> this.refreshableControllers.remove(controller));
-        controller.passAssetID(assetID);
-        this.refreshableControllers.add(controller);
-    }
-
-    public void openNewInfoWindow(URL source, String title, String id) {
-        var controller = (InfoPanelController) this.openNewWindow(source, title);
-        controller.getStage().addEventFilter(WindowEvent.WINDOW_CLOSE_REQUEST,
-                e -> this.refreshableControllers.remove(controller));
-        controller.passID(id);
-        this.refreshableControllers.add(controller);
-    }
-
-    public ReferencingController openNewWindow(URL source, String title) {
-        ReferencingController controller = null;
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(source);
-            Scene mainScene = new Scene(fxmlLoader.load());
-            controller = fxmlLoader.getController();
-            controller.passSimulationReference(simulation);
-            controller.passMainControllerReference(this);
-            Stage stage = new Stage();
-            stage.setTitle(title);
-            stage.setScene(mainScene);
-            stage.getIcons().add(new Image(Application.class.getResource("icon.ico").toString()));
-            stage.show();
-        } catch(IOException e) {
-            System.out.println("Failed to open window " + title);
-            System.out.println(e.getMessage());
-        }
-        return controller;
-    }
-
     private void refreshMarketView() {
         this.marketListView.getItems().clear();
         for (var market : simulation.getMarkets())
@@ -267,37 +221,37 @@ public class MainController {
 
     public void onAddMarketButtonClicked() {
         var source = CreativePanelController.class.getResource("market_creation_panel.fxml");
-        this.openNewWindow(source, "Market Creation Panel");
+        this.windowsManager.openNewCreativeWindow(source, "Market Creation Panel", simulation);
     }
 
     public void onAddCommodityButtonClicked() {
         var source = CreativePanelController.class.getResource("commodity_asset_creation_panel.fxml");
-        this.openNewWindow(source, "Commodity Creation Panel");
+        this.windowsManager.openNewCreativeWindow(source, "Commodity Creation Panel", simulation);
     }
 
     public void onAddCurrencyButtonClicked() {
         var source = CreativePanelController.class.getResource("currency_asset_creation_panel.fxml");
-        this.openNewWindow(source, "Commodity Creation Panel");
+        this.windowsManager.openNewCreativeWindow(source, "Commodity Creation Panel", simulation);
     }
 
     public void onAddStockButtonClicked() {
         var source = CreativePanelController.class.getResource("company_creation_panel.fxml");
-        this.openNewWindow(source, "Company Creation Panel");
+        this.windowsManager.openNewCreativeWindow(source, "Company Creation Panel", simulation);
     }
 
     public void onAddSMIButtonClicked() {
         var source = CreativePanelController.class.getResource("stock_index_creation_panel.fxml");
-        this.openNewWindow(source, "Stock Index Creation Panel");
+        this.windowsManager.openNewCreativeWindow(source, "Stock Index Creation Panel", simulation);
     }
 
     public void onSimulationConfigButtonClicked() {
         var source = ConfigurationPanelController.class.getResource("config_panel.fxml");
-        this.openNewWindow(source, "Configuration Panel");
+        this.windowsManager.openNewConfigWindow(source, simulation);
     }
 
     public void onListViewClicked(String fxmlFileName, String title, String id) {
         var source = AssetInfoPanelController.class.getResource(fxmlFileName);
-        this.openNewInfoWindow(source, title, id);
+        this.windowsManager.openNewInfoWindow(source, title, simulation, id);
     }
 
     public void newIndexAdded(String name) {
@@ -332,8 +286,7 @@ public class MainController {
             this.entitiesCountLabel.setText(String.valueOf(simulation.getEntitiesManager().getTotalNumberOfEntities()));
             this.totalFundsLabel.setText(decimal.format(funds));
             this.assetPriceLabel.setText(decimal.format(averagePrice));
-            for (var controller : this.refreshableControllers)
-                controller.refresh();
+            this.windowsManager.refreshAllWindows();
         });
     }
 
@@ -343,9 +296,10 @@ public class MainController {
 
     public void setOnCloseEvent() {
         this.startButton.getScene().getWindow().addEventFilter(WindowEvent.WINDOW_CLOSE_REQUEST,
-            e -> {
-                for (var controller : this.refreshableControllers)
-                    controller.getStage().close();
-            });
+            e -> this.windowsManager.closeAllWindows());
+    }
+
+    public WindowsManager getWindowsManager() {
+        return this.windowsManager;
     }
 }

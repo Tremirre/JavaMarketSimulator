@@ -1,8 +1,8 @@
 package application.panels.creative;
 
-import application.util.DecimalDisplayFormat;
-import application.util.DoubleFormatter;
-import application.util.IntegerFormatter;
+import application.util.format.DecimalDisplayFormat;
+import application.util.format.DoubleFormatter;
+import application.util.format.IntegerFormatter;
 import javafx.fxml.FXML;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;

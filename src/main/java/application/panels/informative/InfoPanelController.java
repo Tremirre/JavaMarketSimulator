@@ -1,11 +1,10 @@
 package application.panels.informative;
 
 import application.panels.ReferencingController;
-import application.panels.Refreshable;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
-public abstract class InfoPanelController extends ReferencingController implements Refreshable {
+public abstract class InfoPanelController extends ReferencingController {
     @FXML
     protected Label nameLabel;
     @Override

@@ -1,6 +1,6 @@
 package application.panels.creative;
 
-import application.util.DoubleFormatter;
+import application.util.format.DoubleFormatter;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;

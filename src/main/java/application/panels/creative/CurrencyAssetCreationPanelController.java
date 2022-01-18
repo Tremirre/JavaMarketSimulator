@@ -1,7 +1,7 @@
 package application.panels.creative;
 
-import application.util.DecimalDisplayFormat;
-import application.util.DoubleFormatter;
+import application.util.format.DecimalDisplayFormat;
+import application.util.format.DoubleFormatter;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
@@ -14,10 +14,7 @@ import simulation.util.RandomService;
 import simulation.util.Resourced;
 import simulation.util.records.CurrencyRecord;
 
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
 import java.util.HashSet;
-import java.util.Locale;
 
 public class CurrencyAssetCreationPanelController extends CreativePanelController implements Resourced {
 

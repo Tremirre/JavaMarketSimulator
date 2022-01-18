@@ -1,15 +1,13 @@
 package application.panels.informative;
 
-import application.panels.ReferencingController;
-import application.panels.Refreshable;
 import application.panels.plot.PlotPanelController;
-import application.util.DecimalDisplayFormat;
+import application.util.format.DecimalDisplayFormat;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import simulation.asset.AssetData;
 
-public abstract class AssetInfoPanelController extends InfoPanelController implements Refreshable {
+public abstract class AssetInfoPanelController extends InfoPanelController {
 
     @FXML
     protected Label openingPriceLabel;
@@ -21,9 +19,10 @@ public abstract class AssetInfoPanelController extends InfoPanelController imple
     protected Button plotButton;
 
     public void onPlotButtonClicked() {
-        this.mainController.openNewPlotWindow(
+        this.mainController.getWindowsManager().openNewPlotWindow(
                 PlotPanelController.class.getResource("plot_panel.fxml"),
                 "Plot",
+                simulation,
                 this.getAssetID());
     }
 

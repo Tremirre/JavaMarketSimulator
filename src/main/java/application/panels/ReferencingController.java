@@ -29,4 +29,6 @@ public abstract class ReferencingController {
     public Stage getStage() {
         return (Stage) this.cancelButton.getScene().getWindow();
     }
+
+    public void refresh() {}
 }

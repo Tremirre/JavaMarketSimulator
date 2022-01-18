@@ -1,14 +1,13 @@
 package application.panels.plot;
 
 import application.panels.ReferencingController;
-import application.panels.Refreshable;
 import javafx.fxml.FXML;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
 
 import java.util.ArrayList;
 
-public class PlotPanelController extends ReferencingController implements Refreshable {
+public class PlotPanelController extends ReferencingController {
 
     private String assetID;
     @FXML

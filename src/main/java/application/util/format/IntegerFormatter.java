@@ -1,4 +1,4 @@
-package application.util;
+package application.util.format;
 
 import javafx.scene.control.TextFormatter;
 

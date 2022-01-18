@@ -1,12 +1,12 @@
 package application.panels.creative;
 
-import application.util.DecimalDisplayFormat;
-import application.util.DoubleFormatter;
-import application.util.IntegerFormatter;
+import application.util.CustomValidator;
+import application.util.format.DecimalDisplayFormat;
+import application.util.format.DoubleFormatter;
+import application.util.format.IntegerFormatter;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseButton;
-import net.synedra.validatorfx.Validator;
 import simulation.address.Address;
 import simulation.address.RandomAddressFactory;
 import simulation.asset.AssetCategory;
@@ -15,10 +15,6 @@ import simulation.market.InformedMarketFactory;
 import simulation.market.StockMarket;
 import simulation.util.Constants;
 import simulation.util.RandomService;
-
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
-import java.util.Locale;
 
 public class MarketCreationPanelController extends CreativePanelController {
     @FXML
@@ -58,22 +54,15 @@ public class MarketCreationPanelController extends CreativePanelController {
     }
 
     private void setupValidations() {
-        Validator validator = new Validator();
-        validator.createCheck()
-                .dependsOn("buyField", buyFeeField.textProperty())
-                .withMethod(c -> {
-                    double value = Double.parseDouble(c.get("buyField"));
-                    if (value > 1 || value < 0)
-                        c.warn("Fee can only be between 0 and 1!");
-                }).decorates(buyFeeField).immediate();
-
-        validator.createCheck()
-                .dependsOn("sellField", buyFeeField.textProperty())
-                .withMethod(c -> {
-                    double value = Double.parseDouble(c.get("sellField"));
-                    if (value > 1 || value < 0)
-                        c.warn("Fee can only be between 0 and 1!");
-                }).decorates(sellFeeField).immediate();
+        var t = buyFeeField.textProperty();
+        var validator = new CustomValidator();
+        validator.addPercentageCheck("buyField", this.buyFeeField);
+        validator.addPercentageCheck("sellField", this.sellFeeField);
+        validator.addNotEmptyCheck("countryField", this.countryField);
+        validator.addNotEmptyCheck("cityField", this.cityField);
+        validator.addNotEmptyCheck("postalCodeField", this.postalCodeField);
+        validator.addNotEmptyCheck("streetField", this.streetField);
+        validator.addNotEmptyCheck("buildingNumberField", this.buildingNumberField);
     }
 
     public void initialize() {
@@ -88,6 +77,7 @@ public class MarketCreationPanelController extends CreativePanelController {
                 }
             }
         });
+        this.setupValidations();
     }
 
     public void onAssetComboBoxChanged() {

@@ -1,6 +1,6 @@
 package application.panels.informative;
 
-import application.util.DecimalDisplayFormat;
+import application.util.format.DecimalDisplayFormat;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;

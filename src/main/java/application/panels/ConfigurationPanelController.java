@@ -1,6 +1,6 @@
 package application.panels;
 
-import application.util.IntegerFormatter;
+import application.util.format.IntegerFormatter;
 import javafx.fxml.FXML;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
@@ -22,7 +22,6 @@ public class ConfigurationPanelController extends ReferencingController {
     private Slider momentumSlider;
 
     private boolean strategiesProportionsChanged = false;
-
 
     public void initialize() {
         var simConfig = SimulationConfig.getInstance();

@@ -1,4 +1,4 @@
-package application.util;
+package application.util.format;
 
 import application.driver.MainController;
 import simulation.core.Simulation;
