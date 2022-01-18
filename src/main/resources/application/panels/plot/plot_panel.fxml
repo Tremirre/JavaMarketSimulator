@@ -4,23 +4,31 @@
 <?import javafx.scene.chart.LineChart?>
 <?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.Slider?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.panels.plot.PlotPanelController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="429.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.panels.plot.PlotPanelController">
    <children>
       <LineChart fx:id="mainPlot" animated="false" createSymbols="false" legendVisible="false" title="Asset Price Plot">
         <xAxis>
           <NumberAxis forceZeroInRange="false" label="Day" side="BOTTOM" fx:id="xAxis" />
         </xAxis>
         <yAxis>
-          <NumberAxis fx:id="yAxis" label="Relative value" side="LEFT" upperBound="1.0" />
+          <NumberAxis fx:id="yAxis" label="Value in Default Standard Currency" side="LEFT" upperBound="1.0" />
         </yAxis>
          <VBox.margin>
-            <Insets bottom="20.0" left="20.0" right="20.0" />
+            <Insets left="20.0" right="20.0" />
          </VBox.margin>
       </LineChart>
+      <HBox alignment="CENTER" minHeight="40.0" prefHeight="100.0" prefWidth="200.0" spacing="30.0">
+         <children>
+            <Label text="Max. Time range:" />
+            <Slider fx:id="timeSlider" blockIncrement="1.0" majorTickUnit="1.0" max="3.0" minorTickCount="0" onDragDone="#onTimeSliderDragDone" onDragDropped="#onTimeSliderDragDone" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
+         </children>
+      </HBox>
       <Separator prefWidth="200.0" />
       <HBox alignment="CENTER" minHeight="30.0" prefHeight="100.0" prefWidth="200.0">
          <children>

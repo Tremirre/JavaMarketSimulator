@@ -67,7 +67,6 @@ public class WindowsManager {
 
     public PlotPanelController openNewPlotWindow(URL source, String title, Simulation simulation, String assetID) {
         var controller = (PlotPanelController) this.openNewReferencingWindow(source, title, simulation, title+assetID);
-
         controller.passAssetID(assetID);
         return controller;
     }
