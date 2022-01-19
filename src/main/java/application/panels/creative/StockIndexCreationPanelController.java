@@ -15,6 +15,12 @@ public class StockIndexCreationPanelController extends CreativePanelController {
     @FXML
     private ListView<String> stockListView;
 
+    @Override
+    protected void setupValidations() {
+        this.validator.addNotEmptyCheck("nameField", this.nameField);
+        this.validator.addNotEmptyCheck("stockListView", stockListView);
+    }
+
     public void initialize() {
         this.stockListView.setOnMouseClicked( me -> {
             if (me.getButton() == MouseButton.SECONDARY) {
@@ -24,6 +30,7 @@ public class StockIndexCreationPanelController extends CreativePanelController {
                 }
             }
         });
+        super.initialize();
     }
 
     public void onStockComboBoxChanged() {
@@ -35,6 +42,9 @@ public class StockIndexCreationPanelController extends CreativePanelController {
 
     @Override
     public void onCreateButtonClicked() {
+        if (!this.validator.validate()) {
+            return;
+        }
         String name = this.nameField.getText();
         if (!this.simulation.getEntitiesManager().isIndexNameFree(name))
             return;

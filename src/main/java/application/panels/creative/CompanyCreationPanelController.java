@@ -38,16 +38,38 @@ public class CompanyCreationPanelController extends CreativePanelController impl
     @FXML
     private TextField shareCountField;
 
+    @Override
+    protected void setupValidations() {
+        this.validator.addNotEmptyCheck("nameField", this.nameField);
+        this.validator.addNotEmptyCheck("datePicker", this.datePicker);
+        this.validator.addNotEmptyCheck("countryField", this.countryField);
+        this.validator.addNotEmptyCheck("cityField", this.cityField);
+        this.validator.addNotEmptyCheck("postalCodeField", this.postalCodeField);
+        this.validator.addNotEmptyCheck("streetField", this.streetField);
+        this.validator.addNotEmptyCheck("buildingNumberField", this.buildingNumberField);
+        this.validator.addNotEmptyCheck("profitField", this.profitField);
+        this.validator.addNotEmptyCheck("revenueField", this.revenueField);
+        this.validator.addPositiveCheck("revenueFieldPositive", this.revenueField);
+        this.validator.addNotEmptyCheck("shareValueField", this.shareValueField);
+        this.validator.addPositiveCheck("shareValueFieldPositive", this.shareValueField);
+        this.validator.addNotEmptyCheck("shareCountField", this.shareCountField);
+        this.validator.addPositiveCheck("shareCountFieldPositive", this.shareCountField);
+    }
+
     public void initialize() {
         this.buildingNumberField.setTextFormatter(IntegerFormatter.createFormatter());
         this.profitField.setTextFormatter(DoubleFormatter.createFormatter());
         this.revenueField.setTextFormatter(DoubleFormatter.createFormatter());
         this.shareValueField.setTextFormatter(DoubleFormatter.createFormatter());
         this.shareCountField.setTextFormatter(IntegerFormatter.createFormatter());
+        super.initialize();
     }
 
     @Override
     public void onCreateButtonClicked() {
+        if (!this.validator.validate()) {
+            return;
+        }
         var factory = new InformedHolderFactory(
                 this.simulation.getEntitiesManager().getTotalNumberOfEntities(),
                 this.simulation.getAssetManager()

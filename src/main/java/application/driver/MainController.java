@@ -231,7 +231,7 @@ public class MainController {
 
     public void onAddCurrencyButtonClicked() {
         var source = CreativePanelController.class.getResource("currency_asset_creation_panel.fxml");
-        this.windowsManager.openNewCreativeWindow(source, "Commodity Creation Panel", simulation);
+        this.windowsManager.openNewCreativeWindow(source, "Currency Creation Panel", simulation);
     }
 
     public void onAddStockButtonClicked() {

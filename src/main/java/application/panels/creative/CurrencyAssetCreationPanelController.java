@@ -27,6 +27,17 @@ public class CurrencyAssetCreationPanelController extends CreativePanelControlle
     @FXML
     private ListView<String> countryListView;
 
+    @Override
+    protected void setupValidations() {
+        this.validator.addNotEmptyCheck("nameField", this.nameField);
+        this.validator.addNotEmptyCheck("rateField", this.rateField);
+        this.validator.addPositiveCheck("rateFieldPositive", this.rateField);
+        this.validator.addNotEmptyCheck("stabilityField", this.stabilityField);
+        this.validator.addPercentageCheck("stabilityFieldPercentage", this.stabilityField);
+        this.validator.addNotEmptyCheck("countryField", this.countryField);
+        this.validator.addNotEmptyCheck("countryListView", this.countryListView);
+    }
+
     public void initialize() {
         this.rateField.setTextFormatter(DoubleFormatter.createFormatter());
         this.stabilityField.setTextFormatter(DoubleFormatter.createFormatter());
@@ -44,10 +55,14 @@ public class CurrencyAssetCreationPanelController extends CreativePanelControlle
                    this.countryListView.getItems().remove(index);
            }
         });
+        super.initialize();
     }
 
     @Override
     public void onCreateButtonClicked() {
+        if (!this.validator.validate()) {
+            return;
+        }
         var newCurrency = new InformedSupplementaryAssetFactory(
                 this.simulation.getAssetManager(),
                 this.nameField.getText(),

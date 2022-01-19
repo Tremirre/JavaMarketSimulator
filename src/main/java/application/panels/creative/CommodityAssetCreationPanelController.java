@@ -22,6 +22,13 @@ public class CommodityAssetCreationPanelController extends CreativePanelControll
     @FXML
     private ComboBox<String> tradingCurrencyComboBox;
 
+    @Override
+    protected void setupValidations() {
+        this.validator.addPositiveCheck("rateFieldPositive", rateField);
+        this.validator.addNotEmptyCheck("rateFieldNonEmpty",this.rateField);
+        this.validator.addNotEmptyCheck("nameField", this.nameField);
+    }
+
     public void initialize() {
         this.rateField.setTextFormatter(DoubleFormatter.createFormatter());
         this.tradingUnitComboBox.getItems().addAll(
@@ -36,10 +43,14 @@ public class CommodityAssetCreationPanelController extends CreativePanelControll
                 "barrel",
                 "hundredweight"
         );
+        super.initialize();
     }
 
     @Override
     public void onCreateButtonClicked() {
+        if (!this.validator.validate()) {
+            return;
+        }
         var newCommodity = new InformedSupplementaryAssetFactory(
                 this.simulation.getAssetManager(),
                 this.nameField.getText(),

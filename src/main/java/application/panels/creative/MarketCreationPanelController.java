@@ -1,6 +1,5 @@
 package application.panels.creative;
 
-import application.util.CustomValidator;
 import application.util.format.DecimalDisplayFormat;
 import application.util.format.DoubleFormatter;
 import application.util.format.IntegerFormatter;
@@ -53,16 +52,15 @@ public class MarketCreationPanelController extends CreativePanelController {
         return type;
     }
 
-    private void setupValidations() {
-        var t = buyFeeField.textProperty();
-        var validator = new CustomValidator();
-        validator.addPercentageCheck("buyField", this.buyFeeField);
-        validator.addPercentageCheck("sellField", this.sellFeeField);
-        validator.addNotEmptyCheck("countryField", this.countryField);
-        validator.addNotEmptyCheck("cityField", this.cityField);
-        validator.addNotEmptyCheck("postalCodeField", this.postalCodeField);
-        validator.addNotEmptyCheck("streetField", this.streetField);
-        validator.addNotEmptyCheck("buildingNumberField", this.buildingNumberField);
+    protected void setupValidations() {
+        this.validator.addPercentageCheck("buyField", this.buyFeeField);
+        this.validator.addPercentageCheck("sellField", this.sellFeeField);
+        this.validator.addNotEmptyCheck("countryField", this.countryField);
+        this.validator.addNotEmptyCheck("cityField", this.cityField);
+        this.validator.addNotEmptyCheck("postalCodeField", this.postalCodeField);
+        this.validator.addNotEmptyCheck("streetField", this.streetField);
+        this.validator.addNotEmptyCheck("buildingNumberField", this.buildingNumberField);
+        this.validator.addNotEmptyCheck("assetListView", this.assetListView);
     }
 
     public void initialize() {
@@ -77,7 +75,7 @@ public class MarketCreationPanelController extends CreativePanelController {
                 }
             }
         });
-        this.setupValidations();
+        super.initialize();
     }
 
     public void onAssetComboBoxChanged() {
@@ -88,6 +86,9 @@ public class MarketCreationPanelController extends CreativePanelController {
     }
 
     public void onCreateButtonClicked() {
+        if (!this.validator.validate()) {
+            return;
+        }
         var type = this.readMarketTypeFromComboBox();
         var address = new Address(this.countryField.getText(),
                 this.cityField.getText(),

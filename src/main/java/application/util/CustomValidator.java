@@ -1,5 +1,7 @@
 package application.util;
 
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import net.synedra.validatorfx.Validator;
 
@@ -27,6 +29,37 @@ public class CustomValidator extends Validator {
                     if (text == null || text.length() == 0) {
                         c.error("This field cannot be empty!");
                     }
-                }).decorates(field).immediate();
+                }).decorates(field);
+    }
+
+    public void addNotEmptyCheck(String key, ListView<?> view) {
+        this.createCheck().dependsOn(key, view.itemsProperty())
+                .withMethod(c -> {
+                    if (view.getItems().size() == 0) {
+                        c.error("This list cannot be empty!");
+                    }
+                }).decorates(view);
+    }
+
+    public void addNotEmptyCheck(String key, DatePicker picker) {
+        this.createCheck().dependsOn(key, picker.editorProperty())
+                .withMethod(c -> {
+                    if (picker.getValue() == null) {
+                        c.error("This field cannot be empty!");
+                    }
+                }).decorates(picker);
+    }
+
+    public void addPositiveCheck(String key, TextField field) {
+        this.createCheck().dependsOn(key, field.textProperty())
+                .withMethod(c -> {
+                    String text = c.get(key);
+                    if (text != null && text.length() > 0 && !text.equals(".")) {
+                        var num = Double.parseDouble(text);
+                        if (num <= 0) {
+                            c.error("This number has to be positive (larger than 0)!");
+                        }
+                    }
+                }).decorates(field);
     }
 }
