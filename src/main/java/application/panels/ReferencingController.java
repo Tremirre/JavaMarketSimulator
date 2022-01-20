@@ -4,7 +4,10 @@ import application.driver.MainController;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import simulation.core.Simulation;
+
+import static javafx.stage.WindowEvent.WINDOW_CLOSE_REQUEST;
 
 public abstract class ReferencingController {
     protected Simulation simulation;
@@ -22,8 +25,8 @@ public abstract class ReferencingController {
     }
 
     public void onCancelButtonClicked() {
-        Stage stage = this.getStage();
-        stage.close();
+        var stage = this.getStage();
+        stage.fireEvent(new WindowEvent(stage, WindowEvent.WINDOW_CLOSE_REQUEST));
     }
 
     public Stage getStage() {

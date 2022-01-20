@@ -34,7 +34,6 @@ public class CurrencyAssetCreationPanelController extends CreativePanelControlle
         this.validator.addPositiveCheck("rateFieldPositive", this.rateField);
         this.validator.addNotEmptyCheck("stabilityField", this.stabilityField);
         this.validator.addPercentageCheck("stabilityFieldPercentage", this.stabilityField);
-        this.validator.addNotEmptyCheck("countryField", this.countryField);
         this.validator.addNotEmptyCheck("countryListView", this.countryListView);
     }
 

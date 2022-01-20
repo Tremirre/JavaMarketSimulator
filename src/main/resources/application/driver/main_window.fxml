@@ -245,6 +245,7 @@
       </SplitPane>
       <ButtonBar minHeight="-Infinity" minWidth="800.0" prefHeight="40.0" prefWidth="784.0">
         <buttons>
+            <Button mnemonicParsing="false" onAction="#onPriceTrackerButtonClicked" text="Price Tracker" />
             <Button fx:id="generateMarketsButton" cancelButton="true" mnemonicParsing="false" onAction="#onGenerateRandomMarketSelected" text="Generate Random Markets" />
             <Button fx:id="simulationConfigButton" mnemonicParsing="false" onAction="#onSimulationConfigButtonClicked" text="Simulation Config" />
             <Button fx:id="resetButton" cancelButton="true" mnemonicParsing="false" onAction="#onResetButtonClicked" text="Reset Everything" />

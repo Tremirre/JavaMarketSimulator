@@ -47,13 +47,12 @@ public class ConfigurationPanelController extends ReferencingController {
                     this.naiveSlider.getValue(),
                     this.qualitativeSlider.getValue(),
                     this.momentumSlider.getValue()
-
             );
             this.simulation.getEntitiesManager().setInvestorStrategies();
         }
         simConfig.setBullProportion(this.ratioSlider.getValue());
         simConfig.setMaxOfferAge(Integer.parseInt(this.offerAgeField.getText()));
         simConfig.setMaxTransactionsPerDayPerMarket(Integer.parseInt(this.transactionCountField.getText()));
-        this.getStage().close();
+        this.onCancelButtonClicked();
     }
 }

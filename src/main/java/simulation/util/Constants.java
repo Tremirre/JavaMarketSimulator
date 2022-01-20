@@ -19,10 +19,10 @@ public final class Constants {
     public static final int COMPANY_MINIMAL_INITIAL_STOCK_VALUE = 5;
     public static final int COMPANY_MAXIMAL_ADDITIONAL_INITIAL_STOCK_VALUE = 15;
     public static final int COMPANY_MAXIMAL_ADDITIONAL_STOCK_NUMBER = 20;
-    public static final double COMPANY_SHARES_INCREASE_PROBABILITY = 0.01;
+    public static final double COMPANY_SHARES_INCREASE_PROBABILITY = 0.001;
     public static final int INVESTOR_MEAN_INITIAL_FUNDS = 100;
     public static final int INVESTOR_INITIAL_FUNDS_DEVIATION = 20;
-    public static final double INVESTOR_FUNDS_INCREASE_PROBABILITY = 0.01;
+    public static final double INVESTOR_FUNDS_INCREASE_PROBABILITY = 0.001;
     public static final int INVESTOR_FUNDS_INCREASE_AMOUNT = 25;
     public static final String DEFAULT_CURRENCY = "DEFAULT_STANDARD_CURRENCY";
     public static final int RANDOM_SERVICE_SEED = 0;

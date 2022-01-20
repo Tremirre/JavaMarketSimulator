@@ -3,6 +3,7 @@ package application.panels.plot;
 import application.panels.ReferencingController;
 import javafx.fxml.FXML;
 import javafx.scene.chart.LineChart;
+import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Slider;
 import javafx.util.StringConverter;
@@ -12,12 +13,14 @@ import java.util.ArrayList;
 public class PlotPanelController extends ReferencingController {
 
     private String assetID;
-    private int period = 365;
-    private int lastSliderTick = 0;
+    protected int period = 365;
+    protected int lastSliderTick = 0;
     @FXML
-    private LineChart<Number, Number> mainPlot;
+    protected LineChart<Number, Number> mainPlot;
     @FXML
-    private Slider timeSlider;
+    protected Slider timeSlider;
+    @FXML
+    protected NumberAxis xAxis;
 
     public void  initialize() {
         this.timeSlider.setLabelFormatter(new StringConverter<>() {
@@ -61,8 +64,8 @@ public class PlotPanelController extends ReferencingController {
             case 2 -> this.period = 5 * 365;
             default -> this.period = 10 * 365;
         }
-        this.mainPlot.getData().clear();
-        this.updateLine();
+        //this.mainPlot.getData().clear();
+        this.updateChart();
     }
 
     public void passAssetID(String assetID) {
@@ -73,31 +76,35 @@ public class PlotPanelController extends ReferencingController {
         this.refresh();
     }
 
-    private void createLine() {
+    protected XYChart.Series<Number, Number> createLine(String asset) {
         XYChart.Series<Number, Number> series = new XYChart.Series<>();
-        var priceHistory = new ArrayList<>(this.simulation.getAssetManager().getAssetData(assetID).getPriceHistory());
+        var priceHistory = new ArrayList<>(this.simulation.getAssetManager().getAssetData(asset).getPriceHistory());
         int day = this.simulation.getSimulationDay();
-        int initial = day;
-        for (int i = priceHistory.size() - 1; i >= 0 && day >= initial - this.period; i--) {
+        int initialDay = day;
+        for (int i = priceHistory.size() - 1; i >= 0 && day >= initialDay - this.period; i--) {
             series.getData().add(new XYChart.Data<>(day--, priceHistory.get(i)));
         }
         this.mainPlot.getData().add(series);
+        return series;
     }
 
-    private void updateLine() {
+    protected void updateChart() {
+        int day = this.simulation.getSimulationDay();
+        this.xAxis.setLowerBound(Math.max(day - this.period, 0));
+        this.xAxis.setUpperBound(Math.max(day, this.period));
         if (this.mainPlot.getData().size() == 0) {
-            this.createLine();
+            this.createLine(this.assetID);
         } else {
             var series = this.mainPlot.getData().get(0).getData();
             var newPrice = this.simulation.getAssetManager().getAssetData(assetID).getOpeningPrice();
-            series.add(new XYChart.Data<>(this.simulation.getSimulationDay(), newPrice));
-            while (series.size() > 365)
-                series.remove(0);
+            series.add(new XYChart.Data<>(day, newPrice));
+            /*while (series.size() > this.period)
+                series.remove(0);*/
         }
     }
 
     @Override
     public void refresh() {
-        this.updateLine();
+        this.updateChart();
     }
 }

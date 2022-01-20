@@ -3,6 +3,7 @@ package application.driver;
 import application.panels.ConfigurationPanelController;
 import application.panels.creative.CreativePanelController;
 import application.panels.informative.AssetInfoPanelController;
+import application.panels.plot.MultiAssetPanelController;
 import application.util.format.DecimalDisplayFormat;
 import application.util.format.SimulationRunner;
 import javafx.application.Platform;
@@ -206,17 +207,24 @@ public class MainController {
         for (var category : AssetCategory.class.getEnumConstants())
             simulation.setupRandomMarket(category);
         this.refreshListViews();
+        this.refreshSimulationData();
     }
 
     public void onResetButtonClicked() {
         ensureSimulationStop();
         simulation = new Simulation();
         simRunner = new SimulationRunner(this, simulation);
+        this.windowsManager.passReferenceToAllWindows(simulation);
         this.refreshListViews();
         this.refreshSimulationData();
         this.startButton.setDisable(false);
         this.pauseButton.setSelected(false);
         this.pauseButton.setDisable(true);
+    }
+
+    public void onPriceTrackerButtonClicked() {
+        var source = MultiAssetPanelController.class.getResource("multi_asset_panel.fxml");
+        this.windowsManager.openMultiAssetWindow(source, simulation);
     }
 
     public void onAddMarketButtonClicked() {

@@ -4,12 +4,12 @@ import application.panels.ConfigurationPanelController;
 import application.panels.ReferencingController;
 import application.panels.creative.CreativePanelController;
 import application.panels.informative.InfoPanelController;
+import application.panels.plot.MultiAssetPanelController;
 import application.panels.plot.PlotPanelController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 import simulation.core.Simulation;
 
 import java.io.IOException;
@@ -44,13 +44,20 @@ public class WindowsManager {
             controller.passMainControllerReference(mainController);
             controller.passSimulationReference(simulation);
             this.controllers.put(windowID, controller);
-            controller.getStage().addEventFilter(WindowEvent.WINDOW_CLOSE_REQUEST,
-                    e -> this.controllers.remove(windowID));
+            controller.getStage().setOnCloseRequest(e -> this.controllers.remove(windowID));
         } catch(IOException e) {
             System.out.println("Failed to open window " + title);
             System.out.println(e.getMessage());
         }
         return controller;
+    }
+
+    public MultiAssetPanelController openMultiAssetWindow(URL source, Simulation simulation) {
+        return (MultiAssetPanelController) this.openNewReferencingWindow(
+                source,
+                "Multi Asset Panel",
+                simulation,
+                "MAP");
     }
 
     public ConfigurationPanelController openNewConfigWindow(URL source, Simulation simulation) {
@@ -77,6 +84,12 @@ public class WindowsManager {
         return controller;
     }
 
+    public void passReferenceToAllWindows(Simulation simulation) {
+        for (var entry : this.controllers.entrySet()) {
+            entry.getValue().passSimulationReference(simulation);
+        }
+    }
+
     public void refreshAllWindows() {
         for (var entry : this.controllers.entrySet()) {
             entry.getValue().refresh();
@@ -87,6 +100,4 @@ public class WindowsManager {
         for (var entry : this.controllers.entrySet())
             entry.getValue().getStage().close();
     }
-
-
 }

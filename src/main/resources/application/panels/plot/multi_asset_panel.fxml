@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<SplitPane dividerPositions="0.30022321428571436" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="435.0" prefWidth="741.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.panels.plot.MultiAssetPanelController">
+   <items>
+      <TitledPane animated="false" collapsible="false" maxWidth="220.0" prefHeight="1000.0" text="Assets Price Tracker">
+         <content>
+            <ScrollPane maxWidth="220.0" minWidth="220.0" prefHeight="200.0" prefWidth="220.0">
+               <content>
+                  <VBox fx:id="assetVBox" maxWidth="200.0" minWidth="200.0">
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                  </VBox>
+               </content>
+            </ScrollPane>
+         </content>
+      </TitledPane>
+      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+         <children>
+            <LineChart fx:id="mainPlot" animated="false" createSymbols="false" prefHeight="1000.0" prefWidth="1000.0" title="Mulit Asset Plot">
+              <xAxis>
+                <NumberAxis animated="false" autoRanging="false" forceZeroInRange="false" label="Day" minorTickLength="0.0" minorTickVisible="false" side="BOTTOM" tickLength="1.0" tickMarkVisible="false" tickUnit="10.0" fx:id="xAxis" />
+              </xAxis>
+              <yAxis>
+                <NumberAxis label="Relative value (to initial price)" side="LEFT" upperBound="1.0" />
+              </yAxis>
+            </LineChart>
+            <HBox alignment="CENTER" minHeight="40.0" prefHeight="100.0" prefWidth="200.0" spacing="30.0">
+               <children>
+                  <Label text="Max. Time range:" />
+                  <Slider fx:id="timeSlider" blockIncrement="1.0" majorTickUnit="1.0" max="3.0" minorTickCount="0" onDragDone="#onTimeSliderDragDone" onDragDropped="#onTimeSliderDragDone" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" minHeight="40.0" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Button fx:id="cancelButton" mnemonicParsing="false" onAction="#onCancelButtonClicked" text="Close" />
+               </children>
+            </HBox>
+         </children>
+         <padding>
+            <Insets right="20.0" top="5.0" />
+         </padding>
+      </VBox>
+   </items>
+</SplitPane>
