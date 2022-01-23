@@ -1,6 +1,11 @@
 package simulation.asset;
 
+import simulation.core.SimulationConfig;
+import simulation.util.Constants;
+import simulation.util.RandomService;
+
 import java.util.ArrayList;
+import java.util.Random;
 
 abstract public class AssetData {
     final private int id;
@@ -75,5 +80,15 @@ abstract public class AssetData {
     }
 
     public void processRandomEvent() {
+        if (SimulationConfig.getInstance().restoringMechanismEnabled() && this.sellingPrices.size() > 10) {
+            var initialPrice = this.sellingPrices.get(0);
+            double proportion = this.getOpeningPrice()/initialPrice;
+            double multiplier = 1;
+            multiplier += proportion > Constants.RESTORING_EFFECT_PROPORTION ? -0.05 : 0;
+            multiplier += proportion < 1.0/Constants.RESTORING_EFFECT_PROPORTION ? 0.05 : 0;
+            double newPrice = this.sellingPrices.get(this.sellingPrices.size() - 1) * multiplier;
+            this.sellingPrices.set(this.sellingPrices.size() - 1, newPrice);
+            this.openingPrice = newPrice;
+        }
     }
 }

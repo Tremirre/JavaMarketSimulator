@@ -52,9 +52,6 @@ public class RandomMarketFactory extends MarketFactory implements Resourced {
                 for (int i = 0; i < initialNumberOfAssets; i++) {
                     idx.addCompany(this.tradingEntitiesManager.createNewCompany(factory));
                 }
-                for (int i = 0; i < initialNumberOfAssets / 2; i++) {
-                    idx.addCompany(this.tradingEntitiesManager.createNewFund(factory));
-                }
                 newMarket.addStockMarketIndex(idx);
                 return newMarket;
             }

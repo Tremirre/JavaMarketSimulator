@@ -1,13 +1,18 @@
 package simulation.holders;
 
 
+import simulation.address.RandomAddressFactory;
+import simulation.asset.AssetCategory;
 import simulation.asset.AssetManager;
 import simulation.core.SimulationConfig;
 import simulation.holders.strategies.MomentumInvestmentStrategy;
 import simulation.holders.strategies.NaiveInvestmentStrategy;
 import simulation.holders.strategies.QualitativeAssessmentStrategy;
+import simulation.market.InformedMarketFactory;
 import simulation.market.Market;
+import simulation.market.StockMarket;
 import simulation.market.StockMarketIndex;
+import simulation.util.Constants;
 import simulation.util.RandomService;
 
 import java.util.ArrayList;
@@ -18,11 +23,22 @@ public final class TradingEntitiesManager {
     private final HashSet<StockMarketIndex> stockMarketIndexes = new HashSet<>();
     private final HashSet<Market> availableMarkets;
     private final AssetManager assetManager;
-
+    private final StockMarketIndex fundex;
+    private final StockMarket fundMarket;
 
     public TradingEntitiesManager(AssetManager assetManager, HashSet<Market> markets) {
         this.assetManager = assetManager;
         this.availableMarkets = markets;
+        this.fundex = this.createNewStockIndex("FUNDEX");
+        this.fundMarket = (StockMarket) new InformedMarketFactory(this.assetManager,
+                "FUNDEX",
+                new RandomAddressFactory().createAddress(),
+                0.05,
+                0.05
+                ).createMarket(AssetCategory.STOCK);
+        this.fundMarket.setMarketCurrency(Constants.DEFAULT_CURRENCY);
+        this.fundMarket.addStockMarketIndex(this.fundex);
+        this.availableMarkets.add(fundMarket);
     }
 
     public AssetHolder getHolderByID(int id) {
@@ -72,11 +88,19 @@ public final class TradingEntitiesManager {
 
     public void autoCreateInvestors() {
         int neededInvestors = this.assetManager.getNumberOfAssetTypes() * 16;
-        for (var entity : entities)
+        int neededFunds = neededInvestors / 64;
+        for (var entity : entities) {
             neededInvestors -= entity instanceof Investor ? 1 : 0;
+            neededFunds -= entity instanceof InvestmentFund ? 1 : 0;
+        }
         for (int i = 0; i < neededInvestors; i++) {
             this.createNewInvestor(new RandomHolderFactory(this.getTotalNumberOfEntities(), this.assetManager));
         }
+        for (int i = 0; i < neededFunds; i++) {
+            var fund = this.createNewFund(new RandomHolderFactory(this.getTotalNumberOfEntities(),  this.assetManager));
+            this.fundex.addCompany(fund);
+        }
+        this.fundMarket.refreshAssets();
     }
 
     public StockMarketIndex createNewStockIndex(String name) {

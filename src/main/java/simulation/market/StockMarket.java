@@ -54,4 +54,15 @@ public class StockMarket extends Market {
     public HashSet<StockMarketIndex> getStockMarketIndexes() {
         return this.stockMarketIndexes;
     }
+
+    public void refreshAssets() {
+        for (var idx : this.getStockMarketIndexes()) {
+            for (var company : idx.getCompanies()) {
+                if (!this.assetTypesOnMarket.contains(company.getAssociatedAsset())) {
+                    this.assetTypesOnMarket.add(company.getAssociatedAsset());
+                    company.sellAllStocks(this);
+                }
+            }
+        }
+    }
 }
