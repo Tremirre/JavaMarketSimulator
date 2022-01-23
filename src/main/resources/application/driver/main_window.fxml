@@ -159,8 +159,9 @@
                         <Region minWidth="12.0" prefHeight="40.0" prefWidth="12.0" />
                         <ToggleButton fx:id="pauseButton" mnemonicParsing="false" onAction="#onPauseButtonClicked" prefHeight="25.0" text="Pause Simulation" />
                         <Separator orientation="VERTICAL" prefHeight="0.0" prefWidth="13.0" />
-                        <Label text="Time multiplier:" />
-                        <Slider fx:id="timeMultiplierSlider" blockIncrement="0.1" majorTickUnit="5.0" max="20.0" min="1.0" minorTickCount="5" prefHeight="37.0" prefWidth="212.0" showTickLabels="true" showTickMarks="true" value="1.0" />
+                        <Label text="Speed:" />
+                        <Region minWidth="20.0" />
+                        <Slider fx:id="timeMultiplierSlider" blockIncrement="0.1" majorTickUnit="0.15" max="1.0" min="0.05" minorTickCount="2" prefHeight="37.0" prefWidth="212.0" showTickLabels="true" showTickMarks="true" value="1.0" />
                      </items>
                      <padding>
                         <Insets left="20.0" right="20.0" />

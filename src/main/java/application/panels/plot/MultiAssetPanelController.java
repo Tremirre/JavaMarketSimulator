@@ -41,7 +41,7 @@ public class MultiAssetPanelController extends PlotPanelController {
         for (var asset : this.plottedAssets) {
             var series = this.createLine(asset);
             series.setName(asset);
-        }
+        }   this.refresh();
     }
 
     @Override

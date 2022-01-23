@@ -7,6 +7,7 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Slider;
 import javafx.util.StringConverter;
+import simulation.util.Constants;
 
 import java.util.ArrayList;
 
@@ -59,10 +60,10 @@ public class PlotPanelController extends ReferencingController {
     public void onTimeSliderDragDone() {
         int value = (int) Math.floor(this.timeSlider.getValue());
         switch(value) {
-            case 0 -> this.period = 365;
-            case 1 -> this.period = 2 * 365;
-            case 2 -> this.period = 5 * 365;
-            default -> this.period = 10 * 365;
+            case 0 -> this.period = Constants.YEAR;
+            case 1 -> this.period = 2 * Constants.YEAR;
+            case 2 -> this.period = 5 * Constants.YEAR;
+            default -> this.period = 10 * Constants.YEAR;
         }
         //this.mainPlot.getData().clear();
         this.updateChart();
@@ -81,7 +82,8 @@ public class PlotPanelController extends ReferencingController {
         var priceHistory = new ArrayList<>(this.simulation.getAssetManager().getAssetData(asset).getPriceHistory());
         int day = this.simulation.getSimulationDay();
         int initialDay = day;
-        for (int i = priceHistory.size() - 1; i >= 0 && day >= initialDay - this.period; i--) {
+        int maxPeriod = 10 * Constants.YEAR;
+        for (int i = priceHistory.size() - 1; i >= 0 && day >= initialDay - maxPeriod; i--) {
             series.getData().add(new XYChart.Data<>(day--, priceHistory.get(i)));
         }
         this.mainPlot.getData().add(series);
@@ -98,8 +100,6 @@ public class PlotPanelController extends ReferencingController {
             var series = this.mainPlot.getData().get(0).getData();
             var newPrice = this.simulation.getAssetManager().getAssetData(assetID).getOpeningPrice();
             series.add(new XYChart.Data<>(day, newPrice));
-            /*while (series.size() > this.period)
-                series.remove(0);*/
         }
     }
 

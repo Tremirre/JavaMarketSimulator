@@ -129,7 +129,7 @@ public class MainController {
 
         this.setListViewEvents();
         this.timeMultiplierSlider.valueProperty().addListener((observable, oldValue, newValue) ->
-            SimulationConfig.getInstance().setTimeMultiplier((Double) newValue));
+            SimulationConfig.getInstance().setTimeMultiplier(1/(Double) newValue));
     }
     private void disableSimulationModifyingElements(boolean disable) {
         this.marketAddButton.setDisable(disable);
@@ -269,11 +269,11 @@ public class MainController {
     public void newMarketAdded(String marketName) {
         this.marketListView.getItems().add(marketName);
         this.refreshSimulationData();
+        this.refreshInvestorView();
     }
 
     public void newAssetAdded(String assetName, AssetCategory category) {
         this.categoryMapping.get(category).getItems().add(assetName);
-        this.refreshInvestorView();
         this.refreshSimulationData();
     }
 

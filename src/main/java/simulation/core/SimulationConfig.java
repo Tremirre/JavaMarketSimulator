@@ -5,11 +5,11 @@ import java.util.concurrent.atomic.AtomicInteger;
 public final class SimulationConfig {
     private static SimulationConfig instance;
     private final AtomicInteger maxTransactionsPerDayPerMarket = new AtomicInteger(100);
-    private final AtomicInteger maxOfferAge = new AtomicInteger(10);
-    private double bullProportion = 0.5;
+    private final AtomicInteger maxOfferAge = new AtomicInteger(3);
+    private double bullProportion = 0.6;
     private double timeMultiplier = 1.0;
-    private double naiveProportion = 2.0/3;
-    private double qualitativeProportion = 1.0/6;
+    private double naiveProportion = 0.7;
+    private double qualitativeProportion = 0.2;
     private double momentumProportion = 1 - naiveProportion - qualitativeProportion;
 
     public int getMaxOfferAge() {
