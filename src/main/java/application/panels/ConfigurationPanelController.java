@@ -58,6 +58,7 @@ public class ConfigurationPanelController extends ReferencingController {
         simConfig.setMaxOfferAge(Integer.parseInt(this.offerAgeField.getText()));
         simConfig.setMaxTransactionsPerDayPerMarket(Integer.parseInt(this.transactionCountField.getText()));
         simConfig.setRestoringMechanism(this.restoringToggleButton.isSelected());
+        this.mainController.refreshSimulationData();
         this.onCancelButtonClicked();
     }
 }

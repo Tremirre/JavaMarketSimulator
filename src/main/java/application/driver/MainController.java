@@ -15,6 +15,9 @@ import javafx.stage.WindowEvent;
 import simulation.asset.AssetCategory;
 import simulation.core.Simulation;
 import simulation.core.SimulationConfig;
+import simulation.holders.strategies.NaiveInvestmentStrategy;
+import simulation.holders.strategies.QualitativeAssessmentStrategy;
+import simulation.util.Constants;
 import simulation.util.DataExporter;
 
 import java.util.*;
@@ -47,6 +50,18 @@ public class MainController {
     private Label totalFundsLabel;
     @FXML
     private Label assetPriceLabel;
+    @FXML
+    private Label naiveCountLabel;
+    @FXML
+    private Label qualitativeCountLabel;
+    @FXML
+    private Label momentumCountLabel;
+    @FXML
+    private Label processedLabel;
+    @FXML
+    private Label updatedLabel;
+    @FXML
+    private Label removedLabel;
     @FXML
     private Button marketAddButton;
     @FXML
@@ -178,6 +193,11 @@ public class MainController {
         }
     }
 
+    public void setAddingNewEntities(boolean value) {
+        this.generateMarketsButton.setDisable(value);
+        this.stockAddButton.setDisable(value);
+    }
+
     public void onPauseButtonClicked() {
         this.disableSimulationModifyingElements(!this.pauseButton.isSelected());
         if (this.pauseButton.isSelected()) {
@@ -290,12 +310,42 @@ public class MainController {
                 averagePrice += entry.getValue();
             }
             averagePrice /= assetPrices.size();
+            int naiveCount = 0;
+            int qualitativeCount = 0;
+            int allCount = this.simulation.getEntitiesManager().getInvestors().size();
+            for (var investor : this.simulation.getEntitiesManager().getInvestors()) {
+                var strategy = investor.getStrategy();
+                if (strategy instanceof NaiveInvestmentStrategy)
+                    naiveCount++;
+                else if (strategy instanceof QualitativeAssessmentStrategy)
+                    qualitativeCount++;
+            }
+
+            int processed = 0;
+            int removed = 0;
+            int updated = 0;
+
+            for (var market : this.simulation.getMarkets()) {
+                processed += market.getTransactionsCount();
+                removed += market.getRemovedCount();
+                updated += market.getUpdatedCount();
+            }
+
+            this.processedLabel.setText(String.valueOf(processed));
+            this.updatedLabel.setText(String.valueOf(updated));
+            this.removedLabel.setText(String.valueOf(removed));
+            this.naiveCountLabel.setText(String.valueOf(naiveCount));
+            this.qualitativeCountLabel.setText(String.valueOf(qualitativeCount));
+            this.momentumCountLabel.setText(String.valueOf(allCount - naiveCount - qualitativeCount));
             this.simulationDayLabel.setText(String.valueOf(simulation.getSimulationDay()));
             this.entitiesCountLabel.setText(String.valueOf(simulation.getEntitiesManager().getTotalNumberOfEntities()));
             this.totalFundsLabel.setText(decimal.format(funds));
             this.assetPriceLabel.setText(decimal.format(averagePrice));
             this.windowsManager.refreshAllWindows();
         });
+        this.setAddingNewEntities(
+                simulation.getEntitiesManager().getTotalNumberOfEntities() >= Constants.MAX_THREADS
+        );
     }
 
     public static void ensureSimulationStop() {

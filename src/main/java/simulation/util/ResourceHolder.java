@@ -27,8 +27,7 @@ public class ResourceHolder {
         StringBuilder sb = new StringBuilder();
         try (BufferedReader br = new BufferedReader(
                 new InputStreamReader(
-                        Objects.requireNonNull(getClass().getResourceAsStream(path)
-                        )
+                        Objects.requireNonNull(getClass().getResourceAsStream(path))
                 )
         )) {
             String line;

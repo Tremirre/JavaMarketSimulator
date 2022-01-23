@@ -57,6 +57,9 @@ public final class TradingEntitiesManager {
 
     public Company createNewCompany(HolderFactory factory) {
         var newCompany = factory.createCompany();
+        if (newCompany == null) {
+            return null;
+        }
         newCompany.giveAccessToMarkets(this.availableMarkets);
         this.entities.add(newCompany);
         return newCompany;
@@ -64,6 +67,9 @@ public final class TradingEntitiesManager {
 
     public InvestmentFund createNewFund(HolderFactory factory) {
         var newFund = factory.createInvestmentFund();
+        if (newFund == null) {
+            return null;
+        }
         newFund.giveAccessToMarkets(this.availableMarkets);
         this.entities.add(newFund);
         return newFund;
@@ -71,6 +77,9 @@ public final class TradingEntitiesManager {
 
     public Investor createNewInvestor(HolderFactory factory) {
         var newInvestor = factory.createInvestor();
+        if (newInvestor == null) {
+            return null;
+        }
         newInvestor.giveAccessToMarkets(this.availableMarkets);
         this.entities.add(newInvestor);
         return newInvestor;
@@ -98,6 +107,9 @@ public final class TradingEntitiesManager {
         }
         for (int i = 0; i < neededFunds; i++) {
             var fund = this.createNewFund(new RandomHolderFactory(this.getTotalNumberOfEntities(),  this.assetManager));
+            if (fund == null) {
+                continue;
+            }
             this.fundex.addCompany(fund);
         }
         this.fundMarket.refreshAssets();

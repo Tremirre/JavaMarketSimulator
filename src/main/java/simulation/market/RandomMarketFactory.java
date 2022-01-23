@@ -50,7 +50,8 @@ public class RandomMarketFactory extends MarketFactory implements Resourced {
                         rand.yieldRandomString(4).toUpperCase() + (rand.yieldRandomInteger(100) + 10)
                 );
                 for (int i = 0; i < initialNumberOfAssets; i++) {
-                    idx.addCompany(this.tradingEntitiesManager.createNewCompany(factory));
+                    var company = this.tradingEntitiesManager.createNewCompany(factory);
+                    idx.addCompany(company);
                 }
                 newMarket.addStockMarketIndex(idx);
                 return newMarket;
@@ -71,7 +72,12 @@ public class RandomMarketFactory extends MarketFactory implements Resourced {
             case COMMODITY -> {
                 var newMarket = new CommoditiesMarket(this.assetManager, name, buyFee, sellFee, address);
                 for (int i = 0; i < initialNumberOfAssets; i++) {
-                    newMarket.addNewAsset(new RandomSupplementaryAssetFactory(this.assetManager).createCommodityAsset());
+                    var asset = new RandomSupplementaryAssetFactory(this.assetManager).createCommodityAsset();
+                    if (asset == null)
+                        asset = (String) rand.sampleElement(
+                                this.assetManager.getAssetsByCategory(AssetCategory.COMMODITY).toArray()
+                        );
+                    newMarket.addNewAsset(asset);
                 }
                 return newMarket;
             }

@@ -31,6 +31,9 @@ public class RandomSupplementaryAssetFactory extends SupplementaryAssetFactory i
     public String createCommodityAsset() {
         var rand = RandomService.getInstance();
         var commodity = (CommodityRecord) rand.sampleElement(resourceHolder.getUnusedCommodities().toArray());
+        if (commodity == null) {
+            return null;
+        }
         commodity.use();
         var rate = commodity.getInitialRate();
         var unit = commodity.getUnit();

@@ -18,6 +18,21 @@ abstract public class Market {
     private ArrayList<SellOffer> sellOffers;
     protected final AssetManager assetManager;
     protected HashSet<String> assetTypesOnMarket;
+    private int transactionsCount = 0;
+    private int updatedCount = 0;
+    private int removedCount = 0;
+
+    public int getTransactionsCount() {
+        return transactionsCount;
+    }
+
+    public int getUpdatedCount() {
+        return updatedCount;
+    }
+
+    public int getRemovedCount() {
+        return removedCount;
+    }
 
     Market(AssetManager assetManager, String name, double buyFee, double sellFee, Address address) {
         this.assetManager = assetManager;
@@ -44,6 +59,7 @@ abstract public class Market {
     }
 
     protected boolean processTransaction(BuyOffer buyOffer, SellOffer sellOffer) {
+        this.transactionsCount++;
         var buyer = buyOffer.getSender();
         var seller = sellOffer.getSender();
         var commonPrice = sellOffer.getPrice();
@@ -64,6 +80,7 @@ abstract public class Market {
     }
 
     public void processAllOffers() {
+        this.transactionsCount = 0;
         ArrayList<Integer> processedSellOrders = new ArrayList<>();
         for (var sellOffer : this.sellOffers) {
             for (var buyOffer : this.buyOffers) {
@@ -99,21 +116,25 @@ abstract public class Market {
     }
 
     public void updateOffers() {
+        this.updatedCount = 0;
         var allOffers = new HashSet<Offer>(this.buyOffers);
         allOffers.addAll(this.sellOffers);
         for (var offer : allOffers) {
+            this.updatedCount++;
             offer.updatePrice();
             offer.makeOlder();
         }
     }
 
     public void removeOutdatedOffers() {
+        this.removedCount = 0;
         var offersForRemoval = new HashSet<Integer>();
         var allOffers = new HashSet<Offer>(this.buyOffers);
         allOffers.addAll(this.sellOffers);
         for (var offer : allOffers) {
             if (offer.getDaysSinceGiven() > SimulationConfig.getInstance().getMaxOfferAge()
                     && offer.getSender().canWithdraw(offer.getAssetType())) {
+                this.removedCount++;
                 offer.withdraw();
                 offersForRemoval.add(offer.getID());
             }
