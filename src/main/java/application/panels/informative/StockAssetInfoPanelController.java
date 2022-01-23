@@ -2,6 +2,7 @@ package application.panels.informative;
 
 import application.util.format.DecimalDisplayFormat;
 import javafx.fxml.FXML;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import simulation.asset.StockData;
 
@@ -26,9 +27,25 @@ public class StockAssetInfoPanelController extends AssetInfoPanelController {
     private Label streetLabel;
     @FXML
     private Label buildingNumberLabel;
+    @FXML
+    private ComboBox<String> buyoutComboBox;
+
+    public void initialize() {
+        this.buyoutComboBox.getItems().addAll(
+                "20%",
+                "40%",
+                "60%",
+                "80%",
+                "100%"
+        );
+        this.buyoutComboBox.setValue("100%");
+    }
+
 
     public void onBuyoutButtonClicked() {
-        this.assetData.getCompany().buyout();
+        String percentage = this.buyoutComboBox.getValue();
+        double value = ((double) Integer.parseInt(percentage.substring(0, percentage.length() - 1)))/100;
+        this.assetData.getCompany().buyout(value);
     }
 
     @Override

@@ -49,11 +49,13 @@ public class Company extends AssetHolder {
         this.freezeWithdrawal = true;
     }
 
-    public void buyout() {
+    public void buyout(double percentage) {
+        int forSale = (int) percentage * this.numberOfStocks;
         for (var market : this.availableMarkets) {
             if (market.getAvailableAssetTypes().contains(this.associatedAsset)) {
                 var price = this.strategy.determineOptimalBuyingPrice(this.associatedAsset);
-                market.addSellOffer(this.associatedAsset, this, price, this.numberOfStocks);
+                market.addSellOffer(this.associatedAsset, this, price, forSale);
+                this.numberOfStocks -= forSale;
                 return;
             }
         }
