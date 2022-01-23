@@ -11,6 +11,7 @@ public final class SimulationConfig {
     private double naiveProportion = 0.7;
     private double qualitativeProportion = 0.2;
     private double momentumProportion = 1 - naiveProportion - qualitativeProportion;
+    private boolean restoringMechanism = true;
 
     public int getMaxOfferAge() {
         return maxOfferAge.get();
@@ -26,6 +27,14 @@ public final class SimulationConfig {
 
     public void setMaxTransactionsPerDayPerMarket(int maxTransactionsPerDayPerMarket) {
         this.maxTransactionsPerDayPerMarket.getAndSet(maxTransactionsPerDayPerMarket);
+    }
+
+    public synchronized void setRestoringMechanism(boolean restoringMechanism) {
+        this.restoringMechanism = restoringMechanism;
+    }
+
+    public synchronized boolean restoringMechanismEnabled() {
+        return this.restoringMechanism;
     }
 
     public synchronized double getBullProportion() {

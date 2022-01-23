@@ -26,4 +26,7 @@ public final class Constants {
     public static final int INVESTOR_FUNDS_INCREASE_AMOUNT = 25;
     public static final String DEFAULT_CURRENCY = "DEFAULT_STANDARD_CURRENCY";
     public static final int RANDOM_SERVICE_SEED = 0;
+    public static final int RESTORING_EFFECT_PROPORTION = 1000;
+    public static final double RESTORING_EFFECT_CHANGE = 0.1;
+    public static final int RESTORING_EFFECT_DURATION = 10;
 }

@@ -2,10 +2,8 @@ package simulation.asset;
 
 import simulation.core.SimulationConfig;
 import simulation.util.Constants;
-import simulation.util.RandomService;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 abstract public class AssetData {
     final private int id;
@@ -16,6 +14,8 @@ abstract public class AssetData {
     private ArrayList<Double> sellingPrices;
     private ArrayList<Double> salesBuffer;
     protected boolean splittable;
+    private int priceRestoringEffectDaysLeft = 0;
+    private double priceRestoringMultiplier = 1.0;
 
     protected AssetData(int id, String name, double openingPrice) {
         this.id = id;
@@ -80,13 +80,24 @@ abstract public class AssetData {
     }
 
     public void processRandomEvent() {
-        if (SimulationConfig.getInstance().restoringMechanismEnabled() && this.sellingPrices.size() > 10) {
+        if (SimulationConfig.getInstance().restoringMechanismEnabled()
+                && this.sellingPrices.size() > 10
+                && this.priceRestoringEffectDaysLeft == 0) {
             var initialPrice = this.sellingPrices.get(0);
             double proportion = this.getOpeningPrice()/initialPrice;
-            double multiplier = 1;
-            multiplier += proportion > Constants.RESTORING_EFFECT_PROPORTION ? -0.05 : 0;
-            multiplier += proportion < 1.0/Constants.RESTORING_EFFECT_PROPORTION ? 0.05 : 0;
-            double newPrice = this.sellingPrices.get(this.sellingPrices.size() - 1) * multiplier;
+            this.priceRestoringEffectDaysLeft = Constants.RESTORING_EFFECT_DURATION;
+            if (proportion > Constants.RESTORING_EFFECT_PROPORTION) {
+                this.priceRestoringMultiplier = 1.0 - Constants.RESTORING_EFFECT_CHANGE;
+            } else if (proportion < 1.0/Constants.RESTORING_EFFECT_PROPORTION) {
+                this.priceRestoringMultiplier = 1.0 + Constants.RESTORING_EFFECT_CHANGE;
+            } else {
+                this.priceRestoringMultiplier = 1.0;
+                this.priceRestoringEffectDaysLeft = 0;
+            }
+        }
+        if (this.priceRestoringEffectDaysLeft > 0) {
+            this.priceRestoringEffectDaysLeft--;
+            double newPrice = this.sellingPrices.get(this.sellingPrices.size() - 1) * this.priceRestoringMultiplier;
             this.sellingPrices.set(this.sellingPrices.size() - 1, newPrice);
             this.openingPrice = newPrice;
         }
