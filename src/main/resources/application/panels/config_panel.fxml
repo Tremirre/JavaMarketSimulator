@@ -38,6 +38,7 @@
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.Slider?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
@@ -45,7 +46,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="TOP_CENTER" maxHeight="498.0" maxWidth="420.0" minHeight="225.0" minWidth="420.0" prefHeight="382.0" prefWidth="420.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.panels.ConfigurationPanelController">
+<VBox alignment="TOP_CENTER" maxHeight="498.0" maxWidth="420.0" minHeight="225.0" minWidth="420.0" prefHeight="421.0" prefWidth="420.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.panels.ConfigurationPanelController">
    <children>
       <Label alignment="CENTER" prefHeight="31.0" prefWidth="398.0" text="Simulation Config">
          <font>
@@ -113,6 +114,11 @@
             </HBox>
          </children>
       </GridPane>
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+         <children>
+            <ToggleButton fx:id="restoringToggleButton" mnemonicParsing="false" text="Toggle Restoring Mechanism" />
+         </children>
+      </HBox>
       <HBox alignment="CENTER" maxHeight="30.0" minHeight="30.0" prefHeight="61.0" prefWidth="389.0">
          <children>
             <Label text="Ratios of investors' strategies:" />

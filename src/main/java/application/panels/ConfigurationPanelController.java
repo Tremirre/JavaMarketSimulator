@@ -4,6 +4,7 @@ import application.util.format.IntegerFormatter;
 import javafx.fxml.FXML;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleButton;
 import simulation.core.SimulationConfig;
 
 public class ConfigurationPanelController extends ReferencingController {
@@ -20,6 +21,8 @@ public class ConfigurationPanelController extends ReferencingController {
     private Slider qualitativeSlider;
     @FXML
     private Slider momentumSlider;
+    @FXML
+    private ToggleButton restoringToggleButton;
 
     private boolean strategiesProportionsChanged = false;
 
@@ -33,6 +36,7 @@ public class ConfigurationPanelController extends ReferencingController {
         this.naiveSlider.setValue(simConfig.getNaiveProportion());
         this.qualitativeSlider.setValue(simConfig.getQualitativeProportion());
         this.momentumSlider.setValue(simConfig.getMomentumProportion());
+        this.restoringToggleButton.setSelected(simConfig.restoringMechanismEnabled());
     }
 
     public void onStrategyProportionSliderChanged() {
@@ -53,6 +57,7 @@ public class ConfigurationPanelController extends ReferencingController {
         simConfig.setBullProportion(this.ratioSlider.getValue());
         simConfig.setMaxOfferAge(Integer.parseInt(this.offerAgeField.getText()));
         simConfig.setMaxTransactionsPerDayPerMarket(Integer.parseInt(this.transactionCountField.getText()));
+        simConfig.setRestoringMechanism(this.restoringToggleButton.isSelected());
         this.onCancelButtonClicked();
     }
 }
