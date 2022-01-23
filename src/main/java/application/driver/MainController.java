@@ -200,6 +200,9 @@ public class MainController {
 
     public void onPauseButtonClicked() {
         this.disableSimulationModifyingElements(!this.pauseButton.isSelected());
+        this.setAddingNewEntities(
+                simulation.getEntitiesManager().getTotalNumberOfEntities() >= Constants.MAX_THREADS
+        );
         if (this.pauseButton.isSelected()) {
             simRunner.pause();
         }
