@@ -153,13 +153,13 @@ public class MainController {
         this.marketAddButton.setDisable(disable);
         this.currencyAddButton.setDisable(disable);
         this.commodityAddButton.setDisable(disable);
-        this.stockAddButton.setDisable(disable);
         this.smiAddButton.setDisable(disable);
-        this.investorAddButton.setDisable(disable);
-        this.generateMarketsButton.setDisable(disable);
         this.simulationConfigButton.setDisable(disable);
         this.resetButton.setDisable(disable);
         this.priceExportMenuItem.setDisable(disable);
+        this.disableAddingNewEntities(disable
+                        || simulation.getEntitiesManager().getTotalNumberOfEntities() >= Constants.MAX_THREADS
+                );
     }
 
     private void refreshMarketView() {
@@ -195,9 +195,12 @@ public class MainController {
                     investor.getFirstName() + ' ' + investor.getLastName() + " (" + investor.getID() + ')'
             );
         }
+        this.disableAddingNewEntities(
+                simulation.getEntitiesManager().getTotalNumberOfEntities() >= Constants.MAX_THREADS
+        );
     }
 
-    public void setAddingNewEntities(boolean value) {
+    public void disableAddingNewEntities(boolean value) {
         this.generateMarketsButton.setDisable(value);
         this.stockAddButton.setDisable(value);
         this.investorAddButton.setDisable(value);
@@ -205,9 +208,6 @@ public class MainController {
 
     public void onPauseButtonClicked() {
         this.disableSimulationModifyingElements(!this.pauseButton.isSelected());
-        this.setAddingNewEntities(
-                simulation.getEntitiesManager().getTotalNumberOfEntities() >= Constants.MAX_THREADS
-        );
         if (this.pauseButton.isSelected()) {
             simRunner.pause();
         }
@@ -308,6 +308,9 @@ public class MainController {
     public void newAssetAdded(String assetName, AssetCategory category) {
         this.categoryMapping.get(category).getItems().add(assetName);
         this.refreshSimulationData();
+        this.disableAddingNewEntities(
+                simulation.getEntitiesManager().getTotalNumberOfEntities() >= Constants.MAX_THREADS
+        );
     }
 
     public void refreshSimulationData() {
@@ -356,9 +359,6 @@ public class MainController {
             this.assetPriceLabel.setText(decimal.format(averagePrice));
             this.windowsManager.refreshAllWindows();
         });
-        this.setAddingNewEntities(
-                simulation.getEntitiesManager().getTotalNumberOfEntities() >= Constants.MAX_THREADS
-        );
     }
 
     public static void ensureSimulationStop() {

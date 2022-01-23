@@ -311,7 +311,7 @@
                               <Insets left="15.0" right="15.0" />
                            </padding>
                            <children>
-                              <Label text="Momentum Investros Count:">
+                              <Label text="Momentum Investors Count:">
                                  <font>
                                     <Font size="14.0" />
                                  </font>
