@@ -73,6 +73,8 @@ public class MainController {
     @FXML
     private Button smiAddButton;
     @FXML
+    private Button investorAddButton;
+    @FXML
     private Button generateMarketsButton;
     @FXML
     private Button simulationConfigButton;
@@ -145,6 +147,7 @@ public class MainController {
         this.setListViewEvents();
         this.timeMultiplierSlider.valueProperty().addListener((observable, oldValue, newValue) ->
             SimulationConfig.getInstance().setTimeMultiplier(1/(Double) newValue));
+        this.refreshListViews();
     }
     private void disableSimulationModifyingElements(boolean disable) {
         this.marketAddButton.setDisable(disable);
@@ -152,6 +155,7 @@ public class MainController {
         this.commodityAddButton.setDisable(disable);
         this.stockAddButton.setDisable(disable);
         this.smiAddButton.setDisable(disable);
+        this.investorAddButton.setDisable(disable);
         this.generateMarketsButton.setDisable(disable);
         this.simulationConfigButton.setDisable(disable);
         this.resetButton.setDisable(disable);
@@ -184,7 +188,7 @@ public class MainController {
         this.refreshSMIView();
     }
 
-    private void refreshInvestorView() {
+    public void refreshInvestorView() {
         this.investorListView.getItems().clear();
         for (var investor : simulation.getEntitiesManager().getInvestors()) {
             this.investorListView.getItems().add(
@@ -196,6 +200,7 @@ public class MainController {
     public void setAddingNewEntities(boolean value) {
         this.generateMarketsButton.setDisable(value);
         this.stockAddButton.setDisable(value);
+        this.investorAddButton.setDisable(value);
     }
 
     public void onPauseButtonClicked() {
@@ -273,6 +278,11 @@ public class MainController {
     public void onAddSMIButtonClicked() {
         var source = CreativePanelController.class.getResource("stock_index_creation_panel.fxml");
         this.windowsManager.openNewCreativeWindow(source, "Stock Index Creation Panel", simulation);
+    }
+
+    public void onAddInvestorButtonClicked() {
+        var source = CreativePanelController.class.getResource("investor_creation_panel.fxml");
+        this.windowsManager.openNewCreativeWindow(source, "Investor Creation Panel", simulation);
     }
 
     public void onSimulationConfigButtonClicked() {

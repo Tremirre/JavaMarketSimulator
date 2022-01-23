@@ -142,9 +142,10 @@
                   </TitledPane>
                   <TitledPane text="Investors">
                      <content>
-                        <VBox alignment="TOP_CENTER">
+                        <VBox alignment="TOP_CENTER" spacing="10.0">
                            <children>
                               <ListView fx:id="investorListView" />
+                              <Button fx:id="investorAddButton" mnemonicParsing="false" onAction="#onAddInvestorButtonClicked" text="+" />
                            </children>
                         </VBox>
                      </content>
@@ -167,12 +168,12 @@
                         <Insets left="20.0" right="20.0" />
                      </padding>
                   </ToolBar>
-                  <Label prefHeight="34.0" prefWidth="156.0" text="General Simulation Info">
+                  <Label alignment="CENTER" prefHeight="54.0" prefWidth="601.0" text="General Simulation Info" textAlignment="CENTER">
                      <font>
-                        <Font size="15.0" />
+                        <Font name="System Bold" size="15.0" />
                      </font>
                   </Label>
-                  <GridPane alignment="CENTER_LEFT" minHeight="300.0">
+                  <GridPane alignment="CENTER_LEFT" gridLinesVisible="true" minHeight="300.0">
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
