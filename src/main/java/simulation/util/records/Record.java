@@ -21,14 +21,24 @@ public abstract class Record {
         this.initialRate = initialRate;
     }
 
+    /**
+     * Checks if asset is used.
+     * @return used flag.
+     */
     public boolean isUsed() {
         return isUsed;
     }
 
+    /**
+     * Marks the asset as used.
+     */
     public void use() {
         this.isUsed = true;
     }
 
+    /**
+     * Marks the asset as unused.
+     */
     public void unUse() { this.isUsed = false; }
 
     public String getName() {
