@@ -43,7 +43,7 @@ public abstract class AssetHolder extends Thread implements SellingEntity, Buyin
         if (amount <= 0)
             return;
         this.investmentBudget -= price * amount;
-        market.addBuyOffer(chosenAsset, this, convertedPrice, amount, assetCurrency);
+        market.addBuyOffer(chosenAsset, this, convertedPrice, amount);
     }
 
     public void processBuyOffer(String assetType, double overPay, double amount) {

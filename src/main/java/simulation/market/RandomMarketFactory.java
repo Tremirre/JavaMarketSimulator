@@ -8,14 +8,27 @@ import simulation.util.RandomService;
 import simulation.util.Resourced;
 import simulation.util.records.CurrencyRecord;
 
+/**
+ * Class that creates new markets with random data and assets.
+ */
 public class RandomMarketFactory extends MarketFactory implements Resourced {
     private final TradingEntitiesManager tradingEntitiesManager;
 
+    /**
+     * @param assetManager reference to asset manager.
+     * @param tradingEntitiesManager reference to entities manager.
+     */
     public RandomMarketFactory(AssetManager assetManager, TradingEntitiesManager tradingEntitiesManager) {
         super(assetManager);
         this.tradingEntitiesManager = tradingEntitiesManager;
     }
 
+    /**
+     * Creates new market based on the category.
+     * Creates new assets corresponding to the market category and makes them available on the new market.
+     * @param category market category.
+     * @return new market with random parameters and assets.
+     */
     @Override
     public Market createMarket(AssetCategory category) {
         var rand = RandomService.getInstance();
