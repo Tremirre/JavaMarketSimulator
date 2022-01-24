@@ -2,6 +2,9 @@ package simulation.util.records;
 
 import java.util.HashSet;
 
+/**
+ * Class dedicated to holding a single currency
+ */
 public class CurrencyRecord extends Record {
     private HashSet<String> countriesOfUse = new HashSet<>();
 

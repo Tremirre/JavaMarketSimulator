@@ -8,6 +8,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.*;
 
+/**
+ * This class is meant to hold the data for random entities/assets generation.
+ */
 public class ResourceHolder {
     private final static String addressFolder = "address_data";
     private final static String customNamesFolder = "custom_names";
@@ -23,6 +26,12 @@ public class ResourceHolder {
     private String[] marketNames;
     private ArrayList<String> companyNames;
 
+    /**
+     * Utility function that given a path returns contents of a file under that path as a string.
+     * @param path Relative path to the class ResourceHolder (i.e. rooted in the utils package in the resources
+     *             structure.)
+     * @return contents of a file as a string
+     */
     private String writeFromFileToString(String path) {
         StringBuilder sb = new StringBuilder();
         try (BufferedReader br = new BufferedReader(
@@ -45,6 +54,9 @@ public class ResourceHolder {
         return sb.toString();
     }
 
+    /**
+     * Loads currencies and countries from the associated files
+     */
     private void loadCurrenciesAndCountries() {
         String countriesCurrencies = this.writeFromFileToString(assetFolder + "/countries_currencies.txt");
         String[] currencyRecords = countriesCurrencies.split("\n");
@@ -70,6 +82,9 @@ public class ResourceHolder {
         }
     }
 
+    /**
+     * Loads address from the associated files
+     */
     private void loadAddressData() {
         for (String country : this.citiesCountryMapping.keySet()) {
             String cities = this.writeFromFileToString(addressFolder+'/' + country.toLowerCase() + ".txt");
@@ -80,6 +95,9 @@ public class ResourceHolder {
         this.streets = allStreets.split(";");
     }
 
+    /**
+     * Loads commodities data from the associated file
+     */
     private void loadCommodities() {
         String commodities = this.writeFromFileToString(assetFolder + "/commodity_data.txt");
         String[] commoditiesRecords = commodities.split("\n");
@@ -92,6 +110,9 @@ public class ResourceHolder {
         }
     }
 
+    /**
+     * Loads custom names from the associated files
+     */
     private void loadCustomNamesData() {
         String allNames = this.writeFromFileToString(customNamesFolder + "/names.txt");
         this.names = allNames.split(";");
@@ -103,6 +124,10 @@ public class ResourceHolder {
         this.marketNames = allMarketNames.split(";");
     }
 
+    /**
+     * Parameterless constructor.
+     * Initializes containers and loads the data from the files.
+     */
     public ResourceHolder() {
         this.citiesCountryMapping = new HashMap<>();
         this.currencies = new ArrayList<>();
@@ -173,10 +198,17 @@ public class ResourceHolder {
         return companyNames;
     }
 
+    /**
+     * Removes a company name from the pool of free company names.
+     * @param name name of the company to be removed.
+     */
     public void removeCompanyName(String name) {
         this.companyNames.remove(name);
     }
 
+    /**
+     * Ensures all currency and commodity records are marked as unused.
+     */
     public void refresh() {
         for (var currency : this.currencies)
             currency.unUse();

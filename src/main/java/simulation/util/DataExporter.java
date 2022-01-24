@@ -7,14 +7,29 @@ import java.io.Writer;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+/**
+ * Class for exporting data to a csv file.
+ */
 public class DataExporter {
+    /**
+     * Utility function for creating directory if it does not exist.
+     * (If it exists, nothing happens)
+     * @param dirname directory name to be created.
+     */
     private void makeDirectory(String dirname) {
         File dir = new File(dirname);
         dir.mkdir();
     }
 
-    public <T> void exportLabeledData(HashMap<String, ? extends List<T>> data, String exportedFileName) {
+    /**
+     * Function for exporting labeled date (i.e. in form of a mapping from String (labels) to some lists of data).
+     * @param data Map of data to be exported
+     * @param exportedFileName name of the exported file.
+     * @param <T> class of the records to be exported.
+     */
+    public <T> void exportLabeledData(Map<String, ? extends List<T>> data, String exportedFileName) {
         var dirname = "exports";
         makeDirectory(dirname);
         try (Writer writer = new FileWriter(dirname + "\\" + exportedFileName)) {

@@ -2,6 +2,9 @@ package simulation.util;
 
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
+/**
+ * Static class for read-write lock for ensuring the proper concurrent working and modification.
+ */
 public class GlobalHoldersLock {
     private static ReentrantReadWriteLock lock = new ReentrantReadWriteLock();
 
