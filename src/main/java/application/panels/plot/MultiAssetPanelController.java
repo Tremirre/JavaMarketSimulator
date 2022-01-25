@@ -41,7 +41,8 @@ public class MultiAssetPanelController extends PlotPanelController {
         for (var asset : this.plottedAssets) {
             var series = this.createLine(asset);
             series.setName(asset);
-        }   this.refresh();
+        }
+        this.refresh();
     }
 
     @Override
@@ -65,12 +66,15 @@ public class MultiAssetPanelController extends PlotPanelController {
     @Override
     public void passSimulationReference(Simulation simulation) {
         super.passSimulationReference(simulation);
+        this.plottedAssets.clear();
+        this.mainPlot.getData().clear();
         var allAssetsPrices = simulation.getAssetManager().getAssetOpeningPrices();
         for (var entry : allAssetsPrices.entrySet()) {
             var record = new AssetRecord(entry.getKey(), entry.getValue(), this);
             this.records.put(entry.getKey(), record);
             this.assetVBox.getChildren().add(record);
         }
+        this.updateChart();
     }
 
     @Override

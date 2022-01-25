@@ -257,4 +257,12 @@ public class Company extends AssetHolder {
     public String getAssociatedAsset() {
         return associatedAsset;
     }
+
+    public ArrayList<Double> getDailyTotalSales() {
+        return this.dailyTotalSales;
+    }
+
+    public ArrayList<Integer> getDailyTradingVolumes() {
+        return this.dailyTradingVolumes;
+    }
 }

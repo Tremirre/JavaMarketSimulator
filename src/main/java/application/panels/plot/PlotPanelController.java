@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 public class PlotPanelController extends ReferencingController {
 
-    private String assetID;
+    protected String assetID;
     protected int period = 365;
     protected int lastSliderTick = 0;
     @FXML
@@ -65,7 +65,6 @@ public class PlotPanelController extends ReferencingController {
             case 2 -> this.period = 5 * Constants.YEAR;
             default -> this.period = 10 * Constants.YEAR;
         }
-        //this.mainPlot.getData().clear();
         this.updateChart();
     }
 
@@ -86,6 +85,7 @@ public class PlotPanelController extends ReferencingController {
         for (int i = priceHistory.size() - 1; i >= 0 && day >= initialDay - maxPeriod; i--) {
             series.getData().add(new XYChart.Data<>(day--, priceHistory.get(i)));
         }
+        series.setName("Asset Price");
         this.mainPlot.getData().add(series);
         return series;
     }

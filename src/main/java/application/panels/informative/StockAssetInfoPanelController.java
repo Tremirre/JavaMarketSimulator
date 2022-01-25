@@ -1,5 +1,6 @@
 package application.panels.informative;
 
+import application.panels.plot.PlotPanelController;
 import application.util.format.DecimalDisplayFormat;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
@@ -41,6 +42,14 @@ public class StockAssetInfoPanelController extends AssetInfoPanelController {
         this.buyoutComboBox.setValue("100%");
     }
 
+    @Override
+    public void onPlotButtonClicked() {
+        this.mainController.getWindowsManager().openNewPlotWindow(
+                PlotPanelController.class.getResource("stock_plot_panel.fxml"),
+                "Plot",
+                simulation,
+                this.getAssetID());
+    }
 
     public void onBuyoutButtonClicked() {
         String percentage = this.buyoutComboBox.getValue();
