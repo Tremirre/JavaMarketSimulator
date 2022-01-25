@@ -321,7 +321,7 @@ public class MainController {
                 funds += inv.getInvestmentBudget();
             }
             double averagePrice = 0;
-            var assetPrices = new HashMap<>(simulation.getAssetManager().getLatestAverageAssetPrices());
+            var assetPrices = new HashMap<>(simulation.getAssetManager().getAssetOpeningPrices());
             for (var entry : assetPrices.entrySet()) {
                 averagePrice += entry.getValue();
             }

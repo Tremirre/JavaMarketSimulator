@@ -65,7 +65,7 @@ public class MultiAssetPanelController extends PlotPanelController {
     @Override
     public void passSimulationReference(Simulation simulation) {
         super.passSimulationReference(simulation);
-        var allAssetsPrices = simulation.getAssetManager().getLatestAverageAssetPrices();
+        var allAssetsPrices = simulation.getAssetManager().getAssetOpeningPrices();
         for (var entry : allAssetsPrices.entrySet()) {
             var record = new AssetRecord(entry.getKey(), entry.getValue(), this);
             this.records.put(entry.getKey(), record);
@@ -75,7 +75,7 @@ public class MultiAssetPanelController extends PlotPanelController {
 
     @Override
     public void refresh() {
-        var allAssetsPrices = simulation.getAssetManager().getLatestAverageAssetPrices();
+        var allAssetsPrices = simulation.getAssetManager().getAssetOpeningPrices();
         for (var entry : allAssetsPrices.entrySet()) {
             if (!this.records.containsKey(entry.getKey())) {
                 var record = new AssetRecord(entry.getKey(), entry.getValue(), this);

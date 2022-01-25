@@ -5,18 +5,58 @@ import simulation.util.Constants;
 
 import java.util.ArrayList;
 
+/**
+ * Base class representing the common functionality of every asset.
+ */
 abstract public class AssetData {
+    /**
+     * Asset identifier.
+     */
     final private int id;
+    /**
+     * Asset name.
+     */
     private String name;
+    /**
+     * Opening price of the day for 1 unit of the asset in DEFAULT STANDARD CURRENCY.
+     */
     private double openingPrice;
+    /**
+     * Maximal recorded price for 1 unit of the asset in DEFAULT STANDARD CURRENCY.
+     */
     private double maximalPrice;
+    /**
+     * Minimal recorded price for 1 unit of the asset in DEFAULT STANDARD CURRENCY.
+     */
     private double minimalPrice;
+    /**
+     * History of asset prices for every day of the simulation since the asset creation.
+     */
     private ArrayList<Double> sellingPrices;
+    /**
+     * List aggregating prices of transactions made in the given day of the asset.
+     */
     private ArrayList<Double> salesBuffer;
+    /**
+     * Flag denoting whether the asset is discrete (e.g. stocks) or continuous (e.g. currency).
+     */
     protected boolean splittable;
+    /**
+     * Value denoting the left days of the restoring effect.
+     */
     private int priceRestoringEffectDaysLeft = 0;
+    /**
+     * Value denoting the price change during the restoring effect. (Initially 1 denoting no change).
+     */
     private double priceRestoringMultiplier = 1.0;
 
+    /**
+     * Initializes containers, sets the min and max price as the provided opening price, adds the opening price to the
+     * asset price history.
+     * @param id id of the asset.
+     * @param name name of the asset.
+     * @param openingPrice initial value of the asset per 1 unit in DEFAULT STANDARD CURRENCY.
+     */
     protected AssetData(int id, String name, double openingPrice) {
         this.id = id;
         this.name = name;
@@ -42,6 +82,10 @@ abstract public class AssetData {
         return this.splittable;
     }
 
+    /**
+     * Adds transaction price to the buffer and updates min/max price if needed.
+     * @param price
+     */
     public void addLatestSellingPrice(double price) {
         this.salesBuffer.add(price);
         if (this.maximalPrice < price)
@@ -50,6 +94,10 @@ abstract public class AssetData {
             this.minimalPrice = price;
     }
 
+    /**
+     * Adds the average of the day's transaction prices to the price history. (Adds the opening price if no transactions
+     * have been made in a day)
+     */
     public void processDayPrices() {
         double averagePrice = this.salesBuffer.isEmpty() ? this.getOpeningPrice() : 0;
         for (var price : this.salesBuffer)
@@ -59,6 +107,10 @@ abstract public class AssetData {
         this.salesBuffer.clear();
     }
 
+    /**
+     * Returns the unique identifier of the asset as the asset's name concatenated by its numerical id.
+     * @return identifying name of the asset.
+     */
     public String getUniqueIdentifyingName() {
         return this.name + this.id;
     }
@@ -79,7 +131,11 @@ abstract public class AssetData {
         return minimalPrice;
     }
 
-    public void processRandomEvent() {
+    /**
+     * Processes asset random and non-random events.
+     * Checks and applies restoring effect if needed.
+     */
+    public void processAssetEvents() {
         if (SimulationConfig.getInstance().restoringMechanismEnabled()
                 && this.sellingPrices.size() > 10
                 && this.priceRestoringEffectDaysLeft == 0) {
