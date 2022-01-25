@@ -3,6 +3,9 @@ package simulation.address;
 import simulation.util.RandomService;
 import simulation.util.Resourced;
 
+/**
+ * This class defines a factory creating random addresses.
+ */
 public class RandomAddressFactory implements AddressFactory, Resourced {
     public Address createAddress() {
         var rand = RandomService.getInstance();

@@ -1,5 +1,8 @@
 package simulation.address;
 
+/**
+ * Data class representing an address.
+ */
 public class Address {
     private String country;
     private String city;
@@ -13,15 +16,6 @@ public class Address {
         this.postalCode = postalCode;
         this.streetName = streetName;
         this.buildingNumber = buildingNumber;
-    }
-
-    public void print() {
-        System.out.printf("%s %d \n%s %s, %s \n",
-                this.streetName,
-                this.buildingNumber,
-                this.postalCode,
-                this.city,
-                this.country);
     }
 
     public String getCountry() {

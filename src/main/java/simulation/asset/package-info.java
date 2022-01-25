@@ -1,4 +1,3 @@
-package simulation.asset;
 /**
  * This packages defines, manages and creates assets (in form of asset data) of all types.
  * For clarity, the naming is defined as follows:
@@ -8,3 +7,4 @@ package simulation.asset;
  *   all asset types are held in the asset manager, every asset type being associated with exactly one instance of
  *   asset data. Asset type is commonly identified and referred to through its unique identifying name.
  */
+package simulation.asset;
