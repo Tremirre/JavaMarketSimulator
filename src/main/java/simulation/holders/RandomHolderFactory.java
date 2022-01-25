@@ -7,12 +7,25 @@ import simulation.util.Constants;
 import simulation.util.RandomService;
 import simulation.util.Resourced;
 
+/**
+ * Creates new trading entities with random parameters.
+ */
 public class RandomHolderFactory extends HolderFactory implements Resourced {
 
+    /**
+     * Initializes fields with provided values and objects.
+     * @param entitiesCount number of dynamic entities (threads) in the simulation.
+     * @param assetManager reference to the asset manager.
+     */
     public RandomHolderFactory(int entitiesCount, AssetManager assetManager) {
         super(entitiesCount, assetManager);
     }
 
+    /**
+     * Utility function picking with uniform probability a random investment strategy (with random parameters).
+     * @param rand reference to random service.
+     * @return new Investment Strategy.
+     */
     private InvestmentStrategy pickRandomStrategy(RandomService rand) {
         switch (rand.yieldRandomInteger(3)) {
             case 0 -> {
@@ -31,6 +44,10 @@ public class RandomHolderFactory extends HolderFactory implements Resourced {
         }
     }
 
+    /**
+     * Creates a new investor with random data.
+     * @return new Investor.
+     */
     @Override
     public Investor createInvestor() {
         int id = useID();
@@ -45,6 +62,10 @@ public class RandomHolderFactory extends HolderFactory implements Resourced {
         return new Investor(id, funds, name, surname, strategy);
     }
 
+    /**
+     * Creates a new company with random data.
+     * @return new Company.
+     */
     @Override
     public Company createCompany() {
         int id = useID();
@@ -70,6 +91,10 @@ public class RandomHolderFactory extends HolderFactory implements Resourced {
         return new Company(id, initialStockSize, name, date, address, initialStockValue, profit, revenue, strategy);
     }
 
+    /**
+     * Creates a new investment fund with random data.
+     * @return new Investment Fund.
+     */
     @Override
     public InvestmentFund createInvestmentFund() {
         int id = useID();
