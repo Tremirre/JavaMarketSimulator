@@ -19,7 +19,7 @@ public class RandomSupplementaryAssetFactory extends SupplementaryAssetFactory i
     }
 
     /**
-     * {@inheritDoc
+     * {@inheritDoc}
      * Creates currency based on the random currency record in the resource holder. If there are no more usable
      * currency records, returns null.
      * Stability is generated at random.
